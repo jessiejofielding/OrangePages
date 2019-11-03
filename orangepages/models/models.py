@@ -20,6 +20,8 @@ class User(db.Model):
     lastname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True)
     dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
+    posts_made = relationship('Post', back_populates='creator')
+    groups = relationship('Group', back_populates='owner')
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -47,20 +49,19 @@ class Group(db.Model):
     gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50))
     ownerid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    owner = relationship('User', back_populates='groups')
     members = relationship('User', secondary=group_member,
                             backref=backref('groups_in', lazy='dynamic'))
     
     def add_member(self, member):
-        # TODO: add entry to group_member table
-        pass
+        self.members.append(member)
 
     def remove_member(self, member):
-        # TODO: remove entry from group_member table
-        pass
+        self.members.remove(member)
 
-    def __init__(self, title, ownerid, members):
+    def __init__(self, title, owner, members):
         self.title = title
-        self.ownerid = ownerid
+        self.owner = owner
         for member in members:
             self.add_member(member)
 
@@ -96,6 +97,7 @@ class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    creator = relationship('User', back_populates='posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
@@ -106,18 +108,20 @@ class Post(db.Model):
     # TODO: tags
     
     def add_group(self, group):
-        # TODO: add entry to post_group table
-        pass
+        self.groups.append(group)
 
     def add_like(self, liker):
-        # TODO: add entry to post_liker table
-        pass
+        self.likes.append(liker)
 
-    # TODO: remove groups and likes?
+    def remove_group(self, group):
+        self.groups.remove(group)
 
-    def __init__(self, content, creatorid, groups):
+    def unlike(self, unliker):
+        self.likes.remove(unliker)
+
+    def __init__(self, content, creator, groups):
         self.content = content
-        self.creatorid = creatorid
+        self.creator = creator
         for group in groups:
             self.add_group(group)
     

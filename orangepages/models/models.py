@@ -1,9 +1,9 @@
-from flask.ext.sqlalchemy import SQLAlchemy
+import sqlalchemy 
 from sqlalchemy.orm import relationship, backref
 import datetime
 from orangepages import app
 
-db = SQLAlchemy(app)
+db = sqlalchemy(app)
 
 
 class User(db.Model):

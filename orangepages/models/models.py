@@ -1,10 +1,17 @@
-import sqlalchemy 
+import flask_sqlalchemy as fsq
+from flask import Flask
 from sqlalchemy.orm import relationship, backref
 import datetime
-from orangepages import app
+# from orangepages import app
 
-db = sqlalchemy(app)
+# TODO: import app
+app = Flask(__name__)
 
+# engine = fsq.create_engine('sqlite:////Users/jessie/OrangePages/test.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jessie/OrangePages/test.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = fsq.SQLAlchemy(app)
 
 class User(db.Model):
     """ User table """
@@ -20,6 +27,42 @@ class User(db.Model):
         self.lastname = lastname
         self.email = email
 
+""" Secondary tables for many-to-many relationships. """
+post_group = db.Table('post_group',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
+    db.Column('group_id', db.Integer, db.ForeignKey('group.gid'))
+)
+
+post_liker = db.Table('post_liker', User.metadata,
+    db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
+    db.Column('user_id', db.String(20), db.ForeignKey('user.uid'))
+)
+
+group_member = db.Table('group_member', User.metadata,
+    db.Column('group_id', db.Integer, db.ForeignKey('group.gid')),
+    db.Column('user_id', db.String(20), db.ForeignKey('user.uid'))
+)
+
+class Group(db.Model):
+    gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(50))
+    ownerid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    members = relationship('User', secondary=group_member,
+                            backref=backref('groups_in', lazy='dynamic'))
+    
+    def add_member(self, member):
+        # TODO: add entry to group_member table
+        pass
+
+    def remove_member(self, member):
+        # TODO: remove entry from group_member table
+        pass
+
+    def __init__(self, title, ownerid, members):
+        self.title = title
+        self.ownerid = ownerid
+        for member in members:
+            self.add_member(member)
 
 class Relationship(db.Model):
     """ Relationship table """
@@ -78,45 +121,3 @@ class Post(db.Model):
         for group in groups:
             self.add_group(group)
     
-
-
-class Group(db.Model):
-    gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(50))
-    ownerid = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    members = relationship('User', secondary=group_member,
-                            backref=backref('groups_in', lazy='dynamic'))
-    
-    def add_member(self, member):
-        # TODO: add entry to group_member table
-        pass
-
-    def remove_member(self, member):
-        # TODO: remove entry from group_member table
-        pass
-
-    def __init__(self, title, ownerid, members):
-        self.title = title
-        self.ownerid = ownerid
-        for member in members:
-            self.add_member(member)
-
-    
-
-
-""" Secondary tables for many-to-many relationships. """
-post_group = db.Table('post_group', Group.metadata,
-    db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
-    db.Column('group_id', db.Integer, db.ForeignKey('group.gid'))
-)
-
-post_liker = db.Table('post_liker', User.metadata,
-    db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
-    db.Column('user_id', db.String(20), db.ForeignKey('user.uid'))
-)
-
-group_member = db.Table('group_member', User.metadata,
-    db.Column('group_id', db.Integer, db.ForeignKey('group.gid')),
-    db.Column('user_id', db.String(20), db.ForeignKey('user.uid'))
-)
-

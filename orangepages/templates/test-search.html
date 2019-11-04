@@ -5,14 +5,17 @@
 
 <p> query: {{query}} </p>
 
-<p> results:
-    <br>
-    {% for user in user_preview_list: %}
-        {{user}} <br>
-    {% endfor%}
+<p> results: </p>
+
+{% for user in user_preview_list: %}
+<p>
+    {{user.firstname}} {{user.lastname}}<br>
+    <a href="/test-feed/{{user.uid}}"> view feed </a> \ 
+    <a href="/test-profile/{{user.uid}}"> view profile </a>
 </p>
+{% endfor%}
 
 <br>
-<a href="test-page"> back to test page </a>
+<a href="/test-page"> back to test page </a>
 
 

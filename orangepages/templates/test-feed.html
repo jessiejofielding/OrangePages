@@ -1,0 +1,17 @@
+<h1> feed </h1>
+<hr>
+{% include 'test-searchbar.html' %}
+
+
+
+{% for post in posts: %}
+    <p> <strong>{{post.creatorid}}</strong> <br>
+        {{post.content}}<br>
+        <em>{{post.date}}</em>
+    </p>
+{% endfor %}
+
+<br>
+<a href="/test-page"> back to test page </a>
+
+

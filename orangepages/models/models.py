@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, or_, and_
+from sqlalchemy import create_engine, or_, and_, desc
 import flask_sqlalchemy as fsq
 from flask import Flask
 from sqlalchemy.orm import relationship, backref, sessionmaker
@@ -25,11 +25,15 @@ class User(db.Model):
     lastname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True)
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
-    posts_made = relationship('Post', back_populates='creator')
-    groups = relationship('Group', back_populates='owner')
+    _posts_made = relationship('Post', back_populates='creator')
+    _groups = relationship('Group', back_populates='owner')
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
+        self.update_info(firstname, lastname, email)
+
+
+    def update_info(self, firstname, lastname, email):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -39,14 +43,29 @@ class User(db.Model):
         return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
         self.uid, self.firstname, self.lastname, self.email)
 
-        # Returns a list of users whose first or last names match
-        # any of the given arguments. Any number of arguments can be given.
+    # Returns a list of users who have any visible attritute that matches
+    # the given arguments. Any number of arguments can be given.
     def search(*args):
-        attributes = User.__table__.columns
+        attributes = []
+        for x in User.__table__.columns:
+            # to keep
+            if str(x)[5] is not "_":
+                # TODO: this is where we could look at privacy settings with a little work
+                attributes.append(x)
+            
         users = db.session.query(User).\
             filter(or_(and_(x.ilike('%' + val + '%') for val in args ) for x in attributes))
 
         return users
+
+    def get_feed(self):
+        p = db.session.query(Post)
+        p = p.join(Post.groups)
+        p = p.join(Group.members)
+        p = p.filter(User.uid == self.uid)
+        posts = p.order_by(desc(Post.date)).all()
+        return posts
+
 
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',
@@ -68,7 +87,7 @@ class Group(db.Model):
     gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50))
     ownerid = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    owner = relationship('User', back_populates='groups')
+    owner = relationship('User', back_populates='_groups')
     members = relationship('User', secondary=group_member,
                             backref=backref('groups_in', lazy='dynamic'))
 
@@ -130,7 +149,7 @@ class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    creator = relationship('User', back_populates='posts_made')
+    creator = relationship('User', back_populates='_posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))

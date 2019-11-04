@@ -5,10 +5,8 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 import datetime
 import orangepages.models.statuses as st
 import config
-# from orangepages import app
+from orangepages import app
 
-# TODO: import app
-app = Flask(__name__)
 
 # configurations - #TODO: move somewhere permanent
 engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
@@ -38,7 +36,7 @@ class User(db.Model):
         self.lastname = lastname
         self.email = email
 
-        # for debugging
+    # for debugging
     def __repr__(self):
         return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
         self.uid, self.firstname, self.lastname, self.email)
@@ -49,7 +47,7 @@ class User(db.Model):
         attributes = []
         for x in User.__table__.columns:
             # to keep
-            if str(x)[5] is not "_":
+            if str(x)[5] != "_":
                 # TODO: this is where we could look at privacy settings with a little work
                 attributes.append(x)
             

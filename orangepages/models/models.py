@@ -1,17 +1,17 @@
-from sqlalchemy import create_engine, or_
+from sqlalchemy import create_engine, or_, and_
 import flask_sqlalchemy as fsq
 from flask import Flask
 from sqlalchemy.orm import relationship, backref, sessionmaker
 import datetime
-import statuses as st
+import orangepages.models.statuses as st
 # from orangepages import app
 
 # TODO: import app
 app = Flask(__name__)
 
 # configurations - #TODO: move somewhere permanent
-engine = create_engine('sqlite:////Users/KohZe-Xin/desktop/OrangePages/test.sqlite')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/KohZe-Xin/desktop/OrangePages/test.sqlite'
+engine = create_engine('sqlite:////Users/jessie/OrangePages/test.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jessie/OrangePages/test.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 Session = sessionmaker(bind=engine)
 
@@ -23,7 +23,7 @@ class User(db.Model):
     firstname = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True)
-    dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
+    _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     posts_made = relationship('Post', back_populates='creator')
     groups = relationship('Group', back_populates='owner')
 
@@ -41,16 +41,11 @@ class User(db.Model):
         # Returns a list of users whose first or last names match
         # any of the given arguments. Any number of arguments can be given.
     def search(*args):
-        session = Session()
+        attributes = User.__table__.columns
+        users = db.session.query(User).\
+            filter(or_(and_(x.ilike('%' + val + '%') for val in args ) for x in attributes))
 
-        user_list = []
-
-        for val in args:
-            for user in session.query(User).\
-            filter(or_(User.firstname.ilike('%' + val + '%'), User.lastname.ilike('%' + val + '%'))):
-                user_list.append(user)
-
-        return user_list
+        return users
 
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',

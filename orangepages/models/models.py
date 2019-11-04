@@ -8,10 +8,7 @@ import config
 from orangepages import app
 
 
-# configurations - #TODO: move somewhere permanent
-engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
-app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = sessionmaker(bind=engine)
 
 db = fsq.SQLAlchemy(app)

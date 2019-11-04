@@ -10,7 +10,6 @@ def testpage():
     # # TODO:
     return render_template('test-page.html')
 
-
 @page.route('/test-search')
 def testsearch():
     query = request.args.get('query')
@@ -21,4 +20,5 @@ def testsearch():
 def testsearch_local(query):
     query_list = query.split()
     user_preview_list = User.search(*query_list)
-    print(user_preview_list)
+    for user in user_preview_list:
+        print(user)

@@ -1,6 +1,7 @@
 from orangepages.models.models import db, User, app, Group, Post
+import config
 
-if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite:////Users/KohZe-Xin/desktop/OrangePages/test.sqlite':
+if app.config['SQLALCHEMY_DATABASE_URI'] != config.SQLALCHEMY_DATABASE_URI:
     print("db already exists")
     exit()
 

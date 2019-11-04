@@ -3,7 +3,7 @@ import orangepages.models.statuses as st
 import config
 
 # hard coding this so that create_test_db can't mess with real db
-if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite:///./test.sqlite':
+if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite:///../test.sqlite':
     print("not test db")
     exit()
 

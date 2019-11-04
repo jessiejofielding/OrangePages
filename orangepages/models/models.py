@@ -40,9 +40,6 @@ class User(db.Model):
     def __repr__(self):
         return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
         self.uid, self.firstname, self.lastname, self.email)
-    # for debugging
-    def __str__(self):
-        return "%s %s\n%s" % (self.firstname, self.lastname, self.email)
 
     # Returns a list of users who have any visible attritute that matches
     # the given arguments. Any number of arguments can be given.

@@ -50,7 +50,7 @@ class User(db.Model):
         attributes = []
         for x in User.__table__.columns:
             # to keep
-            if str(x)[5] is not "_":
+            if str(x)[5] != "_":
                 # TODO: this is where we could look at privacy settings with a little work
                 attributes.append(x)
             

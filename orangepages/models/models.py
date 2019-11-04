@@ -2,6 +2,7 @@ import flask_sqlalchemy as fsq
 from flask import Flask
 from sqlalchemy.orm import relationship, backref
 import datetime
+import statuses as st
 # from orangepages import app
 
 # TODO: import app
@@ -67,12 +68,26 @@ class Group(db.Model):
 
 class Relationship(db.Model):
     """ Relationship table """
-    user1 = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
-    user2 = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user1id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user1 = relationship('User', 
+                        foreign_keys=[user1id])
+    user2id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user2 = relationship('User', 
+                        foreign_keys=[user2id])
     status = db.Column(db.String(50))
 
+    def change_status(self, status):
+        if ((status == st.request2_1) and (self.status == st.request1_2)) or \
+            ((status == st.request1_2) and (self.status == st.request2_1)):
+            status = st.friends
+
+        if status == st.friends:
+            # add to "Friend" group
+            pass
+        self.status = status
+ 
     def __init__(self, user1, user2, status):
-        assert(user1 < user2)
+        assert(user1.uid < user2.uid)
         self.user1 = user1
         self.user2 = user2
         self.status = status

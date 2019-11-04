@@ -1,0 +1,1 @@
+request1_2, request2_1, block2_1, block1_2, friends, bothblock = range(6)

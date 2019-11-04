@@ -1,6 +1,7 @@
+from sqlalchemy import create_engine, or_
 import flask_sqlalchemy as fsq
 from flask import Flask
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship, backref, sessionmaker
 import datetime
 import statuses as st
 # from orangepages import app
@@ -8,9 +9,11 @@ import statuses as st
 # TODO: import app
 app = Flask(__name__)
 
-# engine = fsq.create_engine('sqlite:////Users/jessie/OrangePages/test.sqlite')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jessie/OrangePages/test.sqlite'
+# configurations - #TODO: move somewhere permanent
+engine = create_engine('sqlite:////Users/KohZe-Xin/desktop/OrangePages/test.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/KohZe-Xin/desktop/OrangePages/test.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+Session = sessionmaker(bind=engine)
 
 db = fsq.SQLAlchemy(app)
 
@@ -29,6 +32,25 @@ class User(db.Model):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
+
+        # for debugging
+    def __repr__(self):
+        return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
+        self.uid, self.firstname, self.lastname, self.email)
+
+        # Returns a list of users whose first or last names match
+        # any of the given arguments. Any number of arguments can be given.
+    def search(*args):
+        session = Session()
+
+        user_list = []
+
+        for val in args:
+            for user in session.query(User).\
+            filter(or_(User.firstname.ilike('%' + val + '%'), User.lastname.ilike('%' + val + '%'))):
+                user_list.append(user)
+
+        return user_list
 
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',
@@ -53,7 +75,7 @@ class Group(db.Model):
     owner = relationship('User', back_populates='groups')
     members = relationship('User', secondary=group_member,
                             backref=backref('groups_in', lazy='dynamic'))
-    
+
     def add_member(self, member):
         self.members.append(member)
 
@@ -121,7 +143,7 @@ class Post(db.Model):
                             backref=backref('posts', lazy='dynamic'))
 
     # TODO: tags
-    
+
     def add_group(self, group):
         self.groups.append(group)
 
@@ -139,4 +161,3 @@ class Post(db.Model):
         self.creator = creator
         for group in groups:
             self.add_group(group)
-    

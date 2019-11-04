@@ -5,6 +5,12 @@
 
 <p> query: {{query}} </p>
 
+<p> results:
+    <br>
+    {% for user in user_preview_list: %}
+        {{user}} <br>
+    {% endfor%}
+</p>
 
 <br>
 <a href="test-page"> back to test page </a>

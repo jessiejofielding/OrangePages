@@ -17,7 +17,7 @@ def testsearch():
     query_list = query.split()
     user_preview_list = User.search(*query_list)
 
-    return render_template('user-previews.html',
+    return render_template('test-search.html', query=query,
     user_preview_list=user_preview_list)
 
 def testsearch_local(query):

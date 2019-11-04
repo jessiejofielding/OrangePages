@@ -14,7 +14,10 @@ def testpage():
 def testsearch():
     query = request.args.get('query')
 
-    return render_template('test-search.html', query=query,
+    query_list = query.split()
+    user_preview_list = User.search(*query_list)
+
+    return render_template('user-previews.html',
     user_preview_list=user_preview_list)
 
 def testsearch_local(query):

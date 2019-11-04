@@ -20,6 +20,7 @@ db.session.commit()
 sally = User('sstudent', 'Sally', 'Student', 'sstudent@princeton.edu')
 sally2 = User('ssam', 'Sally', 'Sam', 'ssam@princeton.edu')
 sally3 = User('ssally', 'Sam', 'Sally', 'ssally@princeton.edu')
+sally3 = User('ssxlly', 'Sxm', 'Sxlly', 'ssxlly@princeton.edu')
 
 john = User('jexample', 'John', 'Example', 'jexample@princeton.edu')
 cos333 = Group('COS333', None, [sally])
@@ -37,7 +38,7 @@ db.session.add(post1)
 db.session.add(sally_friends)
 db.session.commit()
 
-users = User.query.all()
+users = User.search("s", "x")
 for user in users:
     print(user.firstname)
     print(user.lastname)
@@ -49,19 +50,22 @@ for user in users:
 
 print()
 
-groups = Group.query.all()
-for group in groups:
-    print(group.title)
-    print(group.members)
-    print()
+# for c in User.__table__.columns:
+#     print(c)
 
-print()
+# groups = Group.query.all()
+# for group in groups:
+#     print(group.title)
+#     print(group.members)
+#     print()
 
-posts = Post.query.all()
-for post in posts:
-    print(post.creatorid)
-    print(post.creator)
-    print(post.content)
-    print(post.groups)
-    print()
+# print()
+
+# posts = Post.query.all()
+# for post in posts:
+#     print(post.creatorid)
+#     print(post.creator)
+#     print(post.content)
+#     print(post.groups)
+#     print()
 

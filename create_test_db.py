@@ -1,11 +1,9 @@
 from orangepages.models.models import db, User, app, Group, Post
 import orangepages.models.statuses as st
+import config
 
-# hard coding that this will only work on my computer in the test db so that we 
-# don't accidentally drop_all() and replace with this mess on an important db
-# I haven't figured out how to do it with a relative path yet but will figure 
-# that out soon 
-if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite:////Users/jessie/OrangePages/test.sqlite':
+if app.config['SQLALCHEMY_DATABASE_URI'] != config.SQLALCHEMY_DATABASE_URI:
+    print("not test db")
     exit()
 
 # this is so that we can mess around with different possibilities for testing

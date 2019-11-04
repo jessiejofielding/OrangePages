@@ -4,14 +4,15 @@ from flask import Flask
 from sqlalchemy.orm import relationship, backref, sessionmaker
 import datetime
 import orangepages.models.statuses as st
+import config
 # from orangepages import app
 
 # TODO: import app
 app = Flask(__name__)
 
 # configurations - #TODO: move somewhere permanent
-engine = create_engine('sqlite:////Users/jessie/OrangePages/test.sqlite')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/jessie/OrangePages/test.sqlite'
+engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
+app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 Session = sessionmaker(bind=engine)
 

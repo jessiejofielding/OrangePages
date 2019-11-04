@@ -1,3 +1,3 @@
-from orangepages.views.testsearch import testsearch
+from orangepages.views.testsearch import testsearch_local
 
-testsearch()
+testsearch_local("sa st")

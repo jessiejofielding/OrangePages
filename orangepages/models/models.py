@@ -1,12 +1,13 @@
-from sqlalchemy import create_engine, or_, and_, desc
-import flask_sqlalchemy as fsq
-from flask import Flask
-from sqlalchemy.orm import relationship, backref, sessionmaker
 import datetime
-import orangepages.models.statuses as st
-import config
-from orangepages import app
 
+from flask import Flask
+from sqlalchemy import and_, create_engine, desc, or_
+from sqlalchemy.orm import backref, relationship, sessionmaker
+
+import config
+import flask_sqlalchemy as fsq
+import orangepages.models.statuses as st
+from orangepages import app
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 Session = sessionmaker(bind=engine)
@@ -45,7 +46,9 @@ class User(db.Model):
         for x in User.__table__.columns:
             # to keep
             if str(x)[5] != "_":
-                # TODO: this is where we could look at privacy settings with a little work
+                # TODO: this is where we could look at privacy settings with 
+                # a little work; we would need to take searcherid or searcher 
+                # (user object) as the first argument -jf
                 attributes.append(x)
             
         users = db.session.query(User).\
@@ -91,6 +94,8 @@ class Group(db.Model):
 
     def remove_member(self, member):
         self.members.remove(member)
+
+    # TODO: may want to do a "is_member" method -jf
 
     def __init__(self, title, owner, members):
         self.title = title

@@ -11,4 +11,4 @@ page = Blueprint('general', __name__)
 # @login_required
 def feed():
     # # TODO:
-    return
+    return render_template('index.html')

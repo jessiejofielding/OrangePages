@@ -10,7 +10,8 @@ page = Blueprint('testsearch', __name__)
 def search_user():
     query_list = request.args.get('query').split()
     user_preview_list = User.search(*query_list)
+    query = ' '.join(query_list)
 
-    return render_template('test-search.html',
-    user_preview_list=user_preview_list)
+    return render_template('search.html',
+    user_preview_list=user_preview_list, query=query)
 

@@ -1,8 +1,10 @@
 from flask import Flask
 import config
-app = Flask(__name__)
-app.config.from_object(config.Config)
+import os 
 
+dir = os.path.abspath('orangepages/templates')
+app = Flask(__name__, template_folder=dir)
+app.config.from_object(config.Config)
 
 # Import and register views.
 from orangepages.views import general, post, search, user, test

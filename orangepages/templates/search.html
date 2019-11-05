@@ -53,12 +53,18 @@
     </div>
 </nav>
 
-<!--     <div class="jumbotron">
+
+
+    <div class="jumbotron">
         <h1 class="display-4">Orange Pages</h1>
         <p class="lead">
-            Welcome to Orange Pages!
+            {% for user in user_preview_list: %}
+        <p>
+        <a href="/test-feed/{{user.uid}}"> {{user.firstname}} {{user.lastname}} </a> 
         </p>
-    </div> -->
+        {% endfor%}
+        </p>
+    </div>
 
     </div>
 

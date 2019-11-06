@@ -1,10 +1,46 @@
-<h1> profile </h1>
-<hr>
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<body style="background-color:#333333;">
+    <head>
+        <title>{{user.firstname}} {{user.lastname}} - Orange Pages</title>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+        <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="/static/css/styles.css" type="text/css"/>
+    </head>
+
 {% include 'test-searchbar.html' %}
 
-<p> {{user}} </p>
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <div class="card mt-4 mb-4 ml-4">
+            <div class="card-body text-center">
+                    <i class="fa fa-user fa-5x"></i>
+                <h3 class="card-title">{{user.firstname}} {{user.lastname}}</h3>
+                <p class="card-text">puid: {{user.uid}}
+                    <br> email: {{user.email}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card mt-4 mb-4 mr-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">Card Title</h5>
+                <p class="card-text">Some quick text to build up on the card title.</p>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<br>
-<a href="/test-page"> back to test page </a>
+    </div>
 
-
+    <body>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+</html>

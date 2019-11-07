@@ -8,7 +8,7 @@ page = Blueprint('testsearch', __name__)
 
 @page.route('/search')
 def search_user():
-    query_list = request.args.get('query').split()
+    query_list = request.args.get('query').split(' ')
     user_preview_list = User.search(*query_list).all()
     query = ' '.join(query_list)
 

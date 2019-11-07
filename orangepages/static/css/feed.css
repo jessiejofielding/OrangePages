@@ -1,0 +1,11 @@
+.make-post {
+	max-width: 80%;
+	background-color: lightgrey;
+	margin-top: 10px;
+}
+
+.post {
+	max-width: 80%;
+	background-color: lightgrey;
+	margin-top: 20px;
+}

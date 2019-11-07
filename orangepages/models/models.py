@@ -29,6 +29,7 @@ class User(db.Model):
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
+    _pic = db.Column(db.String(50))
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -78,7 +79,7 @@ class User(db.Model):
                 attributes.append(x)
 
         users = db.session.query(User).\
-            filter(or_(and_(x.ilike('%' + val + '%') for val in args ) for x in attributes))
+            filter(and_(or_(x.ilike('%' + val + '%') for x in attributes ) for val in args))
 
         return users
 

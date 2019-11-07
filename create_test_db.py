@@ -37,9 +37,12 @@ cos333 = Group('COS333', None, [sally])
 the_clique = Group('Clique', None, [sally])
 post1 = Post("Hey everyone! It's my first post :))))", sally, [cos333, the_clique])
 post2 = Post("Hey everyone! It's the second post :))))", sally, [cos333])
+post5 = Post("Hey so I just really wanted to let everyone know that our 333 project (Orange Pages :) ) is in development! Hope you'll all like it!!", jessie, [cos333])
 post3 = Post("Hey everyone! It's my third post :))))", sally, [the_clique])
 post4 = Post("Hey everyone! It's my fourth post :))))", sally, [cos333])
+post6 = Post("I'm really bad at writing posts but I want there to be some variety on this feed is all!", jessie, [cos333])
 
+posts = [post1, post2, post3, post4, post5, post6]
 cos333.add_member(john)
 the_clique.add_member(john)
 post1.add_like(john)
@@ -97,3 +100,26 @@ db.session.commit()
 
 for like in post1.likes:
     print(like.firstname)
+
+# import cloudinary 
+# import os
+# from cloudinary.uploader import upload
+
+# cloudinary.config.update = ({
+#     'cloud_name':os.environ.get('CLOUDINARY_CLOUD_NAME'),
+#     'api_key': os.environ.get('CLOUDINARY_API_KEY'),
+#     'api_secret': os.environ.get('CLOUDINARY_API_SECRET')
+# })
+
+# tig = upload('/Users/jessie/OrangePages/tiger1.jpg')
+
+# john._pic = tig['public_id']
+# sally._pic = tig['public_id']
+
+john._pic = 'invtn6zt9ipi1fbtighn'
+sally._pic = 'invtn6zt9ipi1fbtighn'
+db.session.commit()
+# picurl, _ = cloudinary.utils.cloudinary_url(john._pic, width = 100, height = 150, crop = "fill")
+# print(picurl)
+
+

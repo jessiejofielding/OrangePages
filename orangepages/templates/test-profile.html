@@ -23,25 +23,59 @@
                     <div class="card-body text-center">
                         <i class="fa fa-user fa-5x"></i>
                         <h3 class="card-title">{{user.firstname}} {{user.lastname}}</h3>
-                        <p class="card-text">puid: {{user.uid}}
-                            <br> email: {{user.email}}
-                            <br> hometown: {{user.hometown}}
-                            <br> year: {{user.year}}
-                            <br> major: {{user.major}}
-                            <br> state: {{user.state}}
-                            <br> country: {{user.country}}
-                            <br> room: {{user.room}}
-                            <br> building: {{user.building}}</p>
+                        <p class="card-text">{{user.uid}}</p>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card mt-4 mb-4 mr-4">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Card Title</h5>
-                        <p class="card-text">Some quick text to build up on the card title.</p>
-                        <a href="#" class="card-link">Another link</a>
+                    <div class="card-header">
+                        <h4>Details about {{user.firstname}}</h4>
                     </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Basic info</h5>
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>puid:</td>
+                                    <td>{{user.uid}}</td>
+                                </tr>
+                                <tr>
+                                    <td>email:</td>
+                                    <td>{{user.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>year:</td>
+                                    <td>{{user.year}}</td>
+                                </tr>
+                                <tr>
+                                    <td>major:</td>
+                                    <td>{{user.major}}</td>
+                                </tr>
+                                <tr>
+                                    <td>hometown:</td>
+                                    <td>{{user.hometown}}</td>
+                                </tr>
+                                <tr>
+                                    <td>state:</td>
+                                    <td>{{user.state}}</td>
+                                </tr>
+                                <tr>
+                                    <td>country:</td>
+                                    <td>{{user.country}}</td>
+                                </tr>
+                                <tr>
+                                    <td>room:</td>
+                                    <td>{{user.room}}</td>
+                                </tr>
+                                <tr>
+                                    <td>building:</td>
+                                    <td>{{user.building}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>

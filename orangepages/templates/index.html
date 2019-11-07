@@ -14,6 +14,44 @@
 
     {% include 'test-searchbar.html' %}
 
+    {% for post in posts: %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <div class="card mt-4 mb-4 ml-4">
+                    <div class="card-body text-center">
+                        {% if post.creator._pic is none: %}
+                        <h3 class="card-title"><i class="fa fa-user fa-2x"></i> 
+                            <a href="/test-profile/{{post.creatorid}}">{{post.creator.firstname}} {{post.creator.lastname}} </a> </h3>
+                        {% else: %}
+                        <h3 class="card-title">
+                            <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{post.creator._pic}}.png' alt="failed to load"> 
+                            <a href="/test-profile/{{post.creatorid}}">{{post.creator.firstname}} {{post.creator.lastname}} </a> </h3>
+                            {% endif %}
+                        <!-- <p class="card-text"> {{post.date}}
+                        </p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mt-4 mb-4 mr-4">
+                    <div class="card-body text-left">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">
+                            <br>
+                            {{post.content}}
+                            <br>
+                            <br>
+                        </p>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type='button'><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
  <!--    <nav class="navbar navbar-icon-top navbar-expand-sm navbar-dark bg-primary main-nav">
         <div class="container justify-content-center">
         <a class="navbar-brand" href="#">OrangePages</a>

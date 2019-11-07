@@ -10,7 +10,7 @@ if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite:///../test.sqlite':
 # this is so that we can mess around with different possibilities for testing
 # without having to think about what already exists
 # once we have a test db that we like, we won't run this anymore so we won't keep
-# dropping and creating the whole db 
+# dropping and creating the whole db
 
 db.drop_all()
 db.create_all()
@@ -20,8 +20,19 @@ db.session.commit()
 sally = User('sstudent', 'Sally', 'Student', 'sstudent@princeton.edu')
 sally2 = User('ssam', 'Sally', 'Sam', 'ssam@princeton.edu')
 sally3 = User('ssally', 'Sam', 'Sally', 'ssally@princeton.edu')
-
 john = User('jexample', 'John', 'Example', 'jexample@princeton.edu')
+
+elise = User('ccolter', 'Elise', 'Colter', 'ccolter@princeton.edu')
+jessie = User('jjf4', 'Jessica', 'Fielding', 'jjf4@princeton.edu')
+julie = User('jkallini', 'Julie', 'Kallini', 'jkallini@princeton.edu')
+jamie = User('jamieguo', 'Jamie', 'Guo', 'jamieguo@princeton.edu')
+zexin = User('zkoh', 'Ze-Xin', 'Koh', 'zkoh@princeton.edu')
+
+batman = User('bmcman', 'Bat', 'McMan', 'bmcman@princeton.edu')
+dan = User('dmiller', 'Dan', 'Miller', 'dmiller@princeton.edu')
+
+users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
+
 cos333 = Group('COS333', None, [sally])
 the_clique = Group('Clique', None, [sally])
 post1 = Post("Hey everyone! It's my first post :))))", sally, [cos333, the_clique])
@@ -33,10 +44,11 @@ cos333.add_member(john)
 the_clique.add_member(john)
 post1.add_like(john)
 # cos333.remove_member(sally)
-db.session.add(sally)
-db.session.add(sally2)
-db.session.add(sally3)
-db.session.add(john)
+
+for user in users:
+    db.session.add(user)
+
+
 db.session.add(cos333)
 db.session.add(post1)
 db.session.add(post2)

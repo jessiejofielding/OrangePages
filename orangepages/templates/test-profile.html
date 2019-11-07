@@ -23,7 +23,19 @@
                     <div class="card-body text-center">
                         <i class="fa fa-user fa-5x"></i>
                         <h3 class="card-title">{{user.firstname}} {{user.lastname}}</h3>
-                        <p class="card-text">{{user.uid}}</p>
+                        <p class="card-text">{{user.uid}}
+                            <hr>
+                        </p>
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-user-plus"></i>
+                            <span class="sr-only">(current)</span>
+                            add friend
+                        </a>
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-paper-plane"></i>
+                            <span class="sr-only">(current)</span>
+                            email {{user.firstname}}
+                        </a>
                     </div>
                 </div>
             </div>

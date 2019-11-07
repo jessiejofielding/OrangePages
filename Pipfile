@@ -12,6 +12,7 @@ sqlalchemy-utils = "*"
 psycopg2 = "==2.7.5"
 psycopg2-binary = "==2.7.5"
 flask-sqlalchemy = "*"
+cloudinary = "*"
 
 [requires]
 python_version = "3.7"

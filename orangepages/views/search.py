@@ -13,5 +13,5 @@ def search_user():
     query = ' '.join(query_list)
 
     return render_template('search.html',
-    user_preview_list=user_preview_list, query=query)
+    user_preview_list=user_preview_list, query=query, count=len(query) - 1)
 

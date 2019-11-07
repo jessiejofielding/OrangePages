@@ -2,7 +2,7 @@ import datetime
 
 from flask import Flask
 from sqlalchemy import and_, create_engine, desc, or_
-from sqlalchemy.orm import backref, relationship, sessionmaker
+from sqlalchemy.orm import backref, relationship
 
 import config
 import flask_sqlalchemy as fsq
@@ -10,7 +10,6 @@ import orangepages.models.statuses as st
 from orangepages import app
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
-Session = sessionmaker(bind=engine)
 
 db = fsq.SQLAlchemy(app)
 
@@ -20,6 +19,13 @@ class User(db.Model):
     firstname = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
     email = db.Column(db.String(50), unique=True)
+    hometown = db.Column(db.String(50))
+    state = db.Column(db.String(50))
+    country = db.Column(db.String(50))
+    year = db.Column(db.String(50))
+    major = db.Column(db.String(50))
+    room = db.Column(db.String(50))
+    building = db.Column(db.String(50))
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
@@ -28,16 +34,36 @@ class User(db.Model):
         self.uid = netid
         self.update_info(firstname, lastname, email)
 
-
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
 
+    def update_optional_info(self, firstname, lastname, email, hometown,
+    state, country, year, major, room, building):
+        self.update_info(firstname, lastname, email)
+        self.hometown = hometown
+        self.state = state
+        self.country = country
+        self.year = year
+        self.major = major
+        self.room = room
+        self.building = building
+
+    # for debugging
+    # def __repr__(self):
+    #     return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
+    #     self.uid, self.firstname, self.lastname, self.email)
+
     # for debugging
     def __repr__(self):
-        return "<User(uid='%s', firstname='%s', lastname='%s', email='%s')>" % (
-        self.uid, self.firstname, self.lastname, self.email)
+        str = "<User(uid='%s', firstname='%s', lastname='%s', email='%s', " + \
+        "hometown='%s', state='%s', country='%s', year='%s', " + \
+        "major='%s', room='%s', building='%s')>"
+
+        return str % (self.uid, self.firstname, self.lastname, self.email,
+        self.hometown, self.state, self.country, self.year,
+        self.major, self.room, self.building)
 
     # Returns a list of users who have any visible attritute that matches
     # the given arguments. Any number of arguments can be given.
@@ -46,11 +72,11 @@ class User(db.Model):
         for x in User.__table__.columns:
             # to keep
             if str(x)[5] != "_":
-                # TODO: this is where we could look at privacy settings with 
-                # a little work; we would need to take searcherid or searcher 
+                # TODO: this is where we could look at privacy settings with
+                # a little work; we would need to take searcherid or searcher
                 # (user object) as the first argument -jf
                 attributes.append(x)
-            
+
         users = db.session.query(User).\
             filter(or_(and_(x.ilike('%' + val + '%') for val in args ) for x in attributes))
 
@@ -106,10 +132,10 @@ class Group(db.Model):
 class Relationship(db.Model):
     """ Relationship table """
     user1id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
-    user1 = relationship('User', 
+    user1 = relationship('User',
                         foreign_keys=[user1id])
     user2id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
-    user2 = relationship('User', 
+    user2 = relationship('User',
                         foreign_keys=[user2id])
     status = db.Column(db.String(50))
 
@@ -122,7 +148,7 @@ class Relationship(db.Model):
             # add to "Friend" group
             pass
         self.status = status
- 
+
     def __init__(self, user1, user2, status):
         assert(user1.uid < user2.uid)
         self.user1 = user1

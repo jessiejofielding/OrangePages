@@ -53,12 +53,10 @@ def test_view_profile(lookup_id):
 # def test_create_user():
 #     # # TODO:
 #     User(netid, firstname, lastname, email)
-#     return 
+#     return
 
 # @page.route('/edit-user', methods=['PUT'])
 # def test_edit_user():
 #     # # TODO:
 #     user.update_info(firstname, lastname, email)
 #     return
-
-

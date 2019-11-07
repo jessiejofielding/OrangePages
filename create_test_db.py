@@ -90,7 +90,9 @@ feed = john.get_feed()
 
 print(feed)
 
-sally2.update_info('Sallie', 'Sam', 'ssam@princeton.edu')
+# sally2.update_info('Sallie', 'Sam', 'ssam@princeton.edu')
+elise.update_optional_info("Elise", "Colter", "ccolter@princeton.edu",
+"Nashville", "Tennessee", "U.S.", "2021", "COS", "N/A", "Little")
 db.session.commit()
 
 for like in post1.likes:

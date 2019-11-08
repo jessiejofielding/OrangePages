@@ -29,7 +29,7 @@ class User(db.Model):
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
-    _pic = db.Column(db.String(50))
+    _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid

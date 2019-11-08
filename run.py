@@ -1,2 +1,3 @@
 from orangepages import app
-app.run()
+from sys import argv
+app.run(port=argv[1])

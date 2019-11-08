@@ -13,7 +13,6 @@ page = Blueprint('general', __name__)
 
 @page.route('/', methods=['GET'])
 @page.route('/feed', methods=['GET'])
-@login_required
 def feed():
     # # TODO:
     username = cas.username
@@ -23,3 +22,14 @@ def feed():
     user = User.query.get(netid)
     posts = user.get_feed()
     return render_template('index.html', posts=posts)
+
+@app.route("/secure")
+@login_required
+def secure():
+    username = cas.username
+    attributes = cas.attributes
+
+    logging.info('CAS username: %s', username)
+    logging.info('CAS attributes: %s', attributes)
+
+    return render_template('404.html', cas=cas)

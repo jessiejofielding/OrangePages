@@ -27,7 +27,7 @@ def feed():
 @login_required
 def secure():
     username = cas.username
-    attributes = cas.attributes
+    # attributes = cas.attributes
     print(username)
     # logging.info('CAS username: %s', username)
     # logging.info('CAS attributes: %s', attributes)

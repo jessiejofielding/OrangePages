@@ -12,85 +12,94 @@
         <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet"/>
-         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
     </head>
 
-<!-- Navbar-->
+    <!-- Navbar-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary main-nav">
-    <div class="container justify-content-center">
-        <ul class="nav navbar-nav flex-fill justify-content-start">
-            <li class="nav-item active">
-                <a class="navbar-brand" href="/">OrangePages</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-        </ul>
-        <ul class="nav navbar-nav flex-fill justify-content-center">
-            <li class="nav-item">
-                <form action="/search" class="form-inline my-2 my-lg-0" method="get">
-                <input class="form-control mr-sm-2" type="text" name="query" 
-                placeholder="{{query}}" aria-label="Search">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit" value="Search"><i class="fa fa-search"></i></button>
-                </form>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav flex-fill justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="/">
+        <div class="container justify-content-center">
+            <ul class="nav navbar-nav flex-fill justify-content-start">
+                <li class="nav-item active">
+                    <a class="navbar-brand" href="/">OrangePages</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+            </ul>
+            <ul class="nav navbar-nav flex-fill justify-content-center">
+                <li class="nav-item">
+                    <form action="/search" class="form-inline my-2 my-lg-0" method="get">
+                        <input class="form-control mr-sm-2" type="text" name="query" placeholder="{{query}}"
+                            aria-label="Search">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" value="Search"><i
+                                class="fa fa-search"></i></button>
+                    </form>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav flex-fill justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
                         <i class="fa fa-home"></i>
                         <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="/test-profile/jexample">
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/test-profile/jexample">
                         <i class="fa fa-user"></i>
                         <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="#">
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#">
                         <i class="fa fa-heart"></i>
                         <span class="sr-only">(current)</span>
-                </a>     
-            </li>
-        </ul>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <br>
+        <!-- Count -->
+        <div class="num-students">
+            <div class="count">
+                <p style="color:antiquewhite"> Found {{count}} students. </p>
+            </div>
+        </div>
     </div>
-</nav>
-
-<!-- Count -->
-<div class="num-students">
-    <div class="count">
-    <p> Found {{count}} students. </p>
-</div>
-</div>
-
-<!-- View posts -->
-{% for user in user_preview_list: %}
-<div class="user container">
-                <div class="card gedf-card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                {% if user._pic is none: %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                {% else: %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{user._pic}}.png' alt="failed to load"> 
-                                </div>
-                                {% endif %}
-                                <div class="ml-2">
-                                    <a class="h5 m-0" href="/test-profile/{{user.uid}}"> {{user.firstname}} {{user.lastname}}</a>
-                                </div>
-                            </div>
+    
+    <!-- View posts -->
+    <div class="user container">
+        <div class="card gedf-card">
+            {% for user in user_preview_list: %}
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                        {% if user._pic is none: %}
+                        <div class="mr-2">
+                            <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                         </div>
-
+                        {% else: %}
+                        <div class="mr-2">
+                            <img class="rounded-circle" width="45"
+                                src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{user._pic}}.png'
+                                alt="failed to load">
+                        </div>
+                        {% endif %}
+                        <div class="ml-2">
+                            <a class="h5 m-0" href="/test-profile/{{user.uid}}"> {{user.firstname}}
+                                {{user.lastname}}</a>
+                        </div>
                     </div>
                 </div>
-</div>
-{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
 
     {% include 'footer.html' %}
 

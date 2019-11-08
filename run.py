@@ -1,3 +1,4 @@
 from orangepages import app
-from sys import argv
-app.run(port=argv[1])
+import os
+app.run(port=os.environ.get('PORT'))
+print(os.environ.get('PORT'))

@@ -6,7 +6,7 @@ class Config(object):
     CAS_AFTER_LOGIN = 'secure'
     CAS_LOGOUT_ROUTE = '/cas/logout'
     CAS_VALIDATE_ROUTE = '/cas/serviceValidate'
-    CAS_LOGIN_ROUTE = 'https://fed.princeton.edu/cas/login'
+    CAS_LOGIN_ROUTE = '/cas/login'
     SECRET_KEY = 'aaaaimtesting'
 
 

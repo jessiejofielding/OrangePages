@@ -1,15 +1,17 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
+from orangepages.models.models import User
+
 # from flask_login import current_user, login_required
 
 
 page = Blueprint('user', __name__)
 
 
-@page.route('/user/<string:lookup_id>', methods=['GET'])
+@page.route('/profile/<string:lookup_id>', methods=['GET'])
 def view_profile(lookup_id):
-    # # TODO:
-    return
+    user = User.query.get(lookup_id)
+    return render_template('profile.html', user=user)
 
 @page.route('/create-user', methods=['POST'])
 def create_user():

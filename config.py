@@ -2,7 +2,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    CAS_SERVER = "https://casserver.herokuapp.com"
+    CAS_SERVER = "https://fed.princeton.edu"
     CAS_AFTER_LOGIN = 'secure'
     # CAS_LOGOUT_ROUTE = '/cas/logout'
     # CAS_VALIDATE_ROUTE = '/cas/serviceValidate'

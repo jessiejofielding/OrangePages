@@ -116,7 +116,7 @@ def validate(ticket):
         print("inside try")
         xml_content = xmldump.split('\n')
         print(xml_content)
-        xml_from_dict = {'cas:authenticationSuccess': xmldump[0], 'cas:attributes': xmldump[1:]}
+        xml_from_dict = {'cas:authenticationSuccess': xml_content[0], 'cas:attributes': xml_content[1:]}
         print(xml_from_dict)
         isValid = True if "cas:authenticationSuccess" in xml_from_dict.get("cas:serviceResponse", {}) else False
         print(isValid)

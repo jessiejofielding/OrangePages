@@ -1,6 +1,3 @@
-""" CREDIT TO COS333 FACULTY for this code at this address:
-https://www.cs.princeton.edu/~cmoretti/cos333/CAS/CASClient-py.txt"""
-
 import sys, os, cgi, urllib, re
 form = cgi.FieldStorage()
 class CASClient:
@@ -15,9 +12,9 @@ class CASClient:
       # No valid ticket; redirect the browser to the login page to get one
       login_url = self.cas_url + 'login' \
          + '?service=' + urllib.quote(self.ServiceURL())
-      print('Location: ' + login_url)
-      print('Status-line: HTTP/1.1 307 Temporary Redirect')
-      print("")
+      print 'Location: ' + login_url
+      print 'Status-line: HTTP/1.1 307 Temporary Redirect'
+      print ""
       sys.exit(0)
    def Validate(self, ticket):
       val_url = self.cas_url + "validate" + \
@@ -38,6 +35,6 @@ class CASClient:
       return "something is badly wrong"
  
 def main():
-  print("CASClient does not run standalone")
+  print "CASClient does not run standalone"
 if __name__ == '__main__':
   main()

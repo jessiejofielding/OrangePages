@@ -1,5 +1,5 @@
 from flask import Flask
-# from flask_cas import CAS
+from flask-cas-fix import CAS
 import config
 import os 
 

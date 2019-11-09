@@ -14,11 +14,6 @@ page = Blueprint('general', __name__)
 @page.route('/', methods=['GET'])
 @page.route('/feed', methods=['GET'])
 def feed():
-    import CASClient
-    C = CASClient.CASClient()
-    netid = C.Authenticate()
-    print(C)
-    print(netid)
     # # TODO:
     # username = cas.username
     # attributes = cas.attributes
@@ -38,3 +33,12 @@ def feed():
 #     # logging.info('CAS attributes: %s', attributes)
 
 #     return render_template('404.html', cas=cas)
+
+@page.route("/secure")
+def secure():
+    import CASClient
+    C = CASClient.CASClient()
+    netid = C.Authenticate()
+    print(C)
+    print(netid)
+    return render_template('404.html')

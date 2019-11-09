@@ -28,6 +28,7 @@ def login():
     the user's attributes are saved under the key
     'CAS_USERNAME_ATTRIBUTE_KEY'
     """
+    print("started login")
 
     cas_token_session_key = current_app.config['CAS_TOKEN_SESSION_KEY']
 
@@ -42,6 +43,7 @@ def login():
     if cas_token_session_key in flask.session:
 
         if validate(flask.session[cas_token_session_key]):
+            print("validation done and validation returned true")
             if 'CAS_AFTER_LOGIN_SESSION_URL' in flask.session:
                 redirect_url = flask.session.pop('CAS_AFTER_LOGIN_SESSION_URL')
             elif flask.request.args.get('origin'):
@@ -94,6 +96,7 @@ def validate(ticket):
     key `CAS_USERNAME_SESSION_KEY` while tha validated attributes dictionary
     is saved under the key 'CAS_ATTRIBUTES_SESSION_KEY'.
     """
+    print("started validation")
 
     cas_username_session_key = current_app.config['CAS_USERNAME_SESSION_KEY']
     cas_attributes_session_key = current_app.config['CAS_ATTRIBUTES_SESSION_KEY']
@@ -136,5 +139,6 @@ def validate(ticket):
             flask.session[cas_attributes_session_key] = attributes
     else:
         current_app.logger.debug("invalid")
-
+    
+    print("finished validation normally")
     return isValid

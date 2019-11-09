@@ -26,6 +26,7 @@ def feed():
 @page.route("/secure")
 @login_required
 def secure():
+    print("here")
     username = cas.username
     # attributes = cas.attributes
     print(username)

@@ -113,21 +113,16 @@ def validate(ticket):
 
     try:
         xmldump = urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore')
-        print("inside try")
         xml_content = xmldump.split('\n')
-        print(xml_content)
         xml_from_dict = {'cas:authenticationSuccess': xml_content[0], 'cas:attributes': xml_content[1:]}
-        print(xml_from_dict)
         isValid = True if "yes" in xml_from_dict.get("cas:authenticationSuccess", {}) else False
-        print(isValid)
     except ValueError:
         current_app.logger.error("CAS returned unexpected result")
         print("CAS returned unexpected result")
 
     if isValid:
-        print("I presume we're not getting here")
         current_app.logger.debug("valid")
-        xml_from_dict = xml_from_dict["cas:serviceResponse"]["cas:authenticationSuccess"]
+        # xml_from_dict = xml_from_dict["cas:serviceResponse"]["cas:authenticationSuccess"]
         username = xml_from_dict.get("cas:attributes", {})
         flask.session[cas_username_session_key] = username
 

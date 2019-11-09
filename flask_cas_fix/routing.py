@@ -114,8 +114,8 @@ def validate(ticket):
     try:
         xmldump = urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore')
         print("inside try")
-        print(xmldump[0])
-        print(xmldump[1])
+        xml_content = xmldump.split('\n')
+        print(xml_content)
         xml_from_dict = {'cas:authenticationSuccess': xmldump[0], 'cas:attributes': xmldump[1:]}
         print(xml_from_dict)
         isValid = True if "cas:authenticationSuccess" in xml_from_dict.get("cas:serviceResponse", {}) else False

@@ -113,7 +113,7 @@ def validate(ticket):
     isValid = False
 
     try:
-        xmldump = urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore')
+        xmldump = '<root>' + urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore') + '</root>'
         xml_from_dict = parse(xmldump)
         isValid = True if "cas:authenticationSuccess" in xml_from_dict["cas:serviceResponse"] else False
     except ValueError:

@@ -118,7 +118,7 @@ def validate(ticket):
         print(xml_content)
         xml_from_dict = {'cas:authenticationSuccess': xml_content[0], 'cas:attributes': xml_content[1:]}
         print(xml_from_dict)
-        isValid = True if "cas:authenticationSuccess" in xml_from_dict.get("cas:serviceResponse", {}) else False
+        isValid = True if "yes" in xml_from_dict.get("cas:authenticationSuccess", {}) else False
         print(isValid)
     except ValueError:
         current_app.logger.error("CAS returned unexpected result")

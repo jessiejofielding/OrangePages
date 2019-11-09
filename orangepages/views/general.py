@@ -13,25 +13,11 @@ page = Blueprint('general', __name__)
 
 @page.route('/', methods=['GET'])
 @page.route('/feed', methods=['GET'])
-@login_required
+@login_required # TODO: make other pages also require login?
 def feed():
-    # # TODO:
-    # username = cas.username
-    # attributes = cas.attributes
-    # print(username)
-    netid = cas.username[0]  # TODO: make this current_user
+    netid = cas.username[0]  # TODO: save current user as part of the session maybe? or as cookies bc they seem simpler tbd
     user = User.query.get(netid)
     posts = user.get_feed()
-    return render_template('index.html', posts=posts)
+    return render_template('index.html', posts=posts, user=user)
 
-# @page.route("/secure")
-# @login_required
-# def secure():
-#     print("here")
-#     username = cas.username
-#     # attributes = cas.attributes
-#     print(username)
-#     # logging.info('CAS username: %s', username)
-#     # logging.info('CAS attributes: %s', attributes)
 
-#     return render_template('404.html', cas=cas)

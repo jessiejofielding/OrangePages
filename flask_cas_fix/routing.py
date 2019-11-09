@@ -94,12 +94,9 @@ def validate(ticket):
     key `CAS_USERNAME_SESSION_KEY` while tha validated attributes dictionary
     is saved under the key 'CAS_ATTRIBUTES_SESSION_KEY'.
     """
-    print("started validation")
-    print(ticket)
 
     cas_username_session_key = current_app.config['CAS_USERNAME_SESSION_KEY']
     cas_attributes_session_key = current_app.config['CAS_ATTRIBUTES_SESSION_KEY']
-    print("session keys:", cas_username_session_key, cas_attributes_session_key)
     current_app.logger.debug("validating token {0}".format(ticket))
 
     cas_validate_url = create_cas_validate_url(
@@ -117,6 +114,7 @@ def validate(ticket):
     try:
         xmldump = '<root>' + urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore') + '</root>'
         print("inside try")
+        print(xmldump)
         xml_from_dict = parse(xmldump)
         isValid = True if "cas:authenticationSuccess" in xml_from_dict.get("cas:serviceResponse", {}) else False
         print(isValid)

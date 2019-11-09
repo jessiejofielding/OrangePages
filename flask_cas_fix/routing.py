@@ -52,6 +52,7 @@ def login():
                 redirect_url = flask.url_for(
                     current_app.config['CAS_AFTER_LOGIN'])
         else:
+            print("validation done and returned false")
             del flask.session[cas_token_session_key]
 
     current_app.logger.debug('Redirecting to: {0}'.format(redirect_url))

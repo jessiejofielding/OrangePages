@@ -1,7 +1,7 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
 from orangepages.models.models import User
-from orangepages import cas
+# from orangepages import cas
 # from flask_cas import login
 # from flask_cas import logout
 # from flask_cas import login_required

@@ -28,7 +28,6 @@ def login():
     the user's attributes are saved under the key
     'CAS_USERNAME_ATTRIBUTE_KEY'
     """
-    print("started login")
 
     cas_token_session_key = current_app.config['CAS_TOKEN_SESSION_KEY']
 
@@ -43,7 +42,6 @@ def login():
     if cas_token_session_key in flask.session:
 
         if validate(flask.session[cas_token_session_key]):
-            print("validation done and validation returned true")
             if 'CAS_AFTER_LOGIN_SESSION_URL' in flask.session:
                 redirect_url = flask.session.pop('CAS_AFTER_LOGIN_SESSION_URL')
             elif flask.request.args.get('origin'):
@@ -52,7 +50,6 @@ def login():
                 redirect_url = flask.url_for(
                     current_app.config['CAS_AFTER_LOGIN'])
         else:
-            print("validation done and returned false")
             del flask.session[cas_token_session_key]
 
     current_app.logger.debug('Redirecting to: {0}'.format(redirect_url))
@@ -98,10 +95,11 @@ def validate(ticket):
     is saved under the key 'CAS_ATTRIBUTES_SESSION_KEY'.
     """
     print("started validation")
+    print(ticket)
 
     cas_username_session_key = current_app.config['CAS_USERNAME_SESSION_KEY']
     cas_attributes_session_key = current_app.config['CAS_ATTRIBUTES_SESSION_KEY']
-
+    print("session keys:", cas_username_session_key, cas_attributes_session_key)
     current_app.logger.debug("validating token {0}".format(ticket))
 
     cas_validate_url = create_cas_validate_url(
@@ -109,7 +107,7 @@ def validate(ticket):
         current_app.config['CAS_VALIDATE_ROUTE'],
         flask.url_for('.login', origin=flask.session.get('CAS_AFTER_LOGIN_SESSION_URL'), _external=True),
         ticket)
-
+    print("validation url", cas_validate_url)
     current_app.logger.debug("Making GET request to {0}".format(
         cas_validate_url))
 
@@ -118,12 +116,16 @@ def validate(ticket):
 
     try:
         xmldump = '<root>' + urlopen(cas_validate_url).read().strip().decode('utf8', 'ignore') + '</root>'
+        print("inside try")
         xml_from_dict = parse(xmldump)
         isValid = True if "cas:authenticationSuccess" in xml_from_dict.get("cas:serviceResponse", {}) else False
+        print(isValid)
     except ValueError:
         current_app.logger.error("CAS returned unexpected result")
+        print("CAS returned unexpected result")
 
     if isValid:
+        print("I presume we're not getting here")
         current_app.logger.debug("valid")
         xml_from_dict = xml_from_dict["cas:serviceResponse"]["cas:authenticationSuccess"]
         username = xml_from_dict.get("cas:attributes", {})
@@ -141,5 +143,4 @@ def validate(ticket):
     else:
         current_app.logger.debug("invalid")
     
-    print("finished validation normally")
     return isValid

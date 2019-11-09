@@ -1,10 +1,10 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
 from orangepages.models.models import User
-# from orangepages import cas
-# from flask_cas import login
-# from flask_cas import logout
-# from flask_cas import login_required
+from orangepages import cas
+from flask_cas import login
+from flask_cas import logout
+from flask_cas import login_required
 # from flask_login import current_user, login_required
 
 
@@ -23,22 +23,13 @@ def feed():
     posts = user.get_feed()
     return render_template('index.html', posts=posts)
 
-# @page.route("/secure")
-# @login_required
-# def secure():
-#     username = cas.username
-#     # attributes = cas.attributes
-#     print(username)
-#     # logging.info('CAS username: %s', username)
-#     # logging.info('CAS attributes: %s', attributes)
-
-#     return render_template('404.html', cas=cas)
-
 @page.route("/secure")
+@login_required
 def secure():
-    import CASClient
-    C = CASClient.CASClient()
-    netid = C.Authenticate()
-    print(C)
-    print(netid)
-    return render_template('404.html')
+    username = cas.username
+    # attributes = cas.attributes
+    print(username)
+    # logging.info('CAS username: %s', username)
+    # logging.info('CAS attributes: %s', attributes)
+
+    return render_template('404.html', cas=cas)

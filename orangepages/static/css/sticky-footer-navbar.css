@@ -3,7 +3,7 @@
    bottom: 0;
     width: 100%;
     line-height: 60px;
-    background-color: #f5f5f5;
+    background-color: white;
 }
 
 .footer-links li {
@@ -18,13 +18,12 @@ ul {
 	padding-bottom: 0;
 	padding-left: 0;
 	margin-left: 0;
-    margin-top: 0;
+  margin-top: 0;
 }
 
 html {
   position: relative;
   min-height: 100%;
-  padding-bottom: 419px;
 }
 body {
   /* Margin bottom by footer height */

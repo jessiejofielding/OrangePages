@@ -3,7 +3,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     CAS_SERVER = "https://fed.princeton.edu"
-    CAS_AFTER_LOGIN = 'secure'
+    CAS_AFTER_LOGIN = 'general.secure'
     CAS_LOGOUT_ROUTE = '/cas/logout'
     CAS_VALIDATE_ROUTE = '/cas/validate'
     CAS_LOGIN_ROUTE = '/cas/login'

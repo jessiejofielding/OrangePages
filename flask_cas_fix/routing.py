@@ -104,7 +104,6 @@ def validate(ticket):
         current_app.config['CAS_VALIDATE_ROUTE'],
         flask.url_for('.login', origin=flask.session.get('CAS_AFTER_LOGIN_SESSION_URL'), _external=True),
         ticket)
-    print("validation url", cas_validate_url)
     current_app.logger.debug("Making GET request to {0}".format(
         cas_validate_url))
 

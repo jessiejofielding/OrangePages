@@ -1,24 +1,38 @@
 .make-post {
-	max-width: 80%;
-
+	background-color: lightgrey;
+	max-width: 95%;
 	margin-top: 10px;
 }
 
+body { 
+    padding-top: 65px; 
+}
+
 .post {
-	max-width: 80%;
 	margin-top: 20px;
 }
 
-.user {
-	max-width: 80%;
+.curr-user {
+	position: fixed;
+	background-color: #FEB98B;
+	max-width: 95%;
+	margin-top: 10px;
+}
 
+.suggestions {
+    position: fixed;
+	background-color: #FEB98B;
+	max-width: 95%;
+	margin-top: 10px;
+}
+
+.user {
 	margin-top: 20px;
 }
 
 .num-students {
 	margin: auto;
 	max-width: 80%;
-
 	padding-top: 10px;
 	padding-bottom: 10px;
 	margin-top: 20px;

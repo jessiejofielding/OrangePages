@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-<body style="background-color:#333333;">
+<body>
     <head>
         <title>Orange Pages</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -16,8 +16,12 @@
 
 {% include 'navbar.html' %}
 
+<div class="row">
+
+<div class="col-sm-8 d-flex justify-content-center">
 <!-- Create a post -->
-<div class="make-post container">
+<div class="make-post container rounded">
+    <a class="toggler" data-toggle="collapse" data-target="#toggleDemo">
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
@@ -37,6 +41,7 @@
                                 <div class="py-4"></div>
                             </div>
                         </div>
+                        <div id="toggleDemo" class="collapse">
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary">share</button>
@@ -54,7 +59,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </a>
+    </div>
+
+<!-- TODO: if no posts, display a message -->
+{% if not posts: %}
+{% endif %}
 
 <!-- View posts -->
 {% for post in posts: %}
@@ -63,15 +74,9 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
-                                {% if post.creator._pic is none: %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                {% else: %}
                                 <div class="mr-2">
                                     <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png' alt="failed to load"> 
                                 </div>
-                                {% endif %}
                                 <div class="ml-2">
                                     <div class="h5 m-0"> {{post.creator.firstname}} {{post.creator.lastname}}</div>
                                 </div>
@@ -107,6 +112,12 @@
                 </div>
 </div>
 {% endfor %}
+</div>
+
+<!-- User panel and suggested friends -->
+<div class="col-sm-4">
+</div>
+
 
 {% include 'footer.html' %}
 

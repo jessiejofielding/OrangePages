@@ -20,4 +20,3 @@ def feed():
     posts = user.get_feed()
     return render_template('index.html', posts=posts, user=user)
 
-

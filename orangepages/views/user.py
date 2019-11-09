@@ -10,7 +10,7 @@ page = Blueprint('user', __name__)
 
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
-@login_required
+#@login_required
 def view_profile(lookup_id):
     user = User.query.get(lookup_id)
     return render_template('profile.html', user=user)

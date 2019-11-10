@@ -1,25 +1,58 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
+from orangepages.models.models import db, User, Group, Post, Comment
+from orangepages.views.util import cur_user, cur_uid, render
 # from flask_login import current_user, login_required
 
 
 page = Blueprint('post', __name__)
 
-
-@page.route('/post/<int:post_id>', methods=['GET'])
-def feed_post(post_id):
-    # # TODO:
-    return
-
-@page.route('/create-post', methods=['POST'])
+@page.route('/create-post', methods=['POST', 'GET'])
 def create_post():
-    # # TODO:
-    return
+    if request.method=='GET':
+        return render('post_create.html')
 
-@page.route('/post/<int:post_id>/comment', methods=['POST'])
-def comment(post_id):
-    # # TODO:
-    return
+    user = cur_user()
+    content = request.form.get('content')
+
+    # group with everyone in it
+    public = Group.query.get(1)
+
+    post = Post(content, user, [public])
+    db.session.add(post)
+    db.session.commit()
+
+    return render("post_created.html")
+
+@page.route('/post/<int:postid>', methods=['GET'])
+def view_post(postid):
+    post = Post.query.get(postid)
+    comments = post.get_comments()
+    return render("post.html", post=post, comments=comments)
+
+@page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
+def comment(postid):
+    post = Post.query.get(postid)
+
+    if request.method=='GET':
+        return render("post_comment.html", post=post)
+    else:
+        user = cur_user()
+        content = request.form.get('content')
+
+        comment = Comment(postid, content, cur_uid())
+        db.session.add(comment)
+        db.session.commit()
+
+        return render('message.html',
+            title='Success',
+            message='You have successfully added ur comment. yay. congrats. now go eat a popsickle')
+
+# @page.route('/post/<int:post_id>', methods=['GET'])
+# def feed_post(post_id):
+#     # # TODO:
+#     return
+
 
 @page.route('/post/<int:post_id>/like', methods=['POST'])
 def like(post_id):

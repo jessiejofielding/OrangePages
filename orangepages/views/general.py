@@ -25,7 +25,7 @@ def login():
 
 
 @page.route('/logout')
-# not sure about this 
+# not sure about this
 def logout_route():
     return logout() # (cas logout)
 
@@ -35,4 +35,3 @@ def logout_route():
 def feed():
     posts = cur_user().get_feed()
     return render('feed.html', posts=posts)
-

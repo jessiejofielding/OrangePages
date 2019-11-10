@@ -34,6 +34,9 @@ class User(db.Model):
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
         self.update_info(firstname, lastname, email)
+        # every user is a member of the group public
+        public = Group.query.get(1)
+        public.add_member(self)
 
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
@@ -197,6 +200,9 @@ class Post(db.Model):
 
     def unlike(self, unliker):
         self.likes.remove(unliker)
+
+    def __repr__(self):
+        return "Post %s by %s" % (self.content, self.creator)
 
     def __init__(self, content, creator, groups):
         self.content = content

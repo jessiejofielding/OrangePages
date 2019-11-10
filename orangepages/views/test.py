@@ -3,11 +3,31 @@
 from flask import request, make_response, url_for, redirect
 from flask import Blueprint, render_template
 
-from orangepages.models.models import db, User
+from orangepages.models.models import db, User, Group, Post
 from orangepages.views.util import cur_user, cur_uid, set_uid, render
 
-page = Blueprint('test', __name__, 
+page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
+
+
+@page.route('/create-post', methods=['POST', 'GET'])
+def create_post():
+    if request.method=='GET':
+        return render('post_create.html')
+
+    user = cur_user()
+    content = request.form.get('content')
+    print("user:", user, "| content:", content)
+    
+    # group with everyone in it
+    public = Group.query.get(1)
+
+    post = Post(content, user, [public])
+    db.session.add(post)
+    db.session.commit()
+    print("commitr")
+    return render("post_created.html")
+
 
 #-----------------------------------------------------------------------
 # search.py
@@ -58,7 +78,7 @@ def login():
 
 @page.route('/logout')
 def logout():
-    response = make_response(render('message.html', 
+    response = make_response(render('message.html',
         title='Logged out',
         message='You have been successfully logged out.'))
     return set_uid(response, None)
@@ -67,6 +87,8 @@ def logout():
 @page.route('/feed', methods=['GET'])
 def feed():
     posts = cur_user().get_feed()
+    for p in posts:
+        print(p)
     return render('feed.html', posts=posts)
 
 
@@ -82,7 +104,7 @@ def view_profile(lookup_id):
 @page.route('/create-user', methods=['GET', 'POST'])
 def create_user():
 
-    if request.method=='GET': 
+    if request.method=='GET':
         return render('profile_create.html')
 
 
@@ -106,7 +128,7 @@ def create_user():
     db.session.add(user)
     db.session.commit()
 
-    return render('message.html', 
+    return render('message.html',
         title='Success',
         message='You have successfully registered!')
 
@@ -114,10 +136,10 @@ def create_user():
 @page.route('/edit-user', methods=['GET', 'POST'])
 def edit_user():
 
-    if request.method=='GET': 
+    if request.method=='GET':
         return render('profile_edit.html')
 
-    # Get form fields 
+    # Get form fields
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
     email = request.form.get('email')

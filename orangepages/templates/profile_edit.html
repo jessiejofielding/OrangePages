@@ -1,0 +1,73 @@
+
+<h1> edit user </h1>
+
+<h3> theres prob a better way to make the form than this </h3>
+
+<form action="edit-user" method="post">
+         <table>
+            <tr>
+               <td>First name: </td>
+               <td>
+                  <input type="text" name="firstname" value="{{user.firstname}}" >
+               </td>
+            </tr>
+            <tr>
+               <td>Last name: </td>
+               <td>
+                  <input type="text" name="lastname" value="{{user.lastname}}">
+               </td>
+            </tr>
+            <tr>
+               <td>email: </td>
+               <td>
+                  <input type="text" name="email" value="{{user.email}}">
+               </td>
+            </tr>
+            <tr>
+               <td>hometown: </td>
+               <td>
+                  <input type="text" name="hometown" value="{{user.hometown}}">
+               </td>
+            </tr>
+            <tr>
+               <td>state: </td>
+               <td>
+                  <input type="text" name="state" value="{{user.state}}">
+               </td>
+            </tr>
+            <tr>
+               <td>country: </td>
+               <td>
+                  <input type="text" name="country" value="{{user.country}}" >
+               </td>
+            </tr>
+            <tr>
+               <td>class year: </td>
+               <td>
+                  <input type="text" name="year" value="{{user.year}}">
+               </td>
+            </tr>
+            <tr>
+               <td>major: </td>
+               <td>
+                  <input type="text" name="major" value="{{user.major}}">
+               </td>
+            </tr>
+            <tr>
+               <td>room: </td>
+               <td>
+                  <input type="text" name="room" value="{{user.room}}">
+               </td>
+            </tr>
+            <tr>
+               <td>building: </td>
+               <td>
+                  <input type="text" name="building" value="{{user.building}}">
+               </td>
+            </tr>
+            <tr>
+               <td></td>
+               <td><input type="submit" value="Submit"></td>
+            </tr>
+         </table>
+      </form>

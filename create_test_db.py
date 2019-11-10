@@ -29,13 +29,15 @@ john = User('jexample', 'John', 'Example', 'jexample@princeton.edu')
 elise = User('ccolter', 'Elise', 'Colter', 'ccolter@princeton.edu')
 jessie = User('jjf4', 'Jessica', 'Fielding', 'jjf4@princeton.edu')
 julie = User('jkallini', 'Julie', 'Kallini', 'jkallini@princeton.edu')
-jamie = User('jamieguo', 'Jamie', 'Guo', 'jamieguo@princeton.edu')
+# jamie = User('jamieguo', 'Jamie', 'Guo', 'jamieguo@princeton.edu')
 zexin = User('zkoh', 'Ze-Xin', 'Koh', 'zkoh@princeton.edu')
 
 batman = User('bmcman', 'Bat', 'McMan', 'bmcman@princeton.edu')
 dan = User('dmiller', 'Dan', 'Miller', 'dmiller@princeton.edu')
 
+# users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
 users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
+
 
 cos333 = Group('COS333', None, [sally])
 the_clique = Group('Clique', None, [sally])

@@ -1,22 +1,36 @@
-from flask import request, make_response
-from flask import Blueprint, render_template
+from flask import Blueprint
+from flask_cas_fix import login, logout, login_required
 from orangepages.models.models import User
-from orangepages import cas
-from flask_cas_fix import login
-from flask_cas_fix import logout
-from flask_cas_fix import login_required
-# from flask_login import current_user, login_required
+from orangepages.views.util import cur_user, check_newuser, render
 
 
 page = Blueprint('general', __name__)
 
 
-@page.route('/', methods=['GET'])
+
+@page.route('/')
+def home():
+    if cur_user() is None:
+        return render('index.html')
+    return redirect('feed')
+
+
+@page.route('/login')
+@login_required
+def login():
+    check_newuser()
+    return redirect('feed')
+
+
+@page.route('/logout')
+# not sure about this 
+def logout_route():
+    logout() # (cas logout)
+
+
 @page.route('/feed', methods=['GET'])
-@login_required # TODO: make other pages also require login?
+@login_required
 def feed():
-    netid = cas.username[0]  # TODO: save current user as part of the session maybe? or as cookies bc they seem simpler tbd
-    user = User.query.get(netid)
-    posts = user.get_feed()
-    return render_template('index.html', posts=posts, user=user)
+    posts = cur_user().get_feed()
+    return render('index.html', posts=posts)
 

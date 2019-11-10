@@ -58,7 +58,9 @@ def login():
 
 @page.route('/logout')
 def logout():
-    response = make_response(render('logout.html'))
+    response = make_response(render('message.html', 
+        title='Logged out',
+        message='You have been successfully logged out.'))
     return set_uid(response, None)
 
 
@@ -104,7 +106,9 @@ def create_user():
     db.session.add(user)
     db.session.commit()
 
-    return render('profile_created.html')
+    return render('message.html', 
+        title='Success',
+        message='You have successfully registered!')
 
 
 @page.route('/edit-user', methods=['GET', 'POST'])
@@ -130,4 +134,6 @@ def edit_user():
         hometown,state,country,year,major,room,building)
     db.session.commit()
 
-    return render('profile_edited.html')
+    return render('message.html',
+        title='Success',
+        message='You have successfully edited your profile!')

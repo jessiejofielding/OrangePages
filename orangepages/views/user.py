@@ -1,4 +1,4 @@
-from flask import request, make_response
+from flask import request, make_response, redirect
 from flask import Blueprint, render_template
 from orangepages.models.models import User
 from flask_cas_fix import login_required

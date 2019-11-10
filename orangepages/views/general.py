@@ -1,3 +1,4 @@
+from flask import redirect
 from flask import Blueprint
 from flask_cas_fix import login, logout, login_required
 from orangepages.models.models import User

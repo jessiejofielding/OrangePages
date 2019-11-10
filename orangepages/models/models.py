@@ -163,6 +163,7 @@ class Comment(db.Model):
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     postid = db.Column(db.Integer, db.ForeignKey('post.pid'))
     content = db.Column(db.String(1000))
+    #creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -173,6 +174,9 @@ class Comment(db.Model):
         self.postid = postid
         self.content = content
         self.creator = creator
+
+    def __repr__(self):
+        return "Comment %s by %s" % (self.content, self.creator)
 
 
 class Post(db.Model):
@@ -200,6 +204,12 @@ class Post(db.Model):
 
     def unlike(self, unliker):
         self.likes.remove(unliker)
+
+    def get_comments(self):
+        c = db.session.query(Comment)
+        c = c.filter(Comment.postid == self.pid)
+        comments = c.order_by(desc(Comment.date)).all()
+        return comments
 
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)

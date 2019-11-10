@@ -3,12 +3,51 @@
 from flask import request, make_response, url_for, redirect
 from flask import Blueprint, render_template
 
-from orangepages.models.models import db, User, Group, Post
+from orangepages.models.models import db, User, Group, Post, Comment
 from orangepages.views.util import cur_user, cur_uid, set_uid, render
 
 page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
 
+@page.route('/post/<int:postid>', methods=['GET', 'POST'])
+def view_post(postid):
+    if request.method=='POST':
+        user = cur_user()
+        content = request.form.get('content')
+        comment = Comment(postid, content, user)
+        db.session.add(comment)
+        db.session.commit()
+
+        post = Post.query.get(postid)
+        print("TYPE:", type(post))
+        comments = post.get_comments()
+        return render("post.html", post=post, comments=comments)
+        # str = '/post/' + postid
+    else:
+        post = Post.query.get(postid)
+        print("TYPE:", type(post))
+        comments = post.get_comments()
+        return render("post.html", post=post, comments=comments)
+
+@page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
+def comment(postid):
+    post = Post.query.get(postid)
+
+    if request.method=='GET':
+        return render("post_comment.html", post=post)
+    else:
+        user = cur_user()
+        content = request.form.get('content')
+
+        #print("postid %d user %s content %s" % (postid, content, cur_uid()))
+
+        comment = Comment(postid, content, cur_uid())
+        db.session.add(comment)
+        db.session.commit()
+
+        return render('message.html',
+            title='Success',
+            message='You have successfully added ur comment. yay. congrats. now go eat a popsickle')
 
 @page.route('/create-post', methods=['POST', 'GET'])
 def create_post():
@@ -18,7 +57,7 @@ def create_post():
     user = cur_user()
     content = request.form.get('content')
     print("user:", user, "| content:", content)
-    
+
     # group with everyone in it
     public = Group.query.get(1)
 

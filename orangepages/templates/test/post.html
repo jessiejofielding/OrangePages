@@ -1,0 +1,15 @@
+<h1> u r viewing post {{post.pid}}</h1>
+
+<h3> welcome, {{user.firstname}}! </h3>
+
+<h3> post content: {{post.content}} by: {{post.creator.firstname}} {{post.creator.lastname}}</h3>
+
+{% for comment in comments: %}
+  <b> comment:</b> {{comment.content}} by <i> {{comment.creator}} </i><br>
+{% endfor %}
+
+<br>
+{% include 'post_comment.html' %}
+
+<a href='feed'> view your feed </a> <br>
+<a href='profile/{{user.uid}}'> view your profile </a>

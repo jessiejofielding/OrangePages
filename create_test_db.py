@@ -16,6 +16,10 @@ db.drop_all()
 db.create_all()
 db.session.commit()
 
+public = Group('Public', None, [])
+db.session.add(public)
+db.session.commit()
+
 # Make some students, some groups, some posts
 sally = User('sstudent', 'Sally', 'Student', 'sstudent@princeton.edu')
 sally2 = User('ssam', 'Sally', 'Sam', 'ssam@princeton.edu')
@@ -49,6 +53,7 @@ post1.add_like(john)
 # cos333.remove_member(sally)
 
 for user in users:
+    public.add_member(user)
     db.session.add(user)
 
 
@@ -119,6 +124,18 @@ for like in post1.likes:
 john._pic = 'invtn6zt9ipi1fbtighn'
 sally._pic = 'invtn6zt9ipi1fbtighn'
 db.session.commit()
+jessie = User.query.get('jjf4')
+public = Group('Public', None, [jessie])
+content = "UGH DEBUGGIN"
+anotherpost = Post(content, jessie, [public])
+db.session.add(public)
+db.session.add(anotherpost)
+db.session.commit()
+
+user = User.query.get('jjf4')
+feed = user.get_feed()
+for post in feed:
+    print(post.content)
 # picurl, _ = cloudinary.utils.cloudinary_url(john._pic, width = 100, height = 150, crop = "fill")
 # print(picurl)
 

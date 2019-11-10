@@ -14,7 +14,7 @@ page = Blueprint('user', __name__)
 @login_required
 def view_profile(lookup_id):
     if cur_user() is None:
-        return redirect('create-user')
+        return redirect('/create-user')
     user = User.query.get(lookup_id) 
     return render_template('profile.html', user=user)
 
@@ -63,7 +63,7 @@ def create_user():
 @login_required
 def edit_user():
     if cur_user() is None:
-        return redirect('create-user')
+        return redirect('/create-user')
 
     if request.method=='GET': 
         return render('profile_edit.html')

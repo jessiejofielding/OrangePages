@@ -20,7 +20,7 @@ def home():
 @login_required
 def login():
     if cur_user() is None:
-        return redirect('create-user')
+        return redirect('/create-user')
     return redirect('/feed')
 
 

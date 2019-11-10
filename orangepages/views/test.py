@@ -9,25 +9,11 @@ from orangepages.views.util import cur_user, cur_uid, set_uid, render
 page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
 
-@page.route('/post/<int:postid>', methods=['GET', 'POST'])
+@page.route('/post/<int:postid>', methods=['GET'])
 def view_post(postid):
-    if request.method=='POST':
-        user = cur_user()
-        content = request.form.get('content')
-        comment = Comment(postid, content, user)
-        db.session.add(comment)
-        db.session.commit()
-
-        post = Post.query.get(postid)
-        print("TYPE:", type(post))
-        comments = post.get_comments()
-        return render("post.html", post=post, comments=comments)
-        # str = '/post/' + postid
-    else:
-        post = Post.query.get(postid)
-        print("TYPE:", type(post))
-        comments = post.get_comments()
-        return render("post.html", post=post, comments=comments)
+    post = Post.query.get(postid)
+    comments = post.get_comments()
+    return render("post.html", post=post, comments=comments)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 def comment(postid):
@@ -38,8 +24,6 @@ def comment(postid):
     else:
         user = cur_user()
         content = request.form.get('content')
-
-        #print("postid %d user %s content %s" % (postid, content, cur_uid()))
 
         comment = Comment(postid, content, cur_uid())
         db.session.add(comment)
@@ -56,7 +40,6 @@ def create_post():
 
     user = cur_user()
     content = request.form.get('content')
-    print("user:", user, "| content:", content)
 
     # group with everyone in it
     public = Group.query.get(1)
@@ -64,7 +47,7 @@ def create_post():
     post = Post(content, user, [public])
     db.session.add(post)
     db.session.commit()
-    print("commitr")
+
     return render("post_created.html")
 
 
@@ -126,9 +109,10 @@ def logout():
 @page.route('/feed', methods=['GET'])
 def feed():
     posts = cur_user().get_feed()
-    for p in posts:
-        print(p)
-    return render('feed.html', posts=posts)
+    # for p in posts:
+    #     print(p)
+    #return render('all_posts.html', posts=posts)
+    return render('test/feed.html', posts=posts)
 
 
 #-----------------------------------------------------------------------

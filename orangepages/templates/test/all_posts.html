@@ -1,0 +1,5 @@
+{% for post in posts: %}
+  <b>{{post.content}}</b><br>
+  by {{post.creator.firstname}} {{post.creator.lastname}}<br>
+  <br>
+{% endfor %}

@@ -11,24 +11,24 @@ page = Blueprint('user', __name__)
 
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
-@login_required
+#@login_required
 def view_profile(lookup_id):
     if cur_user() is None:
         return redirect('/create-user')
-    user = User.query.get(lookup_id) 
+    user = User.query.get(lookup_id)
     return render_template('profile.html', user=user)
 
 
 
 
 @page.route('/create-user', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def create_user():
 
     if cur_user() is not None:
         return redirect('/edit-user')
 
-    if request.method=='GET': 
+    if request.method=='GET':
         return render('profile_create.html')
 
 
@@ -52,7 +52,7 @@ def create_user():
     db.session.add(user)
     db.session.commit()
 
-    return render('message.html', 
+    return render('message.html',
         title='Success',
         message='You have successfully registered!')
 
@@ -60,15 +60,15 @@ def create_user():
 
 
 @page.route('/edit-user', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def edit_user():
     if cur_user() is None:
         return redirect('/create-user')
 
-    if request.method=='GET': 
+    if request.method=='GET':
         return render('profile_edit.html')
 
-    # Get form fields 
+    # Get form fields
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
     email = request.form.get('email')
@@ -88,5 +88,3 @@ def edit_user():
     return render('message.html',
         title='Success',
         message='You have successfully edited your profile!')
-
-

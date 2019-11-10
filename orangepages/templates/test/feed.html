@@ -31,6 +31,9 @@
 <br>
 
 <p style="color:white"> THIS IS THE BACKEND TESTING VERSION OF HOME FEED </p>
+<a href='create-post'> write a post! </a><br>
+<a href='post/1'> view post 1 </a><br>
+<a href='post/2'> view post 2 </a><br>
 <a href='profile/{{user.uid}}'> view your own profile </a><br>
 <a href="logout"> log out </a>
 
@@ -41,10 +44,6 @@
 
 
 <!-- end garbage -->
-
-
-
-
 
 
 
@@ -62,7 +61,7 @@
                                 </div>
                                 {% else: %}
                                 <div class="mr-2">
-                                    <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png' alt="failed to load"> 
+                                    <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png' alt="failed to load">
                                 </div>
                                 {% endif %}
                                 <div class="ml-2">

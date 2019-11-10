@@ -40,7 +40,7 @@ def cur_uid():
 # If current user is new, redirect them to user creation page.
 def check_newuser():
     if cur_user() is None:
-        return redirect('create-user')
+        return redirect('/create-user')
 
 
 

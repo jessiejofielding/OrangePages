@@ -13,20 +13,20 @@ page = Blueprint('general', __name__)
 def home():
     if cur_user() is None:
         return render('index.html')
-    return redirect('feed')
+    return redirect('/feed')
 
 
 @page.route('/login')
 @login_required
 def login():
     check_newuser()
-    return redirect('feed')
+    return redirect('/feed')
 
 
 @page.route('/logout')
 # not sure about this 
 def logout_route():
-    logout() # (cas logout)
+    return logout() # (cas logout)
 
 
 @page.route('/feed', methods=['GET'])

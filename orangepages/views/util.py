@@ -37,10 +37,6 @@ def cur_uid():
     return netid[0]
 
 
-# If current user is new, redirect them to user creation page.
-def check_newuser():
-    if cur_user() is None:
-        return redirect('/create-user')
 
 
 

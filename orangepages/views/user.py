@@ -3,7 +3,7 @@ from flask import Blueprint, render_template
 from orangepages.models.models import User
 from flask_cas_fix import login_required
 
-from orangepages.views.util import cur_user, cur_uid, check_newuser, render
+from orangepages.views.util import cur_user, cur_uid, render
 
 
 
@@ -13,7 +13,8 @@ page = Blueprint('user', __name__)
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 @login_required
 def view_profile(lookup_id):
-    check_newuser()
+    if cur_user() is None:
+        return redirect('create-user')
     user = User.query.get(lookup_id) 
     return render_template('profile.html', user=user)
 
@@ -61,7 +62,8 @@ def create_user():
 @page.route('/edit-user', methods=['GET', 'POST'])
 @login_required
 def edit_user():
-    check_newuser()
+    if cur_user() is None:
+        return redirect('create-user')
 
     if request.method=='GET': 
         return render('profile_edit.html')

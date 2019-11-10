@@ -34,5 +34,5 @@ def logout_route():
 @login_required
 def feed():
     posts = cur_user().get_feed()
-    return render('index.html', posts=posts)
+    return render('feed.html', posts=posts)
 

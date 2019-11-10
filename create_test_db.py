@@ -32,7 +32,7 @@ batman = User('bmcman', 'Bat', 'McMan', 'bmcman@princeton.edu')
 dan = User('dmiller', 'Dan', 'Miller', 'dmiller@princeton.edu')
 
 # users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
-users = [sally, sally2, sally3, john, elise, jessie, julie, zexin, batman, dan]
+users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
 
 
 cos333 = Group('COS333', None, [sally])

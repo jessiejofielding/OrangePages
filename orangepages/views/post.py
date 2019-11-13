@@ -1,4 +1,4 @@
-from flask import request, make_response
+from flask import request, redirect, make_response
 from flask import Blueprint, render_template
 from orangepages.models.models import db, User, Group, Post, Comment
 from orangepages.views.util import cur_user, cur_uid, render
@@ -22,7 +22,7 @@ def create_post():
     db.session.add(post)
     db.session.commit()
 
-    return render("post_created.html")
+    return redirect("/feed")
 
 @page.route('/post/<int:postid>', methods=['GET'])
 def view_post(postid):

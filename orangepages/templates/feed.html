@@ -16,17 +16,21 @@
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
 
         <script type="text/javascript">
-            function myfunction(timeStamp) {
+            function getTimeAgo(timeString) {
+                var timeStamp = new Date(timeString);
                 var now = new Date(),
                     secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
                 if (secondsPast < 60) {
                     document.write(parseInt(secondsPast) + 's');
+                    return;
                 }
                 if (secondsPast < 3600) {
                     document.write(parseInt(secondsPast / 60) + 'm');
+                    return;
                 }
                 if (secondsPast <= 86400) {
                     document.write(parseInt(secondsPast / 3600) + 'h');
+                    return;
                 }
                 if (secondsPast > 86400) {
                     day = timeStamp.getDate();
@@ -127,7 +131,7 @@
             <div class="card-body">
                 <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>
                     <script type="text/javascript">
-                        myfunction(new Date("{{ post.date }}"));
+                        getTimeAgo("{{ post.date }}");
                     </script>
                 </div>
                 <p class="card-text">

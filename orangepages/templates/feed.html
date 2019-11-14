@@ -14,6 +14,29 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+
+        <script type="text/javascript">
+            function myfunction(timeStamp) {
+                var now = new Date(),
+                    secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
+                if (secondsPast < 60) {
+                    document.write(parseInt(secondsPast) + 's');
+                }
+                if (secondsPast < 3600) {
+                    document.write(parseInt(secondsPast / 60) + 'm');
+                }
+                if (secondsPast <= 86400) {
+                    document.write(parseInt(secondsPast / 3600) + 'h');
+                }
+                if (secondsPast > 86400) {
+                    day = timeStamp.getDate();
+                    month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+                    year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
+                    document.write(day + " " + month + year);
+                }
+            }
+        </script>
+
     </head>
 
     {% include 'navbar.html' %}
@@ -102,8 +125,11 @@
 
             </div>
             <div class="card-body">
-                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
-
+                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>
+                    <script type="text/javascript">
+                        myfunction(new Date("{{ post.date }}"));
+                    </script>
+                </div>
                 <p class="card-text">
                     {{post.content}}
                 </p>
@@ -129,6 +155,7 @@
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
+
     </body>
 
 </html>

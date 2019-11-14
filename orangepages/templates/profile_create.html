@@ -1,73 +1,46 @@
+<link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
 
-<h1> make a new user </h1>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
 
-<h3> theres prob a better way to make the form than this </h3>
+<!-- MultiStep Form -->
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form id="msform" action="create-user" method="post">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Basic Info</li>
+                <li>Extra Details</li>
+                <li>Extra Extra Details</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <h2 class="fs-title">Basic Info</h2>
+                <input type="text" name="firstname" placeholder="First Name"/>
+                <input type="text" name="lastname" placeholder="Last Name"/>
+                <input type="text" name="email" placeholder="Princeton Email"/>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">Extra Details</h2>
+                <h3 class="fs-subtitle">Where do you live</h3>
+                <input type="text" name="hometown" placeholder="Hometown"/>
+                <input type="text" name="state" placeholder="State"/>
+                <input type="text" name="country" placeholder="Country"/>
+                <input type="text" name="room" placeholder="Dorm #"/>
+                <input type="text" name="building" placeholder="Building">
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">Extra Extra Extra</h2>
+                <input type="text" name="major" placeholder="Major">
+                <input type="text" name="year" placeholder="Class Year">
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
 
-<form action="create-user" method="post">
-         <table>
-            <tr>
-               <td>First name: </td>
-               <td>
-                  <input type="text" name="firstname">
-               </td>
-            </tr>
-            <tr>
-               <td>Last name: </td>
-               <td>
-                  <input type="text" name="lastname">
-               </td>
-            </tr>
-            <tr>
-               <td>email: </td>
-               <td>
-                  <input type="text" name="email">
-               </td>
-            </tr>
-            <tr>
-               <td>hometown: </td>
-               <td>
-                  <input type="text" name="hometown">
-               </td>
-            </tr>
-            <tr>
-               <td>state: </td>
-               <td>
-                  <input type="text" name="state">
-               </td>
-            </tr>
-            <tr>
-               <td>country: </td>
-               <td>
-                  <input type="text" name="country">
-               </td>
-            </tr>
-            <tr>
-               <td>class year: </td>
-               <td>
-                  <input type="text" name="year">
-               </td>
-            </tr>
-            <tr>
-               <td>major: </td>
-               <td>
-                  <input type="text" name="major">
-               </td>
-            </tr>
-            <tr>
-               <td>room: </td>
-               <td>
-                  <input type="text" name="room">
-               </td>
-            </tr>
-            <tr>
-               <td>building: </td>
-               <td>
-                  <input type="text" name="building">
-               </td>
-            </tr>
-            <tr>
-               <td></td>
-               <td><input type="submit" value="Submit"></td>
-            </tr>
-         </table>
-      </form>
+<script src="/static/js/create-profile.js"></script>

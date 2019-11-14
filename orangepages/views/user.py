@@ -2,6 +2,7 @@ from flask import request, make_response, redirect
 from flask import Blueprint, render_template
 from orangepages.models.models import db, User
 from flask_cas_fix import login_required
+from sqlalchemy import exc
 
 from orangepages.views.util import cur_user, cur_uid, render
 
@@ -49,8 +50,12 @@ def create_user():
     user = User(netid, firstname, lastname, email)
     user.update_optional_info(firstname,lastname,email,
         hometown,state,country,year,major,room,building)
-    db.session.add(user)
-    db.session.commit()
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+    except exc.IntegrityError as e:
+        db.session().rollback()
 
     return render('message.html',
         title='Success',

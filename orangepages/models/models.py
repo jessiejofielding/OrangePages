@@ -205,6 +205,10 @@ class Post(db.Model):
     def unlike(self, unliker):
         self.likes.remove(unliker)
 
+     def get_likers(self):
+         print(self.likes)
+         return self.likes
+
     def get_comments(self):
         c = db.session.query(Comment)
         c = c.filter(Comment.postid == self.pid)

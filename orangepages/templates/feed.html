@@ -147,7 +147,15 @@
                 </p>
             </div>
             <div class="card-footer">
-                <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
+                <a href="#" class="card-link toggle-text" data-toggle="collapse">
+                    <span>
+                        <i class="fa fa-heart-o"></i>
+                    </span>
+                    <span class="hidden">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    <span>Like</span><span class="hidden">Unlike</span>
+                </a>
                 <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i> Comment</a>
                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
             </div>
@@ -167,7 +175,12 @@
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
-
+        <script>
+            $('.hidden').removeClass('hidden').hide();
+            $('.toggle-text').click(function () {
+                $(this).find('span').each(function () { $(this).toggle(); });
+            });
+        </script>
     </body>
 
 </html>

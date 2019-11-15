@@ -48,7 +48,7 @@
                 }
             }
         </script>
-        
+
     </head>
 
     {% include 'navbar.html' %}
@@ -100,6 +100,7 @@
                     </script>
                 </div>
                 <p class="card-text">
+                    num likes: {{ num_likers }}<br>
                     {{post.content}}
                 </p>
             </div>
@@ -124,7 +125,7 @@
                                 <textarea name="content" class="form-control" id="message" rows="3"
                                     placeholder="write a comment"></textarea>
                             </div>
-    
+
                         </div>
                         <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                             <div class="form-group">

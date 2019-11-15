@@ -29,7 +29,8 @@ def view_post(postid):
     post = Post.query.get(postid)
     comments = post.get_comments()
     num_likers = len(post.get_likers())
-    return render("post.html", post=post, comments=comments, num_likers=num_likers)
+
+    return render("post.html", post=post, comments=comments, num_likers = num_likers)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 def comment(postid):

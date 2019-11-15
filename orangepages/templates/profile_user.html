@@ -23,7 +23,7 @@
 
     <script>
 $(document).ready(function(){
-  $('.js-edit, .js-save').on('click', function(){
+  $('.js-edit').on('click', function(){
     var $form = $(this).closest('form');
     $form.toggleClass('is-readonly is-editing');
     var isReadonly  = $form.hasClass('is-readonly');

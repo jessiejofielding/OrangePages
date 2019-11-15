@@ -89,11 +89,6 @@ def edit_user():
         room = request.form.get('room')
         building = request.form.get('building')
 
-        print("HERE")
-        print(request.form.get('email'))
-        for i in request.form:
-            print(i)
-
         # Update user
         cur_user().update_optional_info(firstname,lastname,email,
             hometown,state,country,year,major,room,building)

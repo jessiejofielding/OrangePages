@@ -14,10 +14,17 @@ page = Blueprint('user', __name__)
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 #@login_required
 def view_profile(lookup_id):
+
     if cur_user() is None:
         return redirect('/create-user')
+
     lookup = User.query.get(lookup_id)
-    return render('profile.html', lookup=lookup)
+    template = 'profile.html'
+
+    if cur_uid() == lookup_id:
+        template = 'profile_user.html'
+
+    return render(template, lookup=lookup)
 
 
 

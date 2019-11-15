@@ -6,6 +6,7 @@
 
 body { 
     padding-top: 65px; 
+    background-image: linear-gradient(45deg, orange, white);
 }
 
 .post {

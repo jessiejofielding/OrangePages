@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<body style="background-color:#333333;">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<body>
 
     <head>
         <title>{{lookup.firstname}} {{lookup.lastname}} - Orange Pages</title>
@@ -12,11 +14,24 @@
         <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet"/>
-         <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
     </head>
 
     {% include 'navbar.html' %}
+
+    <script>
+$(document).ready(function(){
+  $('.js-edit, .js-save').on('click', function(){
+    var $form = $(this).closest('form');
+    $form.toggleClass('is-readonly is-editing');
+    var isReadonly  = $form.hasClass('is-readonly');
+    $form.find('input,textarea').prop('disabled', isReadonly);
+  });
+});
+    </script>
+
 
     <div class="container">
         <div class="row">
@@ -32,21 +47,32 @@
                         <p class="card-text">{{lookup.uid}}
                             <hr>
                         </p>
-                        <a class="nav-link" href="/edit-user">
+<!--                         <a class="nav-link" href="/edit-user">
                             <i class="fa fa-pencil"></i>
                             <span class="sr-only">(current)</span>
                             edit profile
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card mt-4 mb-4 mr-4">
-                    <div class="card-header">
-                        <h4>Details about {{lookup.firstname}}</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Basic info</h5>
+                <!-- <div class="card mt-4 mb-4 mr-4"> -->
+                        <form id="msform" class="is-readonly" action="create-user" method="post">
+            <fieldset>
+                <h2 class="fs-title">Details About {{lookup.firstname}}</h2>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Email" value="{{lookup.email}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Class Year" value="{{lookup.year}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Major" value="{{lookup.major}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Hometown" value="{{lookup.hometown}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="State" value="{{lookup.state}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Country" value="{{lookup.country}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Room" value="{{lookup.room}}" disabled>
+                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Building" value="{{lookup.building}}" disabled>
+                <button type="button" class="btn btn-default btn-edit js-edit">Edit</button>
+                <button type="button" class="btn btn-default btn-save js-save">Save</button>
+            </fieldset>
+        </form>
+                       <!--  <h5 class="card-title">Basic info</h5>
                         <table class="table table-striped">
                             <tbody>
                                 <tr>
@@ -86,20 +112,14 @@
                                     <td>{{lookup.building}}</td>
                                 </tr>
                             </tbody>
-                        </table>
-                    </div>
-
-                </div>
+                        </table> -->
+                   
+<!-- 
+                </div> -->
             </div>
         </div>
     </div>
 
     {% include 'footer.html' %}
-
-    <body>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-    </body>
 
 </html>

@@ -9,12 +9,34 @@
 
 html {
     height: 100%;
-    background-image: linear-gradient(to right, red , yellow);
+    background-image: linear-gradient(to right, orange , #fdfd96);
 }
 
 body {
     font-family: montserrat, arial, verdana;
     background: transparent;
+}
+
+form {
+  &.is-readonly {
+    .btn-save {
+      display: none;
+    }
+    input,textarea{
+      &[disabled] {
+        cursor: text;
+        background-color: #fff;
+        border-color: transparent;
+        outline-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+  &.is-editing { 
+    .btn-edit{
+      display: none;
+    }
+  }
 }
 
 /*form styles*/

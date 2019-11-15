@@ -14,10 +14,53 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
          <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet"/>
          <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet"/>
+         <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
     </head>
 
     {% include 'navbar.html' %}
 
+    WHAT 
+
+    <!-- MultiStep Form -->
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form id="msform" action="create-user" method="post">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Basic Info</li>
+                <li>Extra Details</li>
+                <li>Extra Extra Details</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <h2 class="fs-title">Basic Info</h2>
+                <input type="text" name="firstname" placeholder="First Name"/>
+                <input type="text" name="lastname" placeholder="Last Name"/>
+                <input type="text" name="email" placeholder="Princeton Email"/>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">Extra Details</h2>
+                <h3 class="fs-subtitle">Where do you live</h3>
+                <input type="text" name="hometown" placeholder="Hometown"/>
+                <input type="text" name="state" placeholder="State"/>
+                <input type="text" name="country" placeholder="Country"/>
+                <input type="text" name="room" placeholder="Dorm #"/>
+                <input type="text" name="building" placeholder="Building">
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">Extra Extra Extra</h2>
+                <input type="text" name="major" placeholder="Major">
+                <input type="text" name="year" placeholder="Class Year">
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!-- 
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-4">
@@ -97,14 +140,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     {% include 'footer.html' %}
 
     <body>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/popper.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
     </body>
 
 </html>

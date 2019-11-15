@@ -44,9 +44,7 @@ def comment(postid):
         db.session.add(comment)
         db.session.commit()
 
-        return render('message.html',
-            title='Success',
-            message='You have successfully added ur comment. yay. congrats. now go eat a popsickle')
+        return redirect('/post/' + str(postid))
 
 # @page.route('/post/<int:post_id>', methods=['GET'])
 # def feed_post(post_id):

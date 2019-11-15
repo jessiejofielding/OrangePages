@@ -18,13 +18,12 @@ def view_profile(lookup_id):
     if cur_user() is None:
         return redirect('/create-user')
 
-    lookup = User.query.get(lookup_id)
-    template = 'profile.html'
-
     if cur_uid() == lookup_id:
-        template = 'profile_user.html'
+        return render('profile_user.html')
 
-    return render(template, lookup=lookup)
+    lookup = User.query.get(lookup_id)
+
+    return render('profile.html', lookup=lookup)
 
 
 
@@ -77,25 +76,30 @@ def edit_user():
     if cur_user() is None:
         return redirect('/create-user')
 
-    if request.method=='GET':
-        return render('profile_edit.html')
+    if request.method=='POST':
+        # Get form fields
+        firstname = cur_user().firstname
+        lastname = cur_user().lastname
+        email = request.form.get('email')
+        hometown = request.form.get('hometown')
+        state = request.form.get('state')
+        country = request.form.get('country')
+        year = request.form.get('year')
+        major = request.form.get('major')
+        room = request.form.get('room')
+        building = request.form.get('building')
 
-    # Get form fields
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    email = request.form.get('email')
-    hometown = request.form.get('hometown')
-    state = request.form.get('state')
-    country = request.form.get('country')
-    year = request.form.get('year')
-    major = request.form.get('major')
-    room = request.form.get('room')
-    building = request.form.get('building')
+        print("HERE")
+        print(request.form.get('email'))
+        for i in request.form:
+            print(i)
 
-    # Update user
-    cur_user().update_optional_info(firstname,lastname,email,
-        hometown,state,country,year,major,room,building)
-    db.session.commit()
+        # Update user
+        cur_user().update_optional_info(firstname,lastname,email,
+            hometown,state,country,year,major,room,building)
+        db.session.commit()
+
+    return redirect('/profile/'+cur_uid())
 
     return render('message.html',
         title='Success',

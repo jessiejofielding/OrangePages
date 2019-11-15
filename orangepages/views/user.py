@@ -16,8 +16,8 @@ page = Blueprint('user', __name__)
 def view_profile(lookup_id):
     if cur_user() is None:
         return redirect('/create-user')
-    user = User.query.get(lookup_id)
-    return render_template('profile.html', user=user)
+    lookup = User.query.get(lookup_id)
+    return render('profile.html', lookup=lookup)
 
 
 

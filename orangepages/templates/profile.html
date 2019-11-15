@@ -4,7 +4,7 @@
 <body style="background-color:#333333;">
 
     <head>
-        <title>{{user.firstname}} {{user.lastname}} - Orange Pages</title>
+        <title>{{lookup.firstname}} {{lookup.lastname}} - Orange Pages</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -26,10 +26,10 @@
                         {%if user._pic is none:%}
                         <i class="fa fa-user fa-5x"></i>
                         {%else:%}
-                        <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{user._pic}}.png' alt="failed to load">
+                        <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{lookup._pic}}.png' alt="failed to load">
                         {%endif%}
-                        <h3 class="card-title">{{user.firstname}} {{user.lastname}}</h3>
-                        <p class="card-text">{{user.uid}}
+                        <h3 class="card-title">{{lookup.firstname}} {{lookup.lastname}}</h3>
+                        <p class="card-text">{{lookup.uid}}
                             <hr>
                         </p>
                         <a class="nav-link" href="#">
@@ -40,7 +40,7 @@
                         <a class="nav-link" href="#">
                             <i class="fa fa-paper-plane"></i>
                             <span class="sr-only">(current)</span>
-                            email {{user.firstname}}
+                            email {{lookup.firstname}}
                         </a>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
             <div class="col">
                 <div class="card mt-4 mb-4 mr-4">
                     <div class="card-header">
-                        <h4>Details about {{user.firstname}}</h4>
+                        <h4>Details about {{lookup.firstname}}</h4>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Basic info</h5>
@@ -56,39 +56,39 @@
                             <tbody>
                                 <tr>
                                     <td>puid:</td>
-                                    <td>{{user.uid}}</td>
+                                    <td>{{lookup.uid}}</td>
                                 </tr>
                                 <tr>
                                     <td>email:</td>
-                                    <td>{{user.email}}</td>
+                                    <td>{{lookup.email}}</td>
                                 </tr>
                                 <tr>
                                     <td>year:</td>
-                                    <td>{{user.year}}</td>
+                                    <td>{{lookup.year}}</td>
                                 </tr>
                                 <tr>
                                     <td>major:</td>
-                                    <td>{{user.major}}</td>
+                                    <td>{{lookup.major}}</td>
                                 </tr>
                                 <tr>
                                     <td>hometown:</td>
-                                    <td>{{user.hometown}}</td>
+                                    <td>{{lookup.hometown}}</td>
                                 </tr>
                                 <tr>
                                     <td>state:</td>
-                                    <td>{{user.state}}</td>
+                                    <td>{{lookup.state}}</td>
                                 </tr>
                                 <tr>
                                     <td>country:</td>
-                                    <td>{{user.country}}</td>
+                                    <td>{{lookup.country}}</td>
                                 </tr>
                                 <tr>
                                     <td>room:</td>
-                                    <td>{{user.room}}</td>
+                                    <td>{{lookup.room}}</td>
                                 </tr>
                                 <tr>
                                     <td>building:</td>
-                                    <td>{{user.building}}</td>
+                                    <td>{{lookup.building}}</td>
                                 </tr>
                             </tbody>
                         </table>

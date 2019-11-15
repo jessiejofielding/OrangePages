@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<body style="background-color:#333333;">
+<body>
 
     <head>
         <title>Orange Pages</title>
@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
 
         <script type="text/javascript">
             function getTimeAgo(timeString) {
@@ -151,26 +152,21 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </form>
 
-        <!-- TODO: if no posts, display a message -->
-        {% if not comments: %}
-        {% endif %}
-    
-        {% for comment in comments: %}
-        <div class="post container">
-            <div class="card gedf-card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="ml-2">
-                                <div class="h5 m-0">{{comment.creator}}</div>
+                    <div class="post-footer"> 
+                <ul class="comments-list">
+                    {% for comment in comments: %}
+                    <li class="comment">
+                        <div class="comment-body">
+                            <div class="comment-heading">
+                                <h4 class="user">{{comment.creator}}</h4>
+                                <h5 class="time">5 minutes ago</h5>
                             </div>
+                            <p>{{comment.content}}</p>
                         </div>
-                        <div>
-                            <div class="dropdown">
+                    </li>
+
+                    <div class="dropdown">
                                 <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-ellipsis-h"></i>
@@ -182,25 +178,17 @@
                                     <a class="dropdown-item" href="#">Report</a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-    
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        {{comment.content}}
-                    </p>
+                    {% endfor %}
+                </ul>
+            </div>
+
                 </div>
             </div>
-        </div>
-        {% endfor %}
-        </div>
-    </div>
-    </div>
-</div>
+        </form>
 
-    {% include 'footer.html' %}
 
+<!--     {% include 'footer.html' %}
+ -->
     <body>
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/popper.min.js"></script>

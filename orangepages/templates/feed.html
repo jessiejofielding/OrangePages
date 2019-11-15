@@ -32,7 +32,11 @@
                     document.write(parseInt(secondsPast / 3600) + 'h');
                     return;
                 }
-                if (secondsPast > 86400) {
+                if (secondsPast <= 604800) {
+                    document.write(parseInt(secondsPast / 86400) + 'd');
+                    return;
+                }
+                if (secondsPast > 604800) {
                     day = timeStamp.getDate();
                     month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
                     year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();

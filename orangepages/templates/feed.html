@@ -116,7 +116,8 @@
                         </div>
                         {% endif %}
                         <div class="ml-2">
-                            <div class="h5 m-0"> {{post.creator.firstname}} {{post.creator.lastname}}</div>
+                            <div class="h5 m-0">
+                             <a href='profile/{{ post.creator.uid }}' class="card-link">{{post.creator.firstname}} {{post.creator.lastname}}</a></div>
                         </div>
                     </div>
                     <div>

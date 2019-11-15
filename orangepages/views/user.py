@@ -12,7 +12,7 @@ page = Blueprint('user', __name__)
 
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
-#@login_required
+@login_required
 def view_profile(lookup_id):
 
     if cur_user() is None:
@@ -30,7 +30,7 @@ def view_profile(lookup_id):
 
 
 @page.route('/create-user', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def create_user():
 
     if cur_user() is not None:
@@ -72,7 +72,7 @@ def create_user():
 
 
 @page.route('/edit-user', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def edit_user():
     if cur_user() is None:
         return redirect('/create-user')

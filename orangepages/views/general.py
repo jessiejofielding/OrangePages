@@ -17,7 +17,7 @@ def home():
 
 
 @page.route('/login')
-#@login_required
+@login_required
 def login():
     if cur_user() is None:
         return redirect('/create-user')
@@ -31,7 +31,7 @@ def logout_route():
 
 
 @page.route('/feed', methods=['GET'])
-#@login_required
+@login_required
 def feed():
     posts = cur_user().get_feed()
     return render('feed.html', posts=posts)

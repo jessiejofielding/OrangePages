@@ -28,7 +28,8 @@ def create_post():
 def view_post(postid):
     post = Post.query.get(postid)
     comments = post.get_comments()
-    return render("post.html", post=post, comments=comments)
+    num_likers = len(post.get_likers())
+    return render("post.html", post=post, comments=comments, num_likers=num_likers)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 def comment(postid):
@@ -73,3 +74,15 @@ def like(post_id):
     return render('message.html',
         title='Success',
         message='You have successfully liked this post!')
+
+# @page.route('/post/<int:post_id>/likers', methods=['GET'])
+# def likers(post_id):
+#     post = Post.query.get(postid)
+#     likers = post.get_likers()
+#     likersStr = str(likers)
+#
+#     return render('message.html',
+#         title='Success',
+#         message=likersStr)
+
+# @page.route('/post/<int:post_id>/num-likers', methods=['GET'])

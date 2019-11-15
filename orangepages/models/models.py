@@ -206,7 +206,7 @@ class Post(db.Model):
         self.likes.remove(unliker)
 
     def get_likers(self):
-        print(self.likes)
+        # print("LEN!" + str(len(self.likes)))
         return self.likes
 
     def get_comments(self):

@@ -51,19 +51,19 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="col">
-                        <form id="msform" class="is-readonly" action="create-user" method="post">
+                        <form id="msform" class="is-readonly" action="edit-user" method="post">
             <fieldset>
                 <h2 class="fs-title">Details About {{lookup.firstname}}</h2>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Email" value="{{lookup.email}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Class Year" value="{{lookup.year}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Major" value="{{lookup.major}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Hometown" value="{{lookup.hometown}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="State" value="{{lookup.state}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Country" value="{{lookup.country}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Room" value="{{lookup.room}}" disabled>
-                <input type="text" class="form-control is-disabled" id="exampleInputPassword1" placeholder="Building" value="{{lookup.building}}" disabled>
+                <input type="text" class="form-control is-disabled" name="email" id="exampleInputPassword1" placeholder="Email" value="{{lookup.email}}" disabled>
+                <input type="text" class="form-control is-disabled" name="year" id="exampleInputPassword1" placeholder="Class Year" value="{{lookup.year}}" disabled>
+                <input type="text" class="form-control is-disabled" name="major" id="exampleInputPassword1" placeholder="Major" value="{{lookup.major}}" disabled>
+                <input type="text" class="form-control is-disabled" name="hometown" id="exampleInputPassword1" placeholder="Hometown" value="{{lookup.hometown}}" disabled>
+                <input type="text" class="form-control is-disabled" name="state" id="exampleInputPassword1" placeholder="State" value="{{lookup.state}}" disabled>
+                <input type="text" class="form-control is-disabled" name="country" id="exampleInputPassword1" placeholder="Country" value="{{lookup.country}}" disabled>
+                <input type="text" class="form-control is-disabled" name="room" id="exampleInputPassword1" placeholder="Room" value="{{lookup.room}}" disabled>
+                <input type="text" class="form-control is-disabled" name="building" id="exampleInputPassword1" placeholder="Building" value="{{lookup.building}}" disabled>
                 <button type="button" class="btn btn-default btn-edit js-edit">Edit</button>
-                <button type="button" class="btn btn-default btn-save js-save">Save</button>
+                <button type="submit" class="btn btn-default btn-save js-save">Save</button>
             </fieldset>
         </form>
             </div>

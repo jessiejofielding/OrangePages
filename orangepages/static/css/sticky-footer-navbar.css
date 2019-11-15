@@ -1,14 +1,14 @@
 html {
-  position: relative;
-  min-height: 100%;
+  position: relative !important;
+  min-height: 100% !important;
 }
 body {
   /* Margin bottom by footer height */
   margin-bottom: 105px;
 }
 #footer {
-  position: absolute;
-  bottom: 0;
+  margin-bottom: 0;
+  position:absolute;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 105px;
@@ -16,11 +16,11 @@ body {
 }
 
 .footer {
-  position: absolute;
    bottom: 0;
-    width: 100%;
-    line-height: 60px;
-    background-color: white;
+   position:absolute;
+   width: 100%; 
+   line-height: 60px;
+   background-color: white;
 }
 
 .footer-links li {

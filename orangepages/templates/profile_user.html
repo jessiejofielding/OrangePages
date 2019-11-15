@@ -36,7 +36,7 @@ $(document).ready(function(){
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-4">
-                <div class="card mt-4 mb-4 ml-4">
+                <div id="user-box" class="card mb-4 ml-4">
                     <div class="card-body text-center">
                         {%if user._pic is none:%}
                         <i class="fa fa-user fa-5x"></i>
@@ -45,18 +45,12 @@ $(document).ready(function(){
                         {%endif%}
                         <h3 class="card-title">{{lookup.firstname}} {{lookup.lastname}}</h3>
                         <p class="card-text">{{lookup.uid}}
-                            <hr>
+                            
                         </p>
-<!--                         <a class="nav-link" href="/edit-user">
-                            <i class="fa fa-pencil"></i>
-                            <span class="sr-only">(current)</span>
-                            edit profile
-                        </a> -->
                     </div>
                 </div>
             </div>
             <div class="col">
-                <!-- <div class="card mt-4 mb-4 mr-4"> -->
                         <form id="msform" class="is-readonly" action="create-user" method="post">
             <fieldset>
                 <h2 class="fs-title">Details About {{lookup.firstname}}</h2>
@@ -72,54 +66,10 @@ $(document).ready(function(){
                 <button type="button" class="btn btn-default btn-save js-save">Save</button>
             </fieldset>
         </form>
-                       <!--  <h5 class="card-title">Basic info</h5>
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td>puid:</td>
-                                    <td>{{lookup.uid}}</td>
-                                </tr>
-                                <tr>
-                                    <td>email:</td>
-                                    <td>{{lookup.email}}</td>
-                                </tr>
-                                <tr>
-                                    <td>year:</td>
-                                    <td>{{lookup.year}}</td>
-                                </tr>
-                                <tr>
-                                    <td>major:</td>
-                                    <td>{{lookup.major}}</td>
-                                </tr>
-                                <tr>
-                                    <td>hometown:</td>
-                                    <td>{{lookup.hometown}}</td>
-                                </tr>
-                                <tr>
-                                    <td>state:</td>
-                                    <td>{{lookup.state}}</td>
-                                </tr>
-                                <tr>
-                                    <td>country:</td>
-                                    <td>{{lookup.country}}</td>
-                                </tr>
-                                <tr>
-                                    <td>room:</td>
-                                    <td>{{lookup.room}}</td>
-                                </tr>
-                                <tr>
-                                    <td>building:</td>
-                                    <td>{{lookup.building}}</td>
-                                </tr>
-                            </tbody>
-                        </table> -->
-                   
-<!-- 
-                </div> -->
             </div>
         </div>
     </div>
 
-    {% include 'footer.html' %}
+    <!-- {% include 'footer.html' %} -->
 
 </html>

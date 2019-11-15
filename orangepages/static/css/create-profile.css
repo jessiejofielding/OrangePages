@@ -8,7 +8,8 @@
 }
 
 html {
-    height: 100%;
+    position: relative !important;
+    min-height: 100% !important;
     background-image: linear-gradient(to right, orange , #fdfd96);
 }
 
@@ -46,6 +47,16 @@ form {
     margin-top: 30px;
 }
 
+#user-box {
+    background: white;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    margin-top: 30px;
+    width: 80%;
+}
 #msform fieldset {
     background: white;
     border: 0 none;

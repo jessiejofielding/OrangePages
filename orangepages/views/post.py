@@ -52,7 +52,24 @@ def comment(postid):
 #     return
 
 
+# @page.route('/post/<int:post_id>/like', methods=['POST'])
+# def like(post_id):
+#     # # TODO:
+#     return
+
 @page.route('/post/<int:post_id>/like', methods=['POST'])
 def like(post_id):
     # # TODO:
-    return
+    isLike = request.form.get('isLike')
+    post = Post.query.get(postid)
+
+    if isLike:
+        post.add_like(cur_user())
+    else:
+        post.unlike(cur_user())
+
+    db.session.commit()
+
+    return render('message.html',
+        title='Success',
+        message='You have successfully liked this post!')

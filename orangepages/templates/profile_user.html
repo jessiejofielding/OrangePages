@@ -54,6 +54,8 @@ $(document).ready(function(){
                         <form id="msform" class="is-readonly" action="/edit-user" method="post">
             <fieldset>
                 <h2 class="fs-title">Details About {{user.firstname}}</h2>
+                <input type="text" class="form-control is-disabled" name="firstname" id="exampleInputPassword1" placeholder="First Name" value="{{user.firstname}}" disabled>
+                <input type="text" class="form-control is-disabled" name="lastname" id="exampleInputPassword1" placeholder="Last Name" value="{{user.lastname}}" disabled>
                 <input type="text" class="form-control is-disabled" name="email" id="exampleInputPassword1" placeholder="Email" value="{{user.email}}" disabled>
                 <input type="text" class="form-control is-disabled" name="year" id="exampleInputPassword1" placeholder="Class Year" value="{{user.year}}" disabled>
                 <input type="text" class="form-control is-disabled" name="major" id="exampleInputPassword1" placeholder="Major" value="{{user.major}}" disabled>

@@ -121,6 +121,11 @@ class User(db.Model):
     def friend_list(self):
         return self._groups[0].members
 
+    # is user a friend of self? 
+    def is_friend(self, user):
+        is_friend = (user in self.friend_list())
+        return is_friend
+
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',
     db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),

@@ -22,13 +22,14 @@ def unfriend(lookup_id):
     user2 = User.query.get(lookup_id)
     user1.unfriend(user2)
 
+@page.route('/friends-list', methods=['GET'])
+def friends_list():
+    user = cur_user()
+    friend_list = user.friend_list()
+    return render('/test/friend_list.html',
+    friend_list = friend_list)
+
 # @page.route('/profile/<string:lookup_id>/are-friends', methods=['GET'])
 # def are_friends(lookup_id):
 #     user2 = User.query.get(lookup_id)
 #     are_friends = (user2 in cur_user().friend_list())
-#     return are_friends
-#
-# @page.route('/profile/friends-list', methods=['GET'])
-# def get_friends():
-#     user = cur_user()
-#     return user.friend_list()

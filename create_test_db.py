@@ -1,5 +1,6 @@
 from orangepages.models.models import db, User, app, Group, Post
 import orangepages.models.statuses as st
+from orangepages.views.test import add_friend_local
 import config
 
 # hard coding this so that create_test_db can't mess with real db
@@ -36,7 +37,7 @@ batman = User('bmcman', 'Bat', 'McMan', 'bmcman@princeton.edu')
 dan = User('dmiller', 'Dan', 'Miller', 'dmiller@princeton.edu')
 
 # users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
-users = [sally, sally2, sally3, john, elise, jessie, julie, jamie, zexin, batman, dan]
+users = [sally, sally2, sally3, john, elise, jessie, julie, zexin, batman, dan]
 
 
 cos333 = Group('COS333', None, [sally])
@@ -108,7 +109,7 @@ db.session.commit()
 for like in post1.likes:
     print(like.firstname)
 
-# import cloudinary 
+# import cloudinary
 # import os
 # from cloudinary.uploader import upload
 
@@ -130,6 +131,12 @@ jessie = User.query.get('jjf4')
 public = Group('Public', None, [jessie])
 content = "UGH DEBUGGIN"
 anotherpost = Post(content, jessie, [public])
+
+
+
+add_friend_local('jexample', 'sstudent')
+
+
 db.session.add(public)
 db.session.add(anotherpost)
 db.session.commit()
@@ -140,5 +147,3 @@ for post in feed:
     print(post.content)
 # picurl, _ = cloudinary.utils.cloudinary_url(john._pic, width = 100, height = 150, crop = "fill")
 # print(picurl)
-
-

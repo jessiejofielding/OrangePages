@@ -78,8 +78,8 @@ def edit_user():
 
     if request.method=='POST':
         # Get form fields
-        firstname = cur_user().firstname
-        lastname = cur_user().lastname
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
         email = request.form.get('email')
         hometown = request.form.get('hometown')
         state = request.form.get('state')

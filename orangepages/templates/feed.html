@@ -104,11 +104,11 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex justify-content-between align-items-center">
-                        {% if post.creator._pic is none: %}
+                        {% if post.creator._pic is none %}
                         <div class="mr-2">
                             <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                         </div>
-                        {% else: %}
+                        {% else %}
                         <div class="mr-2">
                             <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png'
                                 alt="failed to load">
@@ -147,16 +147,20 @@
                 </p>
             </div>
             <div class="card-footer">
-                <a href="#" class="card-link toggle-text" data-toggle="collapse">
+                <a href="#" class="card-link">
+                    {% if user.liked_post(post.pid) %}
                     <span>
-                        <i class="fa fa-heart-o"></i>
+                        <a class="fa fa-heart" href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}"></i>
                     </span>
-                    <span class="hidden">
-                        <i class="fa fa-heart"></i>
+                    {% else %}
+                    <span>
+                        <a class="fa fa-heart-o" href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}"></i>
                     </span>
-                    <span>Like</span><span class="hidden">Unlike</span>
+                    {% endif %}
+                    <!-- TODO: actually make the likes work -->
+                    <span>{{post.likes|length}}</span>
                 </a>
-                <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i> {{post.get_comments()|length}}</a>
                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
             </div>
         </div>

@@ -54,22 +54,19 @@ def comment(postid):
 #     # # TODO:
 #     return
 
-@page.route('/post/<int:post_id>/like', methods=['POST'])
-def like(post_id):
+@page.route('/post/<int:post_id>/<isLike>')
+def like(post_id, isLike):
     # # TODO:
-    isLike = request.form.get('isLike')
-    post = Post.query.get(postid)
+    post = Post.query.get(post_id)
 
-    if isLike:
+    if isLike == 'True':  #passing a string sorry
         post.add_like(cur_user())
     else:
         post.unlike(cur_user())
 
     db.session.commit()
 
-    return render('message.html',
-        title='Success',
-        message='You have successfully liked this post!')
+    return redirect(request.referrer)
 
 # @page.route('/post/<int:post_id>/likers', methods=['GET'])
 # def likers(post_id):

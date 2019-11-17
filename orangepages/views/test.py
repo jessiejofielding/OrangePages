@@ -10,6 +10,11 @@ from orangepages.views.util import cur_user, cur_uid, set_uid, render
 page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
 
+def likers_local(postid):
+    post = Post.query.get(postid)
+    likers = post.get_likers()
+    # likersStr = str(likers)
+    print(likersStr)
 
 def like_local(uid, postid, isLike):
     # # TODO:

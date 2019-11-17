@@ -1,5 +1,8 @@
-from orangepages.views.test import testsearch_local
-
+# from orangepages.views.test import likers_local, like_local
+#
+# likers_local(2)
+# like_local('jexample', 2, True)
+# likers_local(2)
 # testsearch_local("elise")
 
 from orangepages import app

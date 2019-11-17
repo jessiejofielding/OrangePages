@@ -53,12 +53,6 @@ def comment(postid):
 #     # # TODO:
 #     return
 
-
-# @page.route('/post/<int:post_id>/like', methods=['POST'])
-# def like(post_id):
-#     # # TODO:
-#     return
-
 @page.route('/post/<int:post_id>/like', methods=['POST'])
 def like(post_id):
     # # TODO:

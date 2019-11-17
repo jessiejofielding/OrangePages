@@ -27,9 +27,6 @@ class User(db.Model):
     room = db.Column(db.String(50))
     building = db.Column(db.String(50))
 
-    # posts_liked = relationship('Post', secondary=post_liker,
-    #                         backref=backref('likes', lazy='dynamic'))
-
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
@@ -41,6 +38,9 @@ class User(db.Model):
         # every user is a member of the group public
         public = Group.query.get(1)
         public.add_member(self)
+
+        friends = Group(netid + "'s friends", self, [])
+        self._groups.append(friends)
 
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
@@ -101,6 +101,25 @@ class User(db.Model):
     def liked_post(self, post_id):
         likedPost = self.posts_liked.filter(Post.pid == post_id).all()
         return len(likedPost) == 1
+
+    # FRIENDS
+    def add_friend(self, friend):
+        self._groups[0].members.append(friend)
+        friend._groups[0].members.append(self)
+        # print("after adding friend, friendlist of ", self.uid, " : ", self._groups[0].members)
+        # print("after adding friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
+
+    def unfriend(self, friend):
+        if friend in self._groups[0].members:
+            self._groups[0].members.remove(friend)
+            friend._groups[0].members.remove(self)
+            # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
+            # print("after removing friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
+        else:
+            print(friend.uid, " not a friend of ", self.uid)
+
+    def friend_list(self):
+        return self._groups[0].members
 
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',

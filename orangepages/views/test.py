@@ -10,6 +10,28 @@ from orangepages.views.util import cur_user, cur_uid, set_uid, render
 page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
 
+def add_friend_local(uid1, uid2):
+    user1 = User.query.get(uid1)
+    user2 = User.query.get(uid2)
+    user1.add_friend(user2)
+
+def unfriend_local(uid1, uid2):
+    user1 = User.query.get(uid1)
+    user2 = User.query.get(uid2)
+    user1.unfriend(user2)
+
+def get_friends_local(uid):
+    user = User.query.get(uid)
+    return user.friend_list()
+
+# are uid1 and uid2 friends
+def is_friend_of(uid1, uid2):
+    user1 = User.query.get(uid1)
+    user2 = User.query.get(uid2)
+
+    ans = user2 in user1.friend_list()
+    return ans
+
 def likers_local(postid):
     post = Post.query.get(postid)
     likers = post.get_likers()

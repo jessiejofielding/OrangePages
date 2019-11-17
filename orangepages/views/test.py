@@ -10,11 +10,51 @@ from orangepages.views.util import cur_user, cur_uid, set_uid, render
 page = Blueprint('test', __name__,
     template_folder='../templates/test', url_prefix='/test')
 
+
+def like_local(uid, postid, isLike):
+    # # TODO:
+    user = User.query.get(uid)
+    # isLike = request.form.get('isLike')
+    post = Post.query.get(postid)
+
+    if isLike:
+        post.add_like(user)
+    else:
+        post.unlike(user)
+
+    db.session.commit()
+
+    likedPost = user.liked_post(postid)
+    print(likedPost)
+
+
+@page.route('/post/<int:post_id>/like', methods=['POST'])
+def like(post_id):
+    # # TODO:
+    isLike = request.form.get('isLike')
+    post = Post.query.get(post_id)
+
+    if isLike:
+        post.add_like(cur_user())
+    else:
+        post.unlike(cur_user())
+
+    db.session.commit()
+
+    return render('message.html',
+        title='Success',
+        message='You have successfully liked this post!')
+
+
 @page.route('/post/<int:postid>', methods=['GET'])
 def view_post(postid):
     post = Post.query.get(postid)
     comments = post.get_comments()
     num_likers = len(post.get_likers())
+
+    # likedPost = cur_user().liked_post(postid)
+    # print(likedPost)
+
     return render("post.html", post=post, comments=comments, num_likers=num_likers)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])

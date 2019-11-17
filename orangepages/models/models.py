@@ -26,6 +26,10 @@ class User(db.Model):
     major = db.Column(db.String(50))
     room = db.Column(db.String(50))
     building = db.Column(db.String(50))
+
+    # posts_liked = relationship('Post', secondary=post_liker,
+    #                         backref=backref('likes', lazy='dynamic'))
+
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
@@ -94,6 +98,9 @@ class User(db.Model):
         posts = p.order_by(desc(Post.date)).all()
         return posts
 
+    def liked_post(self, post_id):
+        likedPost = self.posts_liked.filter(Post.pid == post_id).all()
+        return len(likedPost) == 1
 
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',
@@ -197,16 +204,19 @@ class Post(db.Model):
         self.groups.append(group)
 
     def add_like(self, liker):
+        print(liker.firstname, "liked post", self.pid)
         self.likes.append(liker)
 
     def remove_group(self, group):
         self.groups.remove(group)
 
     def unlike(self, unliker):
-        self.likes.remove(unliker)
+        if unliker not in self.likes:
+            print("User %s did not like this post" % unliker.uid)
+        else:
+            self.likes.remove(unliker)
 
     def get_likers(self):
-        # print("LEN!" + str(len(self.likes)))
         return self.likes
 
     def get_comments(self):

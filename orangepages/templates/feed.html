@@ -147,22 +147,21 @@
                 </p>
             </div>
             <div class="card-footer">
-                <a href="#" class="card-link">
                     {% if user.liked_post(post.pid) %}
-                    <span>
-                        <a class="fa fa-heart" href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}"></i>
-                    </span>
+                    <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}"
+                        class="card-link">
+                        <i class="fa fa-heart"></i> {{post.likes|length}}
+                    </a>
                     {% else %}
-                    <span>
-                        <a class="fa fa-heart-o" href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}"></i>
-                    </span>
+                    <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}"
+                        class="card-link">
+                        <i class="fa fa-heart-o"></i> {{post.likes|length}}
+                    </a>
                     {% endif %}
-                    <!-- TODO: actually make the likes work -->
-                    <span>{{post.likes|length}}</span>
-                </a>
-                <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i> {{post.get_comments()|length}}</a>
-                <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-            </div>
+                    <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
+                        {{post.get_comments()|length}}</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                </div>
         </div>
     {% endfor %}
     </div>

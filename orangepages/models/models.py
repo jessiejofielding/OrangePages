@@ -142,6 +142,11 @@ group_member = db.Table('group_member', User.metadata,
     db.Column('user_id', db.String(20), db.ForeignKey('user.uid'))
 )
 
+post_tag = db.Table('post_tag',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
+    db.Column('tag_id', db.String(20), db.ForeignKey('tag.tid'))
+)
+
 class Group(db.Model):
     gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50))
@@ -178,17 +183,32 @@ class Relationship(db.Model):
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
             ((status == st.request1_2) and (self.status == st.request2_1)):
             status = st.friends
+        
+        if status == st.accept:
+            status = st.friends
 
         if status == st.friends:
             # add to "Friend" group
-            pass
+            if self.status != st.friends:
+                self.user1.add_friend(self.user2)
         self.status = status
 
     def __init__(self, user1, user2, status):
         assert(user1.uid < user2.uid)
         self.user1 = user1
         self.user2 = user2
-        self.status = status
+        self.status = st.none
+        self.change_status(status)
+
+    def get_status(user1, user2):
+        # TODO: finish implementing this - jf
+        # if user1.uid > user2.uid:
+        #     temp = user2
+        #     user2 = user1
+        #     user1 = temp
+        # rel = Relationship.query.filter(user1=user1, user2=user2)
+        # status = rel.status
+        pass
 
 class Comment(db.Model):
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -223,9 +243,14 @@ class Post(db.Model):
                             backref=backref('posts', lazy='dynamic'))
 
     # TODO: tags
+    tags = relationship('Tag', secondary=post_tag, 
+                        backref=backref('posts', lazy='dynamic'))
 
     def add_group(self, group):
-        self.groups.append(group)
+        if group not in self.groups: self.groups.append(group)
+
+    def add_tag(self, tag):
+        if tag not in self.tags: self.tags.append(tag)
 
     def add_like(self, liker):
         print(liker.firstname, "liked post", self.pid)
@@ -233,6 +258,12 @@ class Post(db.Model):
 
     def remove_group(self, group):
         self.groups.remove(group)
+
+    def remove_tag(self, tag):
+        if tag not in self.tags:
+            print("Post did not have this tag")
+        else:
+            self.tags.remove(tag)
 
     def unlike(self, unliker):
         if unliker not in self.likes:
@@ -257,3 +288,12 @@ class Post(db.Model):
         self.creator = creator
         for group in groups:
             self.add_group(group)
+
+
+class Tag(db.Model):
+    tid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tag = db.Column(db.String(1000))
+    # use tag.posts to get all the posts with this tag
+
+    def __init__(self, tag):
+        self.tag = tag

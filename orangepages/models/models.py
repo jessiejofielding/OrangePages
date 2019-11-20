@@ -289,6 +289,7 @@ class Post(db.Model):
     def __init__(self, content, creator, groups):
         self.content = content
         self.creator = creator
+        self.add_group(public_group())
         for group in groups:
             self.add_group(group)
 
@@ -308,3 +309,9 @@ class Tag(db.Model):
     def get_posts(self):
         posts = self.posts.all()
         return posts
+
+# only works after db initialised
+# Returns the public group that every user is automatically part of
+def public_group():
+    public = Group.query.get(1)
+    return public

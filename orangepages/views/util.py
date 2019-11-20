@@ -2,7 +2,7 @@
 
 from flask import request, render_template, redirect
 
-from orangepages.models.models import User
+from orangepages.models.models import User, Group
 from orangepages import cas
 
 
@@ -29,15 +29,17 @@ def cur_user():
 # Get current netid.
 def cur_uid():
     netid = cas.username
-    
+
     # LOCAL TESTING: use netid stored in cookie instead of cas
     if netid is None:
         return request.cookies.get('uid')
 
     return netid[0]
 
-
-
+# Returns the public group that every user is automatically part of
+def public_group():
+    public = Group.query.get(1)
+    return public
 
 
 # Wrapper function for render_template to automatically include

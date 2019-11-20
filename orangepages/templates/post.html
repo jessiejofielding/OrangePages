@@ -99,6 +99,11 @@
                             </script>
                         </div>
                         <p class="card-text">
+                            Tags:
+                            {% for tag in tags: %}
+                            #{{tag.tid}}
+                            {% endfor %}
+                            <br />
                             {{post.content}}
                         </p>
                     </div>

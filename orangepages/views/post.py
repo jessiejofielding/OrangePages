@@ -1,6 +1,6 @@
 from flask import request, redirect, make_response
 from flask import Blueprint, render_template
-from orangepages.models.models import db, User, Group, Post, Comment
+from orangepages.models.models import db, User, Group, Post, Comment, Tag
 from orangepages.views.util import cur_user, cur_uid, render
 # from flask_login import current_user, login_required
 
@@ -70,7 +70,7 @@ def like(post_id, isLike):
     return redirect(request.referrer)
 
 @page.route('/post/<int:post_id>/tag')
-def add_tag(post_id, tag_str):
+def add_tag(post_id):
     post = Post.query.get(post_id)
 
     tag_str = request.form.get('content')

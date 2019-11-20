@@ -1,6 +1,7 @@
 from orangepages.models.models import db, User, app, Group, Post
 import orangepages.models.statuses as st
 from orangepages.views.test import add_friend_local
+from orangepages.views.test_local import add_tag, search_tag
 import config
 
 # hard coding this so that create_test_db can't mess with real db
@@ -135,6 +136,10 @@ anotherpost = Post(content, jessie, [public])
 
 
 add_friend_local('jexample', 'sstudent')
+
+
+add_tag('jexample', "tag1")
+search_tag("tag1")
 
 
 db.session.add(public)

@@ -121,7 +121,7 @@ class User(db.Model):
     def friend_list(self):
         return self._groups[0].members
 
-    # is user a friend of self? 
+    # is user a friend of self?
     def is_friend(self, user):
         is_friend = (user in self.friend_list())
         return is_friend
@@ -183,7 +183,7 @@ class Relationship(db.Model):
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
             ((status == st.request1_2) and (self.status == st.request2_1)):
             status = st.friends
-        
+
         if status == st.accept:
             status = st.friends
 
@@ -243,7 +243,7 @@ class Post(db.Model):
                             backref=backref('posts', lazy='dynamic'))
 
     # TODO: tags
-    tags = relationship('Tag', secondary=post_tag, 
+    tags = relationship('Tag', secondary=post_tag,
                         backref=backref('posts', lazy='dynamic'))
 
     def add_group(self, group):
@@ -251,6 +251,9 @@ class Post(db.Model):
 
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
+
+    def get_tags(self):
+        return self.tags
 
     def add_like(self, liker):
         print(liker.firstname, "liked post", self.pid)
@@ -291,9 +294,17 @@ class Post(db.Model):
 
 
 class Tag(db.Model):
-    tid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tag = db.Column(db.String(1000))
+    tid = db.Column(db.String(1000), primary_key=True)
+    # db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # tag = db.Column(db.String(1000))
     # use tag.posts to get all the posts with this tag
 
     def __init__(self, tag):
-        self.tag = tag
+        self.tid = tag
+
+    def __repr__(self):
+        return "<Tag: %s>" % (self.tid)
+
+    def get_posts(self):
+        posts = self.posts.all()
+        return posts

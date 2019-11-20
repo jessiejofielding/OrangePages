@@ -29,9 +29,10 @@ def view_post(postid):
     post = Post.query.get(postid)
     comments = post.get_comments()
     num_likers = len(post.get_likers())
+    tags = post.get_tags()
 
     return render("post.html", post=post, comments=comments,
-    num_likers = num_likers)
+    num_likers = num_likers, tags=tags)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 def comment(postid):
@@ -67,6 +68,23 @@ def like(post_id, isLike):
     db.session.commit()
 
     return redirect(request.referrer)
+
+@page.route('/post/<int:post_id>/tag')
+def add_tag(post_id, tag_str):
+    post = Post.query.get(post_id)
+
+    tag_str = request.form.get('content')
+
+    tag = Tag(tag_str)
+    post.add_tag(tag)
+
+    return redirect(request.referrer)
+
+# def get_tag(post_id):
+#     post = Post.query.get(post_id)
+#     tags = post.get_tags()
+#
+#     return redirect(request.referrer)
 
 # @page.route('/post/<int:post_id>/likers', methods=['GET'])
 # def likers(post_id):

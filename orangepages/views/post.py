@@ -78,14 +78,16 @@ def like(post_id, isLike):
 
     return redirect(request.referrer)
 
+# Might need FIXME
 @page.route('/post/<int:post_id>/tag')
 def add_tag(post_id):
     post = Post.query.get(post_id)
 
     tag_str = request.form.get('content')
 
-    tag = Tag(tag_str)
-    post.add_tag(tag)
+    post.add_tag_str(tag_str)
+    # tag = Tag(tag_str)
+    # post.add_tag(tag)
 
     return redirect(request.referrer)
 

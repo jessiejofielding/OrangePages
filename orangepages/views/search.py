@@ -12,12 +12,17 @@ page = Blueprint('testsearch', __name__)
 def search_user():
     query_list = request.args.get('query').split(' ')
 
-    # print("len(query_list)", len(query_list))
+    # FIXME sry - zx
     if len(query_list) > 0 and len(query_list[0]) > 0:
-        if query_list[0][0] == '#':
-            print("hash", query_list[0][1:])
-            posts = search_tag(query_list[0][1:])
-            return render('test/all_posts.html', posts=posts)
+        tagged_posts = []
+
+        for query in query_list:
+            if query[0] == '#':
+                print("hash", query[1:])
+                posts = search_tag(query[1:])
+                tagged_posts.extend(posts)
+
+        return render('test/all_posts.html', posts=tagged_posts)
 
     user_preview_list = User.search(*query_list).all()
     query = ' '.join(query_list)
@@ -25,10 +30,8 @@ def search_user():
     return render('search.html',
     user_preview_list=user_preview_list, query=query, count=len(user_preview_list))
 
-# @page.route('/search-tag')
 # helper method
 def search_tag(tag_str):
-    # tag_str = request.form.get('content')
     tag = Tag.query.get(tag_str)
     if tag == None:
         posts = []

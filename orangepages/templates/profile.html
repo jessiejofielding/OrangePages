@@ -34,9 +34,18 @@
                             alt="failed to load">
                         {%endif%}
                         <h3 class="card-title">{{lookup.firstname}} {{lookup.lastname}}</h3>
-                        <p class="card-text">{{lookup.uid}}
-
-                        </p>
+                        <p class="card-text">{{lookup.uid}}</p>
+                        {% if user.is_friend(lookup) %}
+                        <a href="#"
+                            class="card-link">
+                            <i class="fa fa-check"></i> Friends
+                        </a>
+                        {% else %}
+                        <a href="/profile/{{ lookup.uid }}/add-friend"
+                            class="card-link">
+                            <i class="fa fa-plus"></i> Add Friend
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ from flask import request, make_response, url_for, redirect
 from flask import Blueprint, render_template
 from sqlalchemy import exc
 
-from orangepages.models.models import db, User, Group, Post, Comment
+from orangepages.models.models import db, User, Group, Post, Comment, Tag
 from orangepages.views.util import cur_user, cur_uid, set_uid, render
 
 page = Blueprint('test', __name__,
@@ -112,10 +112,20 @@ def create_post():
     user = cur_user()
     content = request.form.get('content')
 
+    # Parse tags and add them - list of tag STRINGS
+    tags = []
+    tags_raw =  request.form.get('tags')
+    if tags_raw is not None:
+        tags_str = tags_raw.split(' ')
+
+        for tag_str in tags_str:
+            tags.append(tag_str)
+
     # group with everyone in it
     public = Group.query.get(1)
 
-    post = Post(content, user, [public])
+    post = Post(content, user, [public], tags)
+
     db.session.add(post)
     db.session.commit()
 

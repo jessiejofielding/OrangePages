@@ -257,6 +257,13 @@ class Post(db.Model):
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
 
+    def add_tag_str(self, tag_str):
+        tag = Tag.query.get(tag_str)
+        if tag is None:
+            tag = Tag(tag_str)
+
+        if tag not in self.tags: self.tags.append(tag)
+
     def get_tags(self):
         return self.tags
 
@@ -291,12 +298,15 @@ class Post(db.Model):
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 
-    def __init__(self, content, creator, groups):
+    def __init__(self, content, creator, groups, tags):
         self.content = content
         self.creator = creator
         self.add_group(public_group())
         for group in groups:
             self.add_group(group)
+
+        for tag_str in tags:
+            self.add_tag_str(tag_str)
 
 
 class Tag(db.Model):

@@ -15,10 +15,19 @@ def create_post():
     user = cur_user()
     content = request.form.get('content')
 
+    # Parse tags and add them - list of tag STRINGS
+    tags = []
+    tags_raw =  request.form.get('tags')
+    if tags_raw is not None:
+        tags_str = tags_raw.split(' ')
+
+        for tag_str in tags_str:
+            tags.append(tag_str)
+
     # group with everyone in it
     public = Group.query.get(1)
 
-    post = Post(content, user, [public])
+    post = Post(content, user, [public], tags)
     db.session.add(post)
     db.session.commit()
 

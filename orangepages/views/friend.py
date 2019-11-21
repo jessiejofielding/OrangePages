@@ -10,17 +10,26 @@ from orangepages.views.util import cur_user, cur_uid, render
 
 page = Blueprint('friend', __name__)
 
-@page.route('/profile/<string:lookup_id>/add-friend', methods=['POST'])
-def add_friend(lookup_id):
+@page.route('/test/add-friend', methods=['GET'])
+def view_add_friend():
+    # friend_uid = 'zkoh'
+    return render('/test/friend_add.html')
+
+@page.route('/profile/add-friend', methods=['POST'])
+def add_friend():
     user1 = cur_user()
-    user2 = User.query.get(lookup_id)
+    friend_uid = request.form.get('content')
+    user2 = User.query.get(friend_uid)
     user1.add_friend(user2)
+    return redirect(request.referrer)
 
 @page.route('/profile/<string:lookup_id>/unfriend', methods=['POST'])
 def unfriend(lookup_id):
+    print("lookup_id", lookup_id)
     user1 = cur_user()
     user2 = User.query.get(lookup_id)
     user1.unfriend(user2)
+    return redirect(request.referrer)
 
 @page.route('/friends-list', methods=['GET'])
 def friends_list():

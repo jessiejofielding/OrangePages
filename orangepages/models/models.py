@@ -106,6 +106,9 @@ class User(db.Model):
     def add_friend(self, friend):
         self._groups[0].members.append(friend)
         friend._groups[0].members.append(self)
+        db.session.commit()
+
+        # print(self._groups[0].members)
         # print("after adding friend, friendlist of ", self.uid, " : ", self._groups[0].members)
         # print("after adding friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
 
@@ -113,12 +116,14 @@ class User(db.Model):
         if friend in self._groups[0].members:
             self._groups[0].members.remove(friend)
             friend._groups[0].members.remove(self)
+            db.session.commit()
             # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
             # print("after removing friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
         else:
             print(friend.uid, " not a friend of ", self.uid)
 
     def friend_list(self):
+        # print(self._groups[0].members)
         return self._groups[0].members
 
     # is user a friend of self?

@@ -36,15 +36,23 @@
                         <h3 class="card-title">{{lookup.firstname}} {{lookup.lastname}}</h3>
                         <p class="card-text">{{lookup.uid}}</p>
                         {% if user.is_friend(lookup) %}
-                        <a href="#"
-                            class="card-link">
-                            <i class="fa fa-check"></i> Friends
-                        </a>
+                        
+                        <form method="post" action="/profile/unfriend" class="inline">
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <i class="fa fa-check"></i> Friends
+                            </button>
+                        </form>
+
                         {% else %}
-                        <a href="/profile/{{ lookup.uid }}/add-friend"
-                            class="card-link">
-                            <i class="fa fa-plus"></i> Add Friend
-                        </a>
+
+                        <form method="post" action="/profile/add-friend" class="inline">
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <i class="fa fa-plus"></i> Add Friend
+                            </button>
+                        </form>
+
                         {% endif %}
                     </div>
                 </div>

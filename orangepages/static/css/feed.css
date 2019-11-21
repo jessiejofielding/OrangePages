@@ -1,4 +1,12 @@
 
+.tag-pill {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
 button .unfriend { display: none; }
 button:hover .friends { display: none; }
 button:hover .unfriend { display: inline}

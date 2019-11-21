@@ -99,12 +99,16 @@
                             </script>
                         </div>
                         <p class="card-text">
-                            Tags:
-                            {% for tag in tags: %}
-                            #{{tag.tid}}
-                            {% endfor %}
-                            <br />
                             {{post.content}}
+                            {% if tags|length %}
+                            <br>
+                            <br>
+                            {% for tag in tags: %}
+                                <button type="button" class="btn btn-primary btn-sm tag-pill">
+                                    #{{ tag.tid }}
+                                </button>
+                            {% endfor %}
+                        {% endif %}
                         </p>
                     </div>
                     <div class="card-footer">

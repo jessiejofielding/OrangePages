@@ -12,12 +12,12 @@ page = Blueprint('testsearch', __name__)
 def search_user():
     query_list = request.args.get('query').split(' ')
 
-    print("query_list[0]", query_list[0])
-
-    if query_list[0][0] == '#':
-        print("hash", query_list[0][1:])
-        posts = search_tag(query_list[0][1:])
-        return render('test/all_posts.html', posts=posts)
+    # print("len(query_list)", len(query_list))
+    if len(query_list) > 0 and len(query_list[0]) > 0:
+        if query_list[0][0] == '#':
+            print("hash", query_list[0][1:])
+            posts = search_tag(query_list[0][1:])
+            return render('test/all_posts.html', posts=posts)
 
     user_preview_list = User.search(*query_list).all()
     query = ' '.join(query_list)

@@ -56,7 +56,7 @@ class User(db.Model):
 
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
-        
+
 
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
@@ -345,8 +345,12 @@ class Tag(db.Model):
     def __repr__(self):
         return "<Tag: %s>" % (self.tid)
 
-    def get_posts(self):
-        posts = self.posts.all()
+    def get_posts(self, user):
+        p = self.posts
+        p = p.join(Post.groups)
+        p = p.join(Group.members)
+        p = p.filter(User.uid == user.uid)
+        posts = p.order_by(desc(Post.date)).all()
         return posts
 
 # only works after db initialised

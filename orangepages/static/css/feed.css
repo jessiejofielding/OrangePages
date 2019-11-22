@@ -1,6 +1,7 @@
 
 
 .tag-pill {
+  margin: 3px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

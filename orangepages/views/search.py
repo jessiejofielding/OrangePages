@@ -13,7 +13,7 @@ def search_user():
     query_list = request.args.get('query').split(' ')
 
     # FIXME sry - zx
-    if len(query_list) > 0 and len(query_list[0]) > 0:
+    if len(query_list) > 0 and len(query_list[0]) > 0 and query_list[0][0]=='#':
         tagged_posts = []
 
         for query in query_list:

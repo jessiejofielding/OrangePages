@@ -24,10 +24,19 @@ def create_post():
         for tag_str in tags_str:
             tags.append(tag_str)
 
-    # group with everyone in it
-    public = Group.query.get(1)
+    # TO FIX
+    groups = []
+    visibility = request.form.get('visibility')
+    # hardcoded, one group only rn
+    if visibility == 'Public':
+        groups.append(Group.query.get(1))
+    elif visibility == 'Friends':
+        groups.append(user._groups[0]) # friends group
 
-    post = Post(content, user, [public], tags)
+    groups.append(user._groups[1]) # just me group
+
+
+    post = Post(content, user, groups, tags)
     db.session.add(post)
     db.session.commit()
 

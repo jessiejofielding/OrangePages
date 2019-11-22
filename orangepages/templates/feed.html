@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
 
         <script type="text/javascript">
             function getTimeAgo(timeString) {
@@ -63,8 +64,8 @@
                             <textarea name="content" class="form-control" id="message" rows="3"
                                 placeholder="write a post"></textarea>
                             <br>
-                            <textarea name="tags" class="form-control" id="message" rows="1"
-                                placeholder="enter some tags, separated by spaces"></textarea>
+                            <input name="tags" data-role="tagsinput" id="tags" class="form-control" id="message"
+                                placeholder="enter some tags"></input>
                         </div>
 
                     </div>
@@ -180,6 +181,7 @@
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/toggle-like.js"></script>
+        <script src="/static/js/bootstrap-tagsinput.js"></script>
     </body>
 
 </html>

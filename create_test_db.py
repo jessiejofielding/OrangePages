@@ -68,7 +68,7 @@ db.session.add(post4)
 db.session.commit()
 
 
-users = User.search("s")
+users = dan.search("s")
 # users = User.query.all()
 for user in users:
     print(user.firstname)
@@ -145,5 +145,9 @@ user = User.query.get('jjf4')
 feed = user.get_feed()
 for post in feed:
     print(post.content)
+
+results = user.search('j')
+for result in results:
+    print(result)
 # picurl, _ = cloudinary.utils.cloudinary_url(john._pic, width = 100, height = 150, crop = "fill")
 # print(picurl)

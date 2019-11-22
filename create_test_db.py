@@ -105,6 +105,9 @@ print(feed)
 # sally2.update_info('Sallie', 'Sam', 'ssam@princeton.edu')
 elise.update_optional_info("Elise", "Colter", "ccolter@princeton.edu",
 "Nashville", "Tennessee", "U.S.", "2021", "COS", "N/A", "Little")
+elise_friend_group = elise._groups[0]
+gid = elise_friend_group.gid
+elise._state = gid
 db.session.commit()
 
 for like in post1.likes:

@@ -19,7 +19,7 @@ def create_post():
     tags = []
     tags_raw =  request.form.get('tags')
     if tags_raw is not None:
-        tags_str = tags_raw.split(' ')
+        tags_str = tags_raw.split(',')
 
         for tag_str in tags_str:
             tags.append(tag_str)

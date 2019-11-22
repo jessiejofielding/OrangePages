@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
-    </head>
+        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
 
         <script type="text/javascript">
             function getTimeAgo(timeString) {
@@ -63,8 +64,8 @@
                             <textarea name="content" class="form-control" id="message" rows="3"
                                 placeholder="write a post"></textarea>
                             <br>
-                            <textarea name="tags" class="form-control" id="message" rows="1"
-                                placeholder="enter some tags, separated by spaces"></textarea>
+                            <input name="tags" data-role="tagsinput" id="tags" class="form-control" id="message"
+                                placeholder="enter some tags"></input>
                         </div>
 
                     </div>
@@ -122,12 +123,6 @@
                             <a href='profile/{{ post.creator.uid }}' class="card-link">{{post.creator.firstname}}
                                 {{post.creator.lastname}}</a></div>
                     </div>
-
-                    {% for tag in post.tags %}
-                    <div class="ml-2">
-                        <p> {{tag.tid}} </p>
-                    </div>
-                    {% endfor %}
                 </div>
                 <div>
                     <div class="dropdown">
@@ -154,6 +149,16 @@
             </div>
             <p class="card-text">
                 {{post.content}}
+                {% if post.tags|length %}
+                <br>
+                <br>
+                {% for tag in post.tags: %}
+                    <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
+                    class="btn btn-primary btn-sm tag-pill">
+                        #{{ tag.tid }}
+                    </button>
+                {% endfor %}
+                {% endif %}
             </p>
         </div>
         <div class="card-footer">
@@ -186,6 +191,7 @@
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/toggle-like.js"></script>
+        <script src="/static/js/bootstrap-tagsinput.js"></script>
     </body>
 
 </html>

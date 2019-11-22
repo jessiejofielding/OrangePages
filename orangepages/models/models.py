@@ -54,6 +54,10 @@ class User(db.Model):
         friends = Group(netid + "'s friends", self, [])
         self._groups.append(friends)
 
+        # For 'Just Me' privacy uhhh
+        self._groups.append(Group(netid, self, [self]))
+
+
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
         self.lastname = lastname
@@ -321,7 +325,7 @@ class Post(db.Model):
     def __init__(self, content, creator, groups, tags=[]):
         self.content = content
         self.creator = creator
-        self.add_group(public_group())
+        # self.add_group(public_group())
         for group in groups:
             self.add_group(group)
 
@@ -341,8 +345,12 @@ class Tag(db.Model):
     def __repr__(self):
         return "<Tag: %s>" % (self.tid)
 
-    def get_posts(self):
-        posts = self.posts.all()
+    def get_posts(self, user):
+        p = self.posts
+        p = p.join(Post.groups)
+        p = p.join(Group.members)
+        p = p.filter(User.uid == user.uid)
+        posts = p.order_by(desc(Post.date)).all()
         return posts
 
 # only works after db initialised

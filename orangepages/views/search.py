@@ -29,7 +29,7 @@ def search_tag(query_list):
         if tag == None:
             posts = []
         else:
-            posts = tag.get_posts()
+            posts = tag.get_posts(cur_user())
 
         tagged_posts.extend(posts)
 

@@ -50,20 +50,21 @@
                     </div>
                 </div>
             </div>
+            {%endif%}
+            {% for friend in friend_list: %}
+            <div class="col-sm-12 col-md-4">
+            <div class="post container card gedf-card">
+                <h3 class="card-title">{{friend.firstname}} {{friend.lastname}}</h3>
+            </div>
+            </div>
+    {% endfor %}
     </div>
     </div>
 
-    {%endif%}
+    
         </div>
     </div>
 
-
-    {% for friend in friend_list: %}
-    <div class="post container card gedf-card">
-        <h3 class="card-title">{{friend.firstname}} {{friend.lastname}}</h3>
-    </div>
-    {% endfor %}
-    </div>
     <!-- {% include 'footer.html' %} -->
 
 </html>

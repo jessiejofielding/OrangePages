@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
     </head>
 
     {% include 'navbar.html' %}
@@ -34,9 +33,27 @@
                             alt="failed to load">
                         {%endif%}
                         <h3 class="card-title">{{lookup.firstname}} {{lookup.lastname}}</h3>
-                        <p class="card-text">{{lookup.uid}}
+                        <p class="card-text">{{lookup.uid}}</p>
+                        {% if user.is_friend(lookup) %}
+                        
+                        <form method="post" action="/profile/unfriend" class="inline">
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <span class="friends"><i class="fa fa-check"></i> Friends</span>
+                                <span class="unfriend"><i class="fa fa-times"></i> Unfriend</span>
+                            </button>
+                        </form>
 
-                        </p>
+                        {% else %}
+
+                        <form method="post" action="/profile/add-friend" class="inline">
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <i class="fa fa-plus"></i> Add Friend
+                            </button>
+                        </form>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>

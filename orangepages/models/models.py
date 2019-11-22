@@ -126,6 +126,9 @@ class User(db.Model):
     def add_friend(self, friend):
         self._groups[0].members.append(friend)
         friend._groups[0].members.append(self)
+        db.session.commit()
+
+        # print(self._groups[0].members)
         # print("after adding friend, friendlist of ", self.uid, " : ", self._groups[0].members)
         # print("after adding friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
 
@@ -133,15 +136,17 @@ class User(db.Model):
         if friend in self._groups[0].members:
             self._groups[0].members.remove(friend)
             friend._groups[0].members.remove(self)
+            db.session.commit()
             # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
             # print("after removing friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
         else:
             print(friend.uid, " not a friend of ", self.uid)
 
     def friend_list(self):
+        # print(self._groups[0].members)
         return self._groups[0].members
 
-    # is user a friend of self? 
+    # is user a friend of self?
     def is_friend(self, user):
         is_friend = (user in self.friend_list())
         return is_friend
@@ -203,7 +208,7 @@ class Relationship(db.Model):
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
             ((status == st.request1_2) and (self.status == st.request2_1)):
             status = st.friends
-        
+
         if status == st.accept:
             status = st.friends
 
@@ -263,7 +268,7 @@ class Post(db.Model):
                             backref=backref('posts', lazy='dynamic'))
 
     # TODO: tags
-    tags = relationship('Tag', secondary=post_tag, 
+    tags = relationship('Tag', secondary=post_tag,
                         backref=backref('posts', lazy='dynamic'))
 
     def add_group(self, group):
@@ -271,6 +276,16 @@ class Post(db.Model):
 
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
+
+    def add_tag_str(self, tag_str):
+        tag = Tag.query.get(tag_str)
+        if tag is None:
+            tag = Tag(tag_str)
+
+        if tag not in self.tags: self.tags.append(tag)
+
+    def get_tags(self):
+        return self.tags
 
     def add_like(self, liker):
         print(liker.firstname, "liked post", self.pid)
@@ -303,17 +318,35 @@ class Post(db.Model):
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 
-    def __init__(self, content, creator, groups):
+    def __init__(self, content, creator, groups, tags):
         self.content = content
         self.creator = creator
+        self.add_group(public_group())
         for group in groups:
             self.add_group(group)
 
+        for tag_str in tags:
+            self.add_tag_str(tag_str)
+
 
 class Tag(db.Model):
-    tid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    tag = db.Column(db.String(1000))
+    tid = db.Column(db.String(1000), primary_key=True)
+    # db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # tag = db.Column(db.String(1000))
     # use tag.posts to get all the posts with this tag
 
     def __init__(self, tag):
-        self.tag = tag
+        self.tid = tag
+
+    def __repr__(self):
+        return "<Tag: %s>" % (self.tid)
+
+    def get_posts(self):
+        posts = self.posts.all()
+        return posts
+
+# only works after db initialised
+# Returns the public group that every user is automatically part of
+def public_group():
+    public = Group.query.get(1)
+    return public

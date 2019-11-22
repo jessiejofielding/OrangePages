@@ -1,6 +1,11 @@
 from orangepages import app
 app.run(host='0.0.0.0', port=5000, debug=True)
 
+# from orangepages.views.test_local import add_tag, search_tag
+#
+# add_tag('zkoh', "tag1")
+# search_tag("tag1")
+
 # from orangepages.views.test import add_friend_local, unfriend_local, get_friends_local
 # from orangepages.views.test import is_friend_of
 #

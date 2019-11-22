@@ -1,5 +1,12 @@
+POSTS<br/>
 {% for post in posts: %}
   <b>{{post.content}}</b><br>
   by {{post.creator.firstname}} {{post.creator.lastname}}<br>
+  <br>
+{% endfor %}
+
+USERS<br/>
+{% for user in user_preview_list: %}
+  {{user.firstname}} {{user.lastname}}<br>
   <br>
 {% endfor %}

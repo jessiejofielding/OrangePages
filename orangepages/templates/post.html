@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
+    </head>
 
         <script type="text/javascript">
             function getTimeAgo(timeString) {
@@ -100,6 +100,15 @@
                         </div>
                         <p class="card-text">
                             {{post.content}}
+                            {% if tags|length %}
+                            <br>
+                            <br>
+                            {% for tag in tags: %}
+                                <button type="button" class="btn btn-primary btn-sm tag-pill">
+                                    #{{ tag.tid }}
+                                </button>
+                            {% endfor %}
+                        {% endif %}
                         </p>
                     </div>
                     <div class="card-footer">

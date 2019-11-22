@@ -3,6 +3,7 @@ import datetime
 from flask import Flask
 from sqlalchemy import and_, create_engine, desc, or_
 from sqlalchemy.orm import backref, relationship
+from collections import defaultdict
 
 import config
 import flask_sqlalchemy as fsq
@@ -16,16 +17,27 @@ db = fsq.SQLAlchemy(app)
 class User(db.Model):
     """ User table """
     uid = db.Column(db.String(20), primary_key=True)
+    _uid = db.Column(db.Integer, default=1)
     firstname = db.Column(db.String(50))
+    _firstname = db.Column(db.Integer, default=1)
     lastname = db.Column(db.String(50))
+    _lastname = db.Column(db.Integer, default=1)
     email = db.Column(db.String(50), unique=True)
+    _email = db.Column(db.Integer, default=1)
     hometown = db.Column(db.String(50))
+    _hometown = db.Column(db.Integer, default=1)
     state = db.Column(db.String(50))
+    _state = db.Column(db.Integer, default=1)
     country = db.Column(db.String(50))
+    _country = db.Column(db.Integer, default=1)
     year = db.Column(db.String(50))
+    _year = db.Column(db.Integer, default=1)
     major = db.Column(db.String(50))
+    _major = db.Column(db.Integer, default=1)
     room = db.Column(db.String(50))
+    _room = db.Column(db.Integer, default=1)
     building = db.Column(db.String(50))
+    _building = db.Column(db.Integer, default=1)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
@@ -75,8 +87,10 @@ class User(db.Model):
 
     # Returns a list of users who have any visible attritute that matches
     # the given arguments. Any number of arguments can be given.
-    def search(*args):
+    def search(self, *args):
         attributes = []
+        privacy = {}
+        
         for x in User.__table__.columns:
             # to keep
             if str(x)[5] != "_":
@@ -84,10 +98,16 @@ class User(db.Model):
                 # a little work; we would need to take searcherid or searcher
                 # (user object) as the first argument -jf
                 attributes.append(x)
+            else:
+                name = str(x)[6:]
+                privacy[name] = x
 
+        group_ids = []
+        for group in self.groups_in:
+            group_ids.append(group.gid)
         users = db.session.query(User).\
-            filter(and_(or_(x.ilike('%' + val + '%') for x in attributes ) for val in args))
-
+            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes ) for val in args))
+        # or_(privacy[str(x)[5:]] == g for g in group_ids)
         return users
 
     def get_feed(self):

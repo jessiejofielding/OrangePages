@@ -153,7 +153,8 @@
                 <br>
                 <br>
                 {% for tag in post.tags: %}
-                    <button type="button" class="btn btn-primary btn-sm tag-pill">
+                    <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
+                    class="btn btn-primary btn-sm tag-pill">
                         #{{ tag.tid }}
                     </button>
                 {% endfor %}

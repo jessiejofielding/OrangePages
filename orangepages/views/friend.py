@@ -30,12 +30,19 @@ def unfriend():
     user1.unfriend(user2)
     return redirect(request.referrer)
 
-@page.route('/friends-list', methods=['GET'])
-def friends_list():
-    user = cur_user()
+# @page.route('/friends-list', methods=['GET'])
+# def friends_list():
+#     user = cur_user()
+#     friend_list = user.friend_list()
+#     return render('friends.html',
+#     friend_list = friend_list, lookup_user=user)
+
+@page.route('/profile/<string:lookup_id>/friends-list', methods=['GET'])
+def friends_list(lookup_id):
+    user = User.query.get(lookup_id)
     friend_list = user.friend_list()
     return render('friends.html',
-    friend_list = friend_list)
+    friend_list = friend_list, lookup_user=user)
 
 # @page.route('/profile/<string:lookup_id>/are-friends', methods=['GET'])
 # def are_friends(lookup_id):

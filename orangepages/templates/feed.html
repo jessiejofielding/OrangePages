@@ -62,6 +62,9 @@
                             <label class="sr-only" for="message">post</label>
                             <textarea name="content" class="form-control" id="message" rows="3"
                                 placeholder="write a post"></textarea>
+                            <br>
+                            <textarea name="tags" class="form-control" id="message" rows="1"
+                                placeholder="enter some tags, separated by spaces"></textarea>
                         </div>
 
                     </div>
@@ -101,68 +104,67 @@
 
     {% for post in posts: %}
     <div class="post container card gedf-card">
-            <div class="card-header">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex justify-content-between align-items-center">
-                        {% if post.creator._pic is none %}
-                        <div class="mr-2">
-                            <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                        </div>
-                        {% else %}
-                        <div class="mr-2">
-                            <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png'
-                                alt="failed to load">
-                        </div>
-                        {% endif %}
-                        <div class="ml-2">
-                            <div class="h5 m-0">
-                             <a href='profile/{{ post.creator.uid }}' class="card-link">{{post.creator.firstname}} {{post.creator.lastname}}</a></div>
-                        </div>
+                    {% if post.creator._pic is none %}
+                    <div class="mr-2">
+                        <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                     </div>
-                    <div>
-                        <div class="dropdown">
-                            <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-h"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                <div class="h6 dropdown-header">Configuration</div>
-                                <a class="dropdown-item" href="#">Save</a>
-                                <a class="dropdown-item" href="#">Hide</a>
-                                <a class="dropdown-item" href="#">Report</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="card-body">
-                <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>
-                    <script type="text/javascript">
-                        getTimeAgo("{{ post.date }}");
-                    </script>
-                </div>
-                <p class="card-text">
-                    {{post.content}}
-                </p>
-            </div>
-            <div class="card-footer">
-                    {% if user.liked_post(post.pid) %}
-                    <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}"
-                        class="card-link">
-                        <i class="fa fa-heart"></i> {{post.likes|length}}
-                    </a>
                     {% else %}
-                    <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}"
-                        class="card-link">
-                        <i class="fa fa-heart-o"></i> {{post.likes|length}}
-                    </a>
+                    <div class="mr-2">
+                        <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png'
+                            alt="failed to load">
+                    </div>
                     {% endif %}
-                    <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
-                        {{post.get_comments()|length}}</a>
-                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    <div class="ml-2">
+                        <div class="h5 m-0">
+                            <a href='profile/{{ post.creator.uid }}' class="card-link">{{post.creator.firstname}}
+                                {{post.creator.lastname}}</a></div>
+                    </div>
                 </div>
+                <div>
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                            <div class="h6 dropdown-header">Configuration</div>
+                            <a class="dropdown-item" href="#">Save</a>
+                            <a class="dropdown-item" href="#">Hide</a>
+                            <a class="dropdown-item" href="#">Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <div class="card-body">
+            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>
+                <script type="text/javascript">
+                    getTimeAgo("{{ post.date }}");
+                </script>
+            </div>
+            <p class="card-text">
+                {{post.content}}
+            </p>
+        </div>
+        <div class="card-footer">
+            {% if user.liked_post(post.pid) %}
+            <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}" class="card-link">
+                <i class="fa fa-heart"></i> {{post.likes|length}}
+            </a>
+            {% else %}
+            <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}" class="card-link">
+                <i class="fa fa-heart-o"></i> {{post.likes|length}}
+            </a>
+            {% endif %}
+            <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
+                {{post.get_comments()|length}}</a>
+            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+        </div>
+    </div>
     {% endfor %}
     </div>
 

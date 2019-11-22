@@ -1,7 +1,7 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
 from orangepages.models.models import User, Tag
-from orangepages.views.util import render
+from orangepages.views.util import render, cur_user
 
 
 page = Blueprint('testsearch', __name__)
@@ -12,10 +12,8 @@ page = Blueprint('testsearch', __name__)
 def search_user():
     query_list = request.args.get('query').split(' ')
 
-    # FIXME sry - zx
-
     posts = search_tag(query_list)
-    user_preview_list = User.search(*query_list).all()
+    user_preview_list = cur_user().search(*query_list).all()
     query = ' '.join(query_list)
 
     return render('search.html', posts=posts,

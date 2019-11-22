@@ -90,7 +90,7 @@ class User(db.Model):
     def search(self, *args):
         attributes = []
         privacy = {}
-        
+
         for x in User.__table__.columns:
             # to keep
             if str(x)[5] != "_":
@@ -318,7 +318,7 @@ class Post(db.Model):
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 
-    def __init__(self, content, creator, groups, tags):
+    def __init__(self, content, creator, groups, tags=[]):
         self.content = content
         self.creator = creator
         self.add_group(public_group())

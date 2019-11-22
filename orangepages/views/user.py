@@ -22,8 +22,9 @@ def view_profile(lookup_id):
         return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
+    friends_list = lookup.friends_list()
 
-    return render('profile.html', lookup=lookup)
+    return render('profile.html', lookup=lookup,friends_list=friends_list)
 
 
 

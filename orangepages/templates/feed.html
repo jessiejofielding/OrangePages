@@ -123,6 +123,12 @@
                             <a href='profile/{{ post.creator.uid }}' class="card-link">{{post.creator.firstname}}
                                 {{post.creator.lastname}}</a></div>
                     </div>
+
+                    {% for tag in post.tags %}
+                    <div class="ml-2">
+                        <p> {{tag.tid}} </p>
+                    </div>
+                    {% endfor %}
                 </div>
                 <div>
                     <div class="dropdown">

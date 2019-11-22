@@ -18,7 +18,7 @@ def search_user():
     user_preview_list = User.search(*query_list).all()
     query = ' '.join(query_list)
 
-    return render('test/all_posts.html', posts=posts,
+    return render('search.html', posts=posts,
     user_preview_list=user_preview_list, query=query, count=len(user_preview_list))
 
 # helper method

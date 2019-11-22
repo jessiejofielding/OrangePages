@@ -19,16 +19,16 @@
     <!-- Navbar-->
     {% include 'navbar.html' %}
 
-        <!-- Count -->
-        <div class="num-students">
-            <div class="count">
-                <p style="color:antiquewhite"> Found {{count}} student{% if count != 1:%}s{%endif%}. </p>
-            </div>
-        </div>
-    
     <div class="row">
      <!-- View posts -->
         <div class="col-sm-6">
+            <div class="num-students">
+                <div class="count">
+                    <p style="color:antiquewhite"> Found {{user_preview_list|length}} student{% if user_preview_list|length != 1:%}s{%endif%}. </p>
+                </div>
+            </div>
+    
+
             <div class="user container">
                 <div class="card gedf-card">
                     {% for user in user_preview_list: %}
@@ -58,8 +58,15 @@
             </div>
         </div>
 
-        {% for post in posts %}
+        
         <div class="col-sm-6">
+            <div class="num-students">
+                <div class="count">
+                    <p style="color:antiquewhite"> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </p>
+                </div>
+            </div>
+            
+            {% for post in posts %}
             <div class="post container" style="width: 100%">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
@@ -131,7 +138,7 @@
             {% endfor %}
         </div>
     </div>
- 
-    {% include 'footer.html' %}
+ <!-- 
+    {% include 'footer.html' %} -->
     
 </html>

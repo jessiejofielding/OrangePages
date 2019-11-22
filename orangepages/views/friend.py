@@ -34,7 +34,7 @@ def unfriend():
 def friends_list():
     user = cur_user()
     friend_list = user.friend_list()
-    return render('/test/friend_list.html',
+    return render('friends.html',
     friend_list = friend_list)
 
 # @page.route('/profile/<string:lookup_id>/are-friends', methods=['GET'])

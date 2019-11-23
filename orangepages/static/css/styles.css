@@ -104,7 +104,7 @@ form {
 /*buttons*/
 #msform .action-button {
     width: 100px;
-    background: #ff7b00;
+    background: var(--new-orange);
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -347,7 +347,7 @@ sup {
   top: -.5em; }
 
 a {
-  color: #ff7b00;
+  color: var(--new-orange);
   text-decoration: none;
   background-color: transparent; }
   a:hover {
@@ -611,7 +611,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #ff7b00;
+  background-color: var(--new-orange);
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -1913,8 +1913,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #ff7b00;
-  border-color: #ff7b00; }
+  background-color: var(--new-orange);
+  border-color: var(--new-orange); }
   .btn-primary:hover {
     color: #fff;
     background-color: #b34800;
@@ -3110,8 +3110,8 @@ input[type="button"].btn-block {
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-item.show .nav-link {
     color: #495057;
-    background-color: #ff7b00;
-    border-color: #dee2e6 #dee2e6 #ff7b00; }
+    background-color: var(--new-orange);
+    border-color: #dee2e6 #dee2e6 var(--new-orange); }
   .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
@@ -4771,7 +4771,7 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary {
-  background-color: #ff7b00 !important; }
+  background-color: var(--new-orange) !important; }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,

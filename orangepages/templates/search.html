@@ -57,7 +57,7 @@
             <!-- View posts -->
             <div class="col-lg-5">
                 <div class="num-students">
-                    <text style="color:gray"> Found {{user_preview_list|length}}
+                    <text style="color:white"> Found {{user_preview_list|length}}
                         student{% if user_preview_list|length != 1:%}s{%endif%}. </text>
                 </div>
 
@@ -93,7 +93,7 @@
 
             <div class="col-lg-7">
                 <div class="num-students">
-                    <text style="color:gray"> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </text>
+                    <text style="color:white"> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </text>
                 </div>
 
                 {% for post in posts: %}

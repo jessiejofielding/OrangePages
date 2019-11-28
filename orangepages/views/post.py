@@ -22,7 +22,8 @@ def create_post():
         tags_str = tags_raw.split(',')
 
         for tag_str in tags_str:
-            tags.append(tag_str)
+            if tag_str != "":
+                tags.append(tag_str)
 
     # TO FIX
     groups = []

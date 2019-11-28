@@ -18,8 +18,8 @@
     addOnBlur: true,
     maxTags: undefined,
     maxChars: undefined,
-    confirmKeys: [13, 32],
-    delimiter: ' ',
+    confirmKeys: [13, 32, 44],
+    delimiter: ',',
     delimiterRegex: null,
     cancelConfirmKeysOnEmpty: true,
     onTagExists: function(item, $tag) {

@@ -46,7 +46,8 @@
   cursor: pointer;
 }
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
-  content: "x";
+  content: "\f00d";  /* this is your text. You can also use UTF-8 character codes as I do here */
+  font-family: FontAwesome;
   padding: 0px 2px;
 }
 .bootstrap-tagsinput .tag [data-role="remove"]:hover {

@@ -50,6 +50,8 @@
             }
         </script>
 
+    <script type="text/javascript" src="/static/js/disable-input.js"></script>
+
     </head>
 
     {% include 'navbar.html' %}
@@ -64,7 +66,7 @@
                             <textarea name="content" class="form-control" id="message" rows="3"
                                 placeholder="write a post"></textarea>
                             <br>
-                            <input name="tags" data-role="tagsinput" id="tags" class="form-control" id="message"
+                            <input name="tags" data-role="tagsinput" id="tags" class="form-control noEnterSubmit"
                                 placeholder="enter some tags"></input>
                         </div>
 
@@ -85,10 +87,10 @@
                     </div>
                     <div class="btn-group">
                         <label for="visibility">Visibility:</label>
-                        <select name = "visibility" class="form-control" id="visibility">
-                                <option>Public</option>
-                                <option>Friends</option>
-                                <option>Just me</option>
+                        <select name="visibility" class="form-control" id="visibility">
+                            <option>Public</option>
+                            <option>Friends</option>
+                            <option>Just me</option>
                         </select>
 
                         <!-- sorry idk how to make it work w dropdown
@@ -167,10 +169,10 @@
                 <br>
                 <br>
                 {% for tag in post.tags: %}
-                    <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
+                <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
                     class="btn btn-primary btn-sm tag-pill">
-                        #{{ tag.tid }}
-                    </button>
+                    #{{ tag.tid }}
+                </button>
                 {% endfor %}
                 {% endif %}
             </p>

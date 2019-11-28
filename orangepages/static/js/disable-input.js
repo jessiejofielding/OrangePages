@@ -1,7 +1,8 @@
-function stopRKey(evt) {
-    var evt = (evt) ? evt : ((event) ? event : null);
-    var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-    if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
-}
-
-document.onkeypress = stopRKey;
+$('input[name=tags]').tagsinput();
+$('.bootstrap-tagsinput input').keydown(function( event ) {
+    if ( event.which == 13 ) {
+        $(this).blur();
+        $(this).focus();
+        return false;
+    }
+})

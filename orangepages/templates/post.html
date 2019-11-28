@@ -14,40 +14,8 @@
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
-    </head>
 
-        <script type="text/javascript">
-            function getTimeAgo(timeString) {
-                var timeStamp = new Date(timeString);
-                var date = new Date();
-                var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
-                    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-                var now = new Date(now_utc);
-                var secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
-                if (secondsPast < 60) {
-                    document.write(parseInt(secondsPast) + 's');
-                    return;
-                }
-                if (secondsPast < 3600) {
-                    document.write(parseInt(secondsPast / 60) + 'm');
-                    return;
-                }
-                if (secondsPast <= 86400) {
-                    document.write(parseInt(secondsPast / 3600) + 'h');
-                    return;
-                }
-                if (secondsPast <= 604800) {
-                    document.write(parseInt(secondsPast / 86400) + 'd');
-                    return;
-                }
-                if (secondsPast > 604800) {
-                    day = timeStamp.getDate();
-                    month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
-                    year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
-                    document.write(day + " " + month + year);
-                }
-            }
-        </script>
+        <script type="text/javascript" src="/static/js/timestamp.js"></script>
 
     </head>
 
@@ -104,12 +72,12 @@
                             <br>
                             <br>
                             {% for tag in tags: %}
-                                <button type="button" class="btn btn-primary btn-sm tag-pill"
+                            <button type="button" class="btn btn-primary btn-sm tag-pill"
                                 onclick="location.href='/search?query={{ tag.tid }}'">
-                                    #{{ tag.tid }}
-                                </button>
+                                #{{ tag.tid }}
+                            </button>
                             {% endfor %}
-                        {% endif %}
+                            {% endif %}
                         </p>
                     </div>
                     <div class="card-footer">
@@ -215,8 +183,8 @@
     </div>
 
 
-    <!--     {% include 'footer.html' %}
- -->
+        {% include 'footer.html' %}
+
 
     <body>
         <script src="/static/js/jquery.min.js"></script>

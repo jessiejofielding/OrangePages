@@ -2,7 +2,9 @@
 <html class="no-js" lang="en">
 
 <!-- <body style="background-image: linear-gradient(to right, #c75600 , yellow);"> -->
-<body style= "background-image: linear-gradient(to right, orange , #fdfd96);>
+
+<body>
+
     <head>
         <title>Orange Pages Home</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,17 +15,19 @@
         <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/welcome-page.css" type="text/css" />
     </head>
 
-
-    <div class="container h-100 d-flex justify-content-center">
-        <div class="jumbotron my-auto" style="text-align: center">
-            <h1 class="display-5">Welcome to</h1>
-            <h1 class="display-2" style="color:orange">Orange Pages!</h1>
-            <hr>
-            <a class="btn btn-primary btn-lg" href='/login' role="button">Login</a>
+    <div class="h-100 row align-items-center">
+        <div class="col" style="text-align: center">
+            <h1 class="display-5" style="color:white; text-shadow: 2px 2px 8px black;">Welcome to</h1>
+            <h1 class="display-2" style="color:var(--new-orange); text-shadow: 3px 3px 12px black;">
+                <strong>Orange Pages!</strong></h1>
+            <br>
+            <a class="btn btn-primary btn-lg shadow p-3 border" href='/login' role="button">Login</a>
         </div>
     </div>
+
+</body>
 
 </html>

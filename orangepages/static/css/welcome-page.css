@@ -1,0 +1,22 @@
+/*custom font*/
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+/*basic reset*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    position: relative !important;
+    min-height: 100% !important;
+    background: rgb(35,120,195);
+    background: linear-gradient(90deg, rgba(35,120,195,1) 2%, rgba(28,154,230,1) 39%, rgba(54,179,255,1) 83%);
+    height: 100%
+}
+
+body {
+    font-family: montserrat, arial, verdana;
+    background: transparent;
+    height: 100%
+}

@@ -64,9 +64,12 @@ def comment(postid):
         content = request.form.get('content')
 
         comment = Comment(postid, content, cur_uid())
-        notif = Notification(user, post.creator, NType.COMMENTED, post)
         db.session.add(comment)
-        db.session.add(notif)
+
+        if(post.creator is not user):
+            notif = Notification(user, post.creator, NType.COMMENTED, post)
+            db.session.add(notif)
+        
         db.session.commit()
 
         return redirect('/post/' + str(postid))
@@ -84,8 +87,9 @@ def like(post_id, isLike):
 
     if isLike == 'True':  #passing a string sorry
         post.add_like(user)
-        notif = Notification(user, post.creator, NType.LIKED, post)
-        db.session.add(notif)
+        if(post.creator is not user):
+            notif = Notification(user, post.creator, NType.LIKED, post)
+            db.session.add(notif)
 
     else:
         post.unlike(user)

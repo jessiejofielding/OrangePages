@@ -1,6 +1,6 @@
 from flask import request, redirect, make_response
 from flask import Blueprint, render_template
-from orangepages.models.models import db, User, Group, Post, Comment, Tag
+from orangepages.models.models import db, User, Group, Post, Comment, Tag, NType, Notification
 from orangepages.views.util import cur_user, cur_uid, render
 # from flask_login import current_user, login_required
 
@@ -64,7 +64,9 @@ def comment(postid):
         content = request.form.get('content')
 
         comment = Comment(postid, content, cur_uid())
+        notif = Notification(user, post.creator, NType.COMMENTED, post)
         db.session.add(comment)
+        db.session.add(notif)
         db.session.commit()
 
         return redirect('/post/' + str(postid))
@@ -78,11 +80,15 @@ def comment(postid):
 def like(post_id, isLike):
     # # TODO:
     post = Post.query.get(post_id)
+    user = cur_user()
 
     if isLike == 'True':  #passing a string sorry
-        post.add_like(cur_user())
+        post.add_like(user)
+        notif = Notification(user, post.creator, NType.LIKED, post)
+        db.session.add(notif)
+
     else:
-        post.unlike(cur_user())
+        post.unlike(user)
 
     db.session.commit()
 

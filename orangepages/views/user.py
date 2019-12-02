@@ -100,3 +100,20 @@ def edit_user():
     return render('message.html',
         title='Success',
         message='You have successfully edited your profile!')
+
+
+
+@page.route('/notifications', methods=['GET'])
+#@login_required
+def view_notifs():
+    user = cur_user()
+
+    if user is None:
+        return redirect('/create-user')
+
+
+    notifs = user.notifs.all()
+
+    return render('notifs.html', notifs=notifs)
+
+

@@ -14,6 +14,8 @@ engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = fsq.SQLAlchemy(app)
 
+
+#-----------------------------------------------------------------------
 class User(db.Model):
     """ User table """
     uid = db.Column(db.String(20), primary_key=True)
@@ -43,6 +45,7 @@ class User(db.Model):
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
+
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -140,6 +143,7 @@ class User(db.Model):
         if friend in self._groups[0].members:
             self._groups[0].members.remove(friend)
             friend._groups[0].members.remove(self)
+
             db.session.commit()
             # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
             # print("after removing friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
@@ -155,6 +159,15 @@ class User(db.Model):
         is_friend = (user in self.friend_list())
         return is_friend
 
+    # has self sent a friend request to user?
+    def friend_requested(self, user):
+        notifs = self._notifs_sent.filter(Notification.targetid == user.uid)
+        notifs = notifs.filter(Notification.action == NType.REQUESTED).all()
+        return len(notifs) == 1
+
+
+
+#-----------------------------------------------------------------------
 """ Secondary tables for many-to-many relationships. """
 post_group = db.Table('post_group',
     db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
@@ -176,6 +189,7 @@ post_tag = db.Table('post_tag',
     db.Column('tag_id', db.String(20), db.ForeignKey('tag.tid'))
 )
 
+#-----------------------------------------------------------------------
 class Group(db.Model):
     gid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50))
@@ -198,6 +212,7 @@ class Group(db.Model):
         for member in members:
             self.add_member(member)
 
+#-----------------------------------------------------------------------
 class Relationship(db.Model):
     """ Relationship table """
     user1id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
@@ -239,6 +254,7 @@ class Relationship(db.Model):
         # status = rel.status
         pass
 
+#-----------------------------------------------------------------------
 class Comment(db.Model):
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     postid = db.Column(db.Integer, db.ForeignKey('post.pid'))
@@ -259,6 +275,7 @@ class Comment(db.Model):
         return "Comment %s by %s" % (self.content, self.creator)
 
 
+#-----------------------------------------------------------------------
 class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(1000))
@@ -333,6 +350,7 @@ class Post(db.Model):
             self.add_tag_str(tag_str)
 
 
+#-----------------------------------------------------------------------
 class Tag(db.Model):
     tid = db.Column(db.String(1000), primary_key=True)
     # db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -358,3 +376,70 @@ class Tag(db.Model):
 def public_group():
     public = Group.query.get(1)
     return public
+
+#-----------------------------------------------------------------------
+class NType:
+    # Notification type
+    LIKED, COMMENTED, REQUESTED, ACCEPTED = range(4)
+    text = {
+            LIKED: 'liked your post.',
+            COMMENTED: 'commented on your post.',
+            REQUESTED: 'sent you a friend request.',
+            ACCEPTED: 'accepted your friend request.'
+        }
+
+class Notification(db.Model):
+
+    nid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.DateTime, default=datetime.datetime.now)
+    action = db.Column(db.Integer)
+    text = db.Column(db.String(500))
+
+    # target: person who receives this notification.
+    # sender: person who triggered the notification.
+
+    targetid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    senderid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+
+    target = relationship('User', backref=backref('notifs', 
+        order_by='desc(Notification.date)', lazy='dynamic'), 
+        foreign_keys=[targetid])
+    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic'), 
+        foreign_keys=[senderid])
+
+    # Optional
+    postid = db.Column(db.Integer)
+
+
+
+
+    def __init__(self, sender, target, action, post=None):
+        self.target = target
+        self.sender = sender
+        self.action = action
+
+        if post is not None:
+            self.postid = post.pid
+
+        self.text = NType.text[action]
+
+    def __repr__(self):
+        string = "<Notification(nid=%d, date=%s, targetid=%s," +\
+            " target=%s, senderid=%s)>"
+        return string  % (self.nid, self.date, 
+            self.targetid, self.target, self.senderid)
+
+    def sender_name(self):
+        return self.sender.firstname + ' ' + self.sender.lastname
+
+    def sender_id(self):
+        return self.sender.uid
+
+    def link_to(self):
+        if self.action in (NType.LIKED, NType.COMMENTED):
+            return '/post/' + str(self.postid)
+        else:
+            return '/profile/' + self.sender.uid
+
+
+

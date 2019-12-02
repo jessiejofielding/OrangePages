@@ -46,9 +46,24 @@
                             </button>
                         </form>
 
+                        {% elif user.friend_requested(lookup) %}
+
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <i class="fa fa-check"></i> Friend Request Sent
+                            </button>
+
+                        {% elif lookup.friend_requested(user) %}
+                            <form method="post" action="/profile/add-friend" class="inline">
+                            <button type="submit" class="btn btn-primary" 
+                            name="content" value="{{ lookup.uid }}" class="link-button">
+                                <i class="fa fa-plus"></i> Accept Friend Request
+                            </button>
+                        </form>
+
                         {% else %}
 
-                        <form method="post" action="/profile/add-friend" class="inline">
+                        <form method="post" action="/profile/friend-request" class="inline">
                             <button type="submit" class="btn btn-primary" 
                             name="content" value="{{ lookup.uid }}" class="link-button">
                                 <i class="fa fa-plus"></i> Add Friend

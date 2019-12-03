@@ -41,6 +41,8 @@ class User(db.Model):
     building = db.Column(db.String(50))
     _building = db.Column(db.Integer, default=1)
 
+    unread_notifs = db.Column(db.Integer, default=0)
+
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
@@ -184,6 +186,11 @@ class User(db.Model):
         notifs = self._notifs_sent.filter(Notification.targetid == user.uid)
         notifs = notifs.filter(Notification.action == NType.REQUESTED).all()
         return len(notifs) == 1
+
+    def reset_unread(self):
+        self.unread_notifs = 0
+        db.session.commit()
+        return
 
 
 
@@ -414,6 +421,7 @@ class Notification(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     action = db.Column(db.Integer)
     text = db.Column(db.String(500))
+    unread = db.Column(db.Boolean, default=False) # Always false
 
     # target: person who receives this notification.
     # sender: person who triggered the notification.
@@ -437,6 +445,7 @@ class Notification(db.Model):
         self.target = target
         self.sender = sender
         self.action = action
+        target.unread_notifs += 1
 
         if post is not None:
             self.postid = post.pid

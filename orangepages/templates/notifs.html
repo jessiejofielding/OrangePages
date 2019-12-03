@@ -41,6 +41,12 @@
         {% for notif in notifs: %}
         
         <div class="card-body">
+
+            {% if notif.unread %}
+                <!-- @frontend lol sorry please fix -->
+                <div style='color:red; font-weight: bold; transform:rotate(20deg); position:absolute;'> UNREAD </div>
+            {% endif %}
+            
             <a href='{{notif.link_to()}}' style="width:100%; height:100%;">
             
                 <div class="text-muted"> <i class="fa fa-clock-o"></i>

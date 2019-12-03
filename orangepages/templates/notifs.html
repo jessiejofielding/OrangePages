@@ -29,7 +29,13 @@
              <div class="card-body">
                 No notifications!
             </div>
+
+        {% else %}
+            <div class="card-body">
+                <a href="/clear-notifs"> Clear notifications </a>
+            </div>
             <hr style="margin: 0px; border: 0.5px solid lightgray">
+
         {%endif%}
 
         {% for notif in notifs: %}

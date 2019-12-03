@@ -117,3 +117,18 @@ def view_notifs():
     return render('notifs.html', notifs=notifs)
 
 
+@page.route('/clear-notifs', methods=['GET'])
+#@login_required
+def clear_notifs():
+    user = cur_user()
+    if user is None:
+        return redirect('/create-user')
+
+    notifs = user.notifs.all()
+    for notif in notifs:
+        notif.delete()
+
+    db.session.commit()
+    return redirect(request.referrer)
+
+

@@ -41,7 +41,7 @@ class User(db.Model):
     building = db.Column(db.String(50))
     _building = db.Column(db.Integer, default=1)
 
-    unread_notifs = db.Column(db.Integer, default=0)
+    _unread_notifs = db.Column(db.Integer, default=0)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
     _posts_made = relationship('Post', back_populates='creator')
@@ -188,7 +188,7 @@ class User(db.Model):
         return len(notifs) == 1
 
     def reset_unread(self):
-        self.unread_notifs = 0
+        self._unread_notifs = 0
         db.session.commit()
         return
 
@@ -452,7 +452,7 @@ class Notification(db.Model):
         self.target = target
         self.sender = sender
         self.action = action
-        target.unread_notifs += 1
+        target._unread_notifs += 1
 
         if post is not None:
             self.postid = post.pid

@@ -113,7 +113,7 @@ def view_notifs():
 
     # Order of next few lines matter, pls don't rearrange
     notifs = user.notifs.all()
-    unread_count = user.unread_notifs
+    unread_count = user._unread_notifs
     user.reset_unread()
     for notif, i in zip(notifs, range(unread_count)):
         notif.unread = True # Do not commit to db session 

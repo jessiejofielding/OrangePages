@@ -353,6 +353,13 @@ class Post(db.Model):
             print("User %s did not like this post" % unliker.uid)
         else:
             self.likes.remove(unliker)
+            notifs = db.session.query(Notification).filter(
+                Notification.action == NType.LIKED and
+                Notification.target is self.creator and 
+                Notification.sender is unliker
+                )
+            for notif in notifs.all():
+                notif.delete()
 
     def get_likers(self):
         return self.likes

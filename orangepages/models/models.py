@@ -137,11 +137,15 @@ class User(db.Model):
         friend._groups[0].members.append(self)
 
         notifs = db.session.query(Notification).filter(
-            Notification.action == NType.REQUESTED and
-            Notification.target is self and 
-            Notification.sender is friend
+            (Notification.action == NType.REQUESTED),
+            (Notification.targetid == self.uid),
+            (Notification.senderid == friend.uid)
             )
+
         for notif in notifs.all():
+            print()
+            print(notif)
+            print()
             notif.delete()
 
         db.session.commit()
@@ -157,11 +161,13 @@ class User(db.Model):
 
 
             notifs = db.session.query(Notification).filter(
-                Notification.action == NType.ACCEPTED and
-                ((Notification.target is self and 
-                Notification.sender is friend) or
-                (Notification.target is friend and 
-                Notification.sender is self))
+                (Notification.action == NType.ACCEPTED),
+                or_(
+                    and_(Notification.targetid == self.uid, 
+                    Notification.senderid == friend.uid),
+                    and_(Notification.targetid == friend.uid, 
+                    Notification.senderid == self.uid)
+                    )
             )
             for notif in notifs.all():
                 notif.delete()
@@ -356,9 +362,10 @@ class Post(db.Model):
         else:
             self.likes.remove(unliker)
             notifs = db.session.query(Notification).filter(
-                Notification.action == NType.LIKED and
-                Notification.target is self.creator and 
-                Notification.sender is unliker
+                (Notification.action == NType.LIKED),
+                (Notification.targetid == self.creator.uid), 
+                (Notification.senderid == unliker.uid),
+                (Notification.postid == self.pid)
                 )
             for notif in notifs.all():
                 notif.delete()

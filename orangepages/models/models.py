@@ -133,6 +133,15 @@ class User(db.Model):
     def add_friend(self, friend):
         self._groups[0].members.append(friend)
         friend._groups[0].members.append(self)
+
+        notifs = db.session.query(Notification).filter(
+            Notification.action == NType.REQUESTED and
+            Notification.target is self and 
+            Notification.sender is friend
+            )
+        for notif in notifs.all():
+            notif.delete()
+
         db.session.commit()
 
         # print(self._groups[0].members)
@@ -143,6 +152,17 @@ class User(db.Model):
         if friend in self._groups[0].members:
             self._groups[0].members.remove(friend)
             friend._groups[0].members.remove(self)
+
+
+            notifs = db.session.query(Notification).filter(
+                Notification.action == NType.ACCEPTED and
+                ((Notification.target is self and 
+                Notification.sender is friend) or
+                (Notification.target is friend and 
+                Notification.sender is self))
+            )
+            for notif in notifs.all():
+                notif.delete()
 
             db.session.commit()
             # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
@@ -424,10 +444,8 @@ class Notification(db.Model):
         self.text = NType.text[action]
 
     def __repr__(self):
-        string = "<Notification(nid=%d, date=%s, targetid=%s," +\
-            " target=%s, senderid=%s)>"
-        return string  % (self.nid, self.date, 
-            self.targetid, self.target, self.senderid)
+        string = "To %s: %s %s\n"
+        return string  % (self.targetid, self.senderid, self.text)
 
     def sender_name(self):
         return self.sender.firstname + ' ' + self.sender.lastname
@@ -440,6 +458,12 @@ class Notification(db.Model):
             return '/post/' + str(self.postid)
         else:
             return '/profile/' + self.sender.uid
+
+    def delete(self):
+        self.target.notifs.remove(self)
+        self.sender._notifs_sent.remove(self)
+        db.session.delete(self)
+
 
 
 

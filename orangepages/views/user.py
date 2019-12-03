@@ -22,6 +22,11 @@ def view_profile(lookup_id):
         return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
+    if lookup is None:
+        return render('message.html',
+            title='Error',
+            message="This user doesn't exist.")
+        
     friends_list = lookup.friend_list()
 
     return render('profile.html', lookup=lookup,friends_list=friends_list)

@@ -46,6 +46,11 @@ def create_post():
 @page.route('/post/<int:postid>', methods=['GET'])
 def view_post(postid):
     post = Post.query.get(postid)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
+        
     comments = post.get_comments()
     num_likers = len(post.get_likers())
     tags = post.get_tags()
@@ -56,6 +61,10 @@ def view_post(postid):
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 def comment(postid):
     post = Post.query.get(postid)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
 
     if request.method=='GET':
         return render("post_comment.html", post=post)
@@ -83,6 +92,11 @@ def comment(postid):
 def like(post_id, isLike):
     # # TODO:
     post = Post.query.get(post_id)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
+
     user = cur_user()
 
     if isLike == 'True':  #passing a string sorry
@@ -102,6 +116,10 @@ def like(post_id, isLike):
 @page.route('/post/<int:post_id>/tag')
 def add_tag(post_id):
     post = Post.query.get(post_id)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
 
     tag_str = request.form.get('content')
 

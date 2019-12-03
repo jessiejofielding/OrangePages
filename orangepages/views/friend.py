@@ -56,6 +56,12 @@ def unfriend():
 @page.route('/profile/<string:lookup_id>/friends-list', methods=['GET'])
 def friends_list(lookup_id):
     user = User.query.get(lookup_id)
+    if user is None:
+        return render('message.html',
+            title='Error',
+            message="This user doesn't exist.")
+
+
     friend_list = user.friend_list()
     return render('friends.html',
     friend_list = friend_list, lookup_user=user)

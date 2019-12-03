@@ -286,8 +286,10 @@ class Comment(db.Model):
     cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     postid = db.Column(db.Integer, db.ForeignKey('post.pid'))
     content = db.Column(db.String(1000))
-    #creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    # creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
+    creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic'), 
+        foreign_keys=[creatorid])
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
     post = relationship('Post', backref=

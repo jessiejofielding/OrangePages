@@ -63,7 +63,7 @@ def comment(postid):
         user = cur_user()
         content = request.form.get('content')
 
-        comment = Comment(postid, content, cur_uid())
+        comment = Comment(postid, content, user)
         db.session.add(comment)
 
         if(post.creator is not user):

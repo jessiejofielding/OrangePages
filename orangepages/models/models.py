@@ -163,9 +163,9 @@ class User(db.Model):
             notifs = db.session.query(Notification).filter(
                 (Notification.action == NType.ACCEPTED),
                 or_(
-                    and_(Notification.targetid == self.uid, 
+                    and_(Notification.targetid == self.uid,
                     Notification.senderid == friend.uid),
-                    and_(Notification.targetid == friend.uid, 
+                    and_(Notification.targetid == friend.uid,
                     Notification.senderid == self.uid)
                     )
             )
@@ -294,7 +294,7 @@ class Comment(db.Model):
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     # creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic'), 
+    creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic'),
         foreign_keys=[creatorid])
     date = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -363,7 +363,7 @@ class Post(db.Model):
             self.likes.remove(unliker)
             notifs = db.session.query(Notification).filter(
                 (Notification.action == NType.LIKED),
-                (Notification.targetid == self.creator.uid), 
+                (Notification.targetid == self.creator.uid),
                 (Notification.senderid == unliker.uid),
                 (Notification.postid == self.pid)
                 )
@@ -423,12 +423,13 @@ def public_group():
 #-----------------------------------------------------------------------
 class NType:
     # Notification type
-    LIKED, COMMENTED, REQUESTED, ACCEPTED = range(4)
+    LIKED, COMMENTED, REQUESTED, ACCEPTED, TAGGED = range(5)
     text = {
             LIKED: 'liked your post.',
             COMMENTED: 'commented on your post.',
             REQUESTED: 'sent you a friend request.',
-            ACCEPTED: 'accepted your friend request.'
+            ACCEPTED: 'accepted your friend request.',
+            TAGGED: 'tagged you in a post.'
         }
 
 class Notification(db.Model):
@@ -445,10 +446,10 @@ class Notification(db.Model):
     targetid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     senderid = db.Column(db.String(20), db.ForeignKey('user.uid'))
 
-    target = relationship('User', backref=backref('notifs', 
-        order_by='desc(Notification.date)', lazy='dynamic'), 
+    target = relationship('User', backref=backref('notifs',
+        order_by='desc(Notification.date)', lazy='dynamic'),
         foreign_keys=[targetid])
-    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic'), 
+    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic'),
         foreign_keys=[senderid])
 
     # Optional
@@ -479,7 +480,7 @@ class Notification(db.Model):
         return self.sender.uid
 
     def link_to(self):
-        if self.action in (NType.LIKED, NType.COMMENTED):
+        if self.action in (NType.LIKED, NType.COMMENTED, NType.TAGGED):
             return '/post/' + str(self.postid)
         else:
             return '/profile/' + self.sender.uid
@@ -488,7 +489,3 @@ class Notification(db.Model):
         self.target.notifs.remove(self)
         self.sender._notifs_sent.remove(self)
         db.session.delete(self)
-
-
-
-

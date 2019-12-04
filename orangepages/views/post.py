@@ -15,18 +15,6 @@ def create_post():
     user = cur_user()
     content = request.form.get('content')
 
-    # In content, look for the string right after the @ sign
-    after_sign = content.split("@")
-    # determine if string is a valid netid
-    for str in after_sign:
-        possible_netid = str.split(' ', 1)[0]
-        possible_user = User.query.get(possible_netid)
-
-        if possible_user is not None:
-            notif = Notification(user, possible_user, NType.TAGGED)
-            db.session.add(notif)
-            db.session.commit()
-
     # Parse tags and add them - list of tag STRINGS
     tags = []
     tags_raw =  request.form.get('tags')
@@ -52,6 +40,18 @@ def create_post():
     post = Post(content, user, groups, tags)
     db.session.add(post)
     db.session.commit()
+
+    # In content, look for the string right after the @ sign
+    after_sign = content.split("@")
+    # determine if string is a valid netid
+    for str in after_sign:
+        possible_netid = str.split(' ', 1)[0]
+        possible_user = User.query.get(possible_netid)
+
+        if possible_user is not None:
+            notif = Notification(user, possible_user, NType.TAGGED, post)
+            db.session.add(notif)
+            db.session.commit()
 
     return redirect("/feed")
 

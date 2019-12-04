@@ -18,7 +18,7 @@ html {
 body {
     font-family: montserrat, arial, verdana;
     background: transparent;
-    height: 100%
+    height: 100%;
 }
 
 .loader {
@@ -31,7 +31,9 @@ body {
     height: 80px;
 	margin: -280px 40px 54px  -34px;
 
-	background:url("https://i.imgur.com/gFzgHcI.png");
+	background:url('orange.svg');
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
     
     -webkit-animation: loader 5s infinite  linear;
     -moz-animation: loader 5s infinite  linear;
@@ -90,7 +92,7 @@ body {
   100% {
     width: 80px;
     height: 80px;
-    opacity: 0;
+    opacity: 1;
 
 	-webkit-transform: translate(150px, 800px) rotateZ(360deg);
   }
@@ -118,3 +120,4 @@ body {
 	-webkit-transform: translate(150px, 800px) rotateZ(360deg);
   }
 }
+

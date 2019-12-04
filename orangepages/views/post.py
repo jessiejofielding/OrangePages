@@ -44,14 +44,29 @@ def create_post():
     # In content, look for the string right after the @ sign
     after_sign = content.split("@")
     # determine if string is a valid netid
+
     for str in after_sign:
-        possible_netid = str.split(' ', 1)[0]
+        split_str = str.split(' ',  2)
+        possible_netid = split_str[0]
         possible_user = User.query.get(possible_netid)
 
         if possible_user is not None:
             notif = Notification(user, possible_user, NType.TAGGED, post)
             db.session.add(notif)
             db.session.commit()
+        else:
+            possible_firstname = split_str[0]
+            possible_lastname = split_str[1]
+            # print(possible_firstname, possible_lastname)
+
+            p = db.session.query(User)
+            p = p.filter(User.firstname == possible_firstname)
+            p = p.filter(User.lastname == possible_lastname)
+
+            for tagged_user in p.all():
+                notif = Notification(user, tagged_user, NType.TAGGED, post)
+                db.session.add(notif)
+                db.session.commit()
 
     return redirect("/feed")
 

@@ -33,5 +33,7 @@ def logout_route():
 @page.route('/feed', methods=['GET'])
 #@login_required
 def feed():
+    if cur_user() is None:
+        return redirect('/create-user')
     posts = cur_user().get_feed()
     return render('feed.html', posts=posts)

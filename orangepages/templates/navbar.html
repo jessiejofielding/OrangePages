@@ -3,8 +3,8 @@
     <div class="container justify-content-center">
         <ul class="nav navbar-nav flex-fill justify-content-start">
             <li class="nav-item active">
-                <img 
-    src="./static/css/orange.svg" 
+                <img
+    src="./static/css/orange.svg"
     height="30"
     width="50" />
                 <a class="navbar-brand" href="/">OrangePages</a>
@@ -37,8 +37,9 @@
                 <a class="nav-link" href="/profile/{{user.uid}}/friends-list">
                         <i class="fa fa-heart"></i>
                         <span class="sr-only">(current)</span>
-                </a>     
+                </a>
             </li>
+            {% if user is not none %}
             <li>
                 <a class="nav-link" href="/notifications">
                         <i class="fa fa-bell"></i>
@@ -47,8 +48,9 @@
                             ({{user._unread_notifs}})
                         {% endif %}
                         <span class="sr-only">(current)</span>
-                </a>     
+                </a>
             </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

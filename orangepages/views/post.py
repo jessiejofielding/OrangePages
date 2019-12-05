@@ -182,11 +182,8 @@ def upload_image():
     if request.method == "POST":
         if request.files:
             image = request.files["image"]
-            print(type(image))
-            print(image.filename)
 
             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-            print(image, "saved")
             return redirect(request.referrer)
 
     return render_template("/upload_image.html")
@@ -194,6 +191,5 @@ def upload_image():
 @page.route('/uploads/<filename>')
 def uploaded_file(filename):
     name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
-    print(name)
+    # print(name)
     return render_template("img.html", img_name=name)
-    # return send_from_directory(app.config["IMAGE_UPLOADS"],filename)

@@ -9,6 +9,9 @@ class Config(object):
     CAS_LOGIN_ROUTE = '/cas/login'
     SECRET_KEY = 'bd018ea8ad91ce61534aeb83'
 
+    IMAGE_UPLOADS = "./orangepages/static/uploads/"
+    IMAGE_UPLOADS_RELATIVE = "../static/uploads/"
+
 
 # TODO: we can have different configurations for production etc as we need
 

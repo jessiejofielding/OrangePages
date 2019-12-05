@@ -41,14 +41,12 @@
             </li>
             {% if user is not none %}
             <li>
-                <a class="nav-link" href="/notifications">
-                        <i class="fa fa-bell"></i>
-                        <!-- @frontend pwease make this pwetty -->
+                <li class="nav-item">
                         {% if user._unread_notifs > 0 %}
-                            ({{user._unread_notifs}})
+                        <span class="badge badge-pill badge-danger" style="float:right;margin-bottom:-10px; font-size: 9px">{{user._unread_notifs}}</span>
                         {% endif %}
-                        <span class="sr-only">(current)</span>
-                </a>
+                        <a class="nav-link" href="/notifications"><i class="fa fa-bell"></i><span class="sr-only">(current)</span></a>
+                    </li>
             </li>
             {% endif %}
         </ul>

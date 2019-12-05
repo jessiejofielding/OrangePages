@@ -38,12 +38,14 @@
             <div class="col-lg-4">
                 <div id="user-box" class="card" style="width: 100%">
                     <div class="card-body text-center">
-                        {%if user._pic is none:%}
+                      <!-- @frontend -->
+                      <img src='{{img_path}}' width=150 height=auto alt="failed to load">
+                        <!-- {%if user._pic is none:%}
                         <i class="fa fa-user fa-5x"></i>
                         {%else:%}
                         <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
                             alt="failed to load">
-                        {%endif%}
+                        {%endif%} -->
                         <br>
                         <br>
                         <h3 class="card-title"><strong>{{user.firstname}} {{user.lastname}}</strong></h3>
@@ -52,9 +54,16 @@
                 </div>
             </div>
             <div class="col">
-                <form id="msform" class="is-readonly" action="/edit-user" method="post">
+                <form id="msform" class="is-readonly" action="/edit-user" method="post" enctype=multipart/form-data>
                     <fieldset>
                         <h2 class="fs-title">Your Details</h2>
+                        <!-- @frontend -->
+                        <h3>upload pic:</h3>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" name="image" id="image">
+                          <label class="custom-file-label" for="image">Select image...</label>
+                        </div>
+
                         <div class="row">
                             <div class="col-lg-3 text-left">First Name:</div>
                             <div class="col-lg-9">

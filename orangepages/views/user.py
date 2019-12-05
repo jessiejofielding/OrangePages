@@ -3,6 +3,7 @@ from flask import Blueprint, render_template
 from orangepages.models.models import db, User
 from flask_cas_fix import login_required
 from sqlalchemy import exc
+from orangepages import app
 
 from orangepages.views.util import cur_user, cur_uid, render
 
@@ -11,6 +12,11 @@ from orangepages.views.util import cur_user, cur_uid, render
 page = Blueprint('user', __name__)
 
 
+def upload_pic(image):
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 #@login_required
 def view_profile(lookup_id):
@@ -18,18 +24,24 @@ def view_profile(lookup_id):
     if cur_user() is None:
         return redirect('/create-user')
 
+    img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+
     if cur_uid() == lookup_id:
-        return render('profile_user.html')
+        # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id
+        print(img_path)
+        return render('profile_user.html', img_path = img_path)
 
     lookup = User.query.get(lookup_id)
     if lookup is None:
         return render('message.html',
             title='Error',
             message="This user doesn't exist.")
-        
+
     friends_list = lookup.friend_list()
 
-    return render('profile.html', lookup=lookup,friends_list=friends_list)
+
+    return render('profile.html', lookup=lookup,friends_list=friends_list,
+    img_path = img_path)
 
 
 
@@ -43,7 +55,6 @@ def create_user():
 
     if request.method=='GET':
         return render('profile_create.html')
-
 
     # Get form fields
     netid = cur_uid()
@@ -98,6 +109,12 @@ def edit_user():
         # Update user
         cur_user().update_optional_info(firstname,lastname,email,
             hometown,state,country,year,major,room,building)
+
+        if "image" in request.files:
+            image = request.files["image"]
+            print("IMAGE", image)
+            cur_user().update_pic(image)
+
         db.session.commit()
 
     return redirect('/profile/'+cur_uid())
@@ -121,7 +138,7 @@ def view_notifs():
     unread_count = user._unread_notifs
     user.reset_unread()
     for notif, i in zip(notifs, range(unread_count)):
-        notif.unread = True # Do not commit to db session 
+        notif.unread = True # Do not commit to db session
 
     return render('notifs.html', notifs=notifs)
 
@@ -139,5 +156,3 @@ def clear_notifs():
 
     db.session.commit()
     return redirect(request.referrer)
-
-

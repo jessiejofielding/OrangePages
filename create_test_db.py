@@ -142,7 +142,7 @@ add_friend_local('jexample', 'sstudent')
 
 
 add_tag('jexample', "tag1")
-search_tag("tag1")
+# search_tag("tag1")
 
 
 db.session.add(public)

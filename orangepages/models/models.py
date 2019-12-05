@@ -9,6 +9,7 @@ import config
 import flask_sqlalchemy as fsq
 import orangepages.models.statuses as st
 from orangepages import app
+import os
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
@@ -48,6 +49,8 @@ class User(db.Model):
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
+    # pic = db.Column(db.String(200))
+
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -62,6 +65,12 @@ class User(db.Model):
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
 
+    def update_pic(self, image):
+        subpath = self.uid + "_pic.jpeg"
+        image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+
+    # def pic_path(self):
+    #     return app.config["IMAGE_UPLOADS_RELATIVE"] + self.uid
 
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname

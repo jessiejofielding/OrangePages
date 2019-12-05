@@ -6,7 +6,7 @@
 <!-- MultiStep Form -->
 <div class="row">
     <div class="col-md-12 col-md-offset-3">
-        <form id="msform" action="create-user" method="post">
+        <form id="msform" action="create-user" method="post" enctype=multipart/form-data> 
             <!-- progressbar -->
             <ul id="progressbar">
                 <li class="active">Basic Info</li>
@@ -22,6 +22,14 @@
                 <input type="button" name="next" class="next action-button" value="Next"/>
             </fieldset>
             <fieldset>
+
+                <!-- @frontend -->
+                <h2 class="fs-title">upload pic<h2>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="image" id="image">
+                  <label class="custom-file-label" for="image">Select image...</label>
+                </div>
+
                 <h2 class="fs-title">Extra Details</h2>
                 <h3 class="fs-subtitle">Where do you live</h3>
                 <input type="text" name="hometown" placeholder="Hometown"/>

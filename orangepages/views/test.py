@@ -230,6 +230,11 @@ def create_user():
     user.update_optional_info(firstname,lastname,email,
         hometown,state,country,year,major,room,building)
 
+    if "image" in request.files:
+        image = request.files["image"]
+        print("IMAGE", image)
+        user.update_pic(image)
+
     try:
         db.session.add(user)
         db.session.commit()

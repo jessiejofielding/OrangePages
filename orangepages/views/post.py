@@ -56,7 +56,7 @@ def create_post():
             notif = Notification(user, possible_user, NType.TAGGED, post)
             db.session.add(notif)
             db.session.commit()
-        else:
+        elif len(split_str) > 1:
             possible_firstname = split_str[0]
             possible_lastname = split_str[1]
             # print(possible_firstname, possible_lastname)

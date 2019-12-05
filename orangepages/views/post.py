@@ -1,7 +1,9 @@
 from flask import request, redirect, make_response
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory
 from orangepages.models.models import db, User, Group, Post, Comment, Tag, NType, Notification
 from orangepages.views.util import cur_user, cur_uid, render
+from orangepages import app
+import os
 # from flask_login import current_user, login_required
 
 
@@ -173,3 +175,25 @@ def add_tag(post_id):
 #         message=likersStr)
 
 # @page.route('/post/<int:post_id>/num-likers', methods=['GET'])
+
+# uploads an image
+@page.route("/upload-image", methods=["GET", "POST"])
+def upload_image():
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            print(type(image))
+            print(image.filename)
+
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+            print(image, "saved")
+            return redirect(request.referrer)
+
+    return render_template("/upload_image.html")
+
+@page.route('/uploads/<filename>')
+def uploaded_file(filename):
+    name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
+    print(name)
+    return render_template("img.html", img_name=name)
+    # return send_from_directory(app.config["IMAGE_UPLOADS"],filename)

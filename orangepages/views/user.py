@@ -4,6 +4,7 @@ from orangepages.models.models import db, User
 from flask_cas_fix import login_required
 from sqlalchemy import exc
 from orangepages import app
+import os.path
 
 from orangepages.views.util import cur_user, cur_uid, render
 
@@ -24,7 +25,13 @@ def view_profile(lookup_id):
     if cur_user() is None:
         return redirect('/create-user')
 
-    img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
+
+    if os.path.isfile(img_path_check):
+        img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    else:
+        img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
 
     if cur_uid() == lookup_id:
         # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id

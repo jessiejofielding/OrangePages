@@ -51,6 +51,10 @@ def create_post():
         split_str = str.split(' ',  2)
         possible_netid = split_str[0]
         possible_user = User.query.get(possible_netid)
+        # print("possible_user", possible_user)
+        #
+        # print("len(split_str)", len(split_str))
+        # print(split_str)
 
         if possible_user is not None:
             notif = Notification(user, possible_user, NType.TAGGED, post)

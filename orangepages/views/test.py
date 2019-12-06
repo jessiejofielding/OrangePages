@@ -173,9 +173,9 @@ def login():
 
     user = User.query.get(netid)
     if user is None:
-        response = make_response(redirect('create-user'))
+        response = make_response(redirect('/create-user'))
     else:
-        response = make_response(redirect('feed'))
+        response = make_response(redirect('/feed'))
     return set_uid(response, netid)
 
 

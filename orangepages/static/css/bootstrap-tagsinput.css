@@ -6,7 +6,7 @@
   vertical-align: middle;
   border-radius: 4px;
   max-width: 100%;
-  line-height: 22px;
+  line-height: 25px;
   cursor: text;
 }
 .bootstrap-tagsinput input {
@@ -39,7 +39,15 @@
   background: var(--new-orange);
   padding-right: 6px;
   padding-left: 6px;
-  border-radius: 10px;
+  border-radius: 15px;
+
+  max-width: calc(100% - 5px);
+  position: relative;
+
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .bootstrap-tagsinput .tag [data-role="remove"] {
   margin-left: 8px;

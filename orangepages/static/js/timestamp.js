@@ -1,9 +1,9 @@
 function getTimeAgo(timeString) {
-    var timeStamp = new Date(timeString).getTimezoneOffset();
-    var date = new Date().getTimezoneOffset();
+    var timeStamp = new Date(timeString)
+    var date = new Date()
     var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
         date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-    var now = new Date(now_utc).getTimezoneOffset();
+    var now = new Date(now_utc)
     var secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
     if (secondsPast < 60) {
         document.write(parseInt(secondsPast) + 's');

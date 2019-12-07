@@ -21,9 +21,10 @@ def create_post():
     tags = []
     tags_raw =  request.form.get('tags')
     if tags_raw is not None:
-        tags_str = tags_raw.split(',')
+        tags_str1 = tags_raw.replace(" ", "")
+        tags_str2 = tags_str1.split(',')
 
-        for tag_str in tags_str:
+        for tag_str in tags_str2:
             if tag_str != "":
                 tags.append(tag_str)
 

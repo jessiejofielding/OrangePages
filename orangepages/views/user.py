@@ -13,10 +13,10 @@ from orangepages.views.util import cur_user, cur_uid, render
 page = Blueprint('user', __name__)
 
 
-def upload_pic(image):
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
+# def upload_pic(image):
+#     if request.method == "POST":
+#         if request.files:
+#             image = request.files["image"]
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 #@login_required
@@ -26,17 +26,16 @@ def view_profile(lookup_id):
         return redirect('/create-user')
 
     # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
-
-    if os.path.isfile(img_path_check):
-        img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    else:
-        img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
+    # img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
+    #
+    # if os.path.isfile(img_path_check):
+    #     img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    # else:
+    #     img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
 
     if cur_uid() == lookup_id:
         # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id
-        print(img_path)
-        return render('profile_user.html', img_path = img_path)
+        return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
     if lookup is None:
@@ -47,8 +46,7 @@ def view_profile(lookup_id):
     friends_list = lookup.friend_list()
 
 
-    return render('profile.html', lookup=lookup,friends_list=friends_list,
-    img_path = img_path)
+    return render('profile.html', lookup=lookup,friends_list=friends_list)
 
 
 
@@ -80,6 +78,12 @@ def create_user():
     user = User(netid, firstname, lastname, email)
     user.update_optional_info(firstname,lastname,email,
         hometown,state,country,year,major,room,building)
+
+    if "image" in request.files:
+        image = request.files["image"]
+        if image.filename is not '':
+            print("IMAGE", image)
+            user.add_img(image)
 
     try:
         db.session.add(user)
@@ -119,8 +123,9 @@ def edit_user():
 
         if "image" in request.files:
             image = request.files["image"]
-            print("IMAGE", image)
-            cur_user().update_pic(image)
+            if image.filename is not '':
+                print("IMAGE", image)
+                cur_user().add_img(image)
 
         db.session.commit()
 

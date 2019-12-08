@@ -116,7 +116,7 @@
                     </div>
                     {% else %}
                     <div class="mr-2">
-                        <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png'
+                        <img src='{{post.creator.get_img()}}' width="50px" height=auto class="rounded-circle"
                             alt="failed to load">
                     </div>
                     {% endif %}
@@ -150,7 +150,7 @@
                 </script>
             </div>
             <p class="card-text">
-                <img src="{{post.img}}" width="200px">
+                <img src="{{post.get_img()}}" width="200px">
                 {{post.content}}
                 {% if post.tags|length %}
                 <br>

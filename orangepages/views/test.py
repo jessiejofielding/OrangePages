@@ -232,8 +232,9 @@ def create_user():
 
     if "image" in request.files:
         image = request.files["image"]
-        print("IMAGE", image)
-        user.update_pic(image)
+        if image.filename is not '':
+            print("IMAGE", image)
+            user.add_img(image)
 
     try:
         db.session.add(user)

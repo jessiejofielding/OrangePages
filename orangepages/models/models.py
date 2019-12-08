@@ -15,6 +15,8 @@ engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = fsq.SQLAlchemy(app)
 
+DEF_IMG = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
+
 
 #-----------------------------------------------------------------------
 class User(db.Model):
@@ -49,8 +51,8 @@ class User(db.Model):
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
-    # pic = db.Column(db.String(200))
-
+    img = db.Column(db.String(1000))
+    _img = db.Column(db.Integer, default=1)
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -65,9 +67,27 @@ class User(db.Model):
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
 
+        self.img = DEF_IMG
+
+    # TO REMOVE
     def update_pic(self, image):
         subpath = self.uid + "_pic.jpeg"
         image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+
+    def add_img(self, image):
+        if image is not None:
+            subpath = self.uid + "_pic.jpeg"
+            self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
+            image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+            db.session.commit()
+
+    def get_img(self):
+        img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
+
+        if os.path.isfile(img_path_check):
+            return self.img
+        else:
+            return DEF_IMG
 
     # def pic_path(self):
     #     return app.config["IMAGE_UPLOADS_RELATIVE"] + self.uid
@@ -124,7 +144,7 @@ class User(db.Model):
         for group in self.groups_in:
             group_ids.append(group.gid)
         users = db.session.query(User).\
-            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes ) for val in args))
+            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes) for val in args))
         # or_(privacy[str(x)[5:]] == g for g in group_ids)
         return users
 
@@ -397,9 +417,13 @@ class Post(db.Model):
             image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
             db.session.commit()
 
-    def get_img():
-        print("self.img", self.img)
-        return self.img
+    def get_img(self):
+        img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
+
+        if os.path.isfile(img_path_check):
+            return self.img
+        else:
+            return ""
 
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)

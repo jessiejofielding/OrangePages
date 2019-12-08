@@ -67,7 +67,7 @@
                             </script>
                         </div>
                         <p class="card-text">
-                            <img src="{{post.img}}" width="200px">
+                            <img src="{{post.get_img()}}" width="200px">
                             <br/>
                             {{post.content}}
                             {% if tags|length %}

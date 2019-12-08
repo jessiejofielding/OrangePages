@@ -326,6 +326,8 @@ class Post(db.Model):
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = relationship('User', back_populates='_posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
+    img = db.Column(db.String(1000))
+
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
 
@@ -338,6 +340,9 @@ class Post(db.Model):
 
     def add_group(self, group):
         if group not in self.groups: self.groups.append(group)
+
+    def remove_group(self, group):
+        if group in self.groups: self.groups.remove(group)
 
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
@@ -352,18 +357,15 @@ class Post(db.Model):
     def get_tags(self):
         return self.tags
 
-    def add_like(self, liker):
-        print(liker.firstname, "liked post", self.pid)
-        self.likes.append(liker)
-
-    def remove_group(self, group):
-        self.groups.remove(group)
-
     def remove_tag(self, tag):
         if tag not in self.tags:
             print("Post did not have this tag")
         else:
             self.tags.remove(tag)
+
+    def add_like(self, liker):
+        print(liker.firstname, "liked post", self.pid)
+        self.likes.append(liker)
 
     def unlike(self, unliker):
         if unliker not in self.likes:
@@ -388,12 +390,24 @@ class Post(db.Model):
         comments = c.order_by(desc(Comment.date)).all()
         return comments
 
+    def add_img(self, image):
+        if image is not None:
+            subpath = str(self.pid) + "_pic.jpeg"
+            self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
+            image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
+            db.session.commit()
+
+    def get_img():
+        print("self.img", self.img)
+        return self.img
+
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 
     def __init__(self, content, creator, groups, tags=[]):
         self.content = content
         self.creator = creator
+        self.img = ""
         # self.add_group(public_group())
         for group in groups:
             self.add_group(group)

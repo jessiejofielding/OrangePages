@@ -75,6 +75,11 @@ def create_post():
                 db.session.add(notif)
                 db.session.commit()
 
+    if "image" in request.files:
+        image = request.files["image"]
+        if image.filename is not '':
+            post.add_img(image)
+
     return redirect("/feed")
 
 @page.route('/post/<int:postid>', methods=['GET'])

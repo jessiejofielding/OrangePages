@@ -4,12 +4,17 @@ import config
 import os
 import cloudinary as Cloud
 from dotenv import load_dotenv
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 dotenv_path = os.path.join("./", 'dev.env')
 load_dotenv(dotenv_path)
 
 dir = os.path.abspath('orangepages/templates')
 app = Flask(__name__, template_folder=dir)
+admin = Admin(app, name='microblog', template_mode='bootstrap3')
+# admin.add_view(ModelView(User, db.session))
+# admin.add_view(ModelView(Post, db.session))
 cas = CAS(app, '/cas')
 app.config.from_object(config.Config)
 

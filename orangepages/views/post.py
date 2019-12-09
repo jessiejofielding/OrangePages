@@ -7,7 +7,7 @@ import os
 # from flask_login import current_user, login_required
 
 
-page = Blueprint('post', __name__)
+page = Blueprint('post_page', __name__)
 
 @page.route('/create-post', methods=['POST', 'GET'])
 def create_post():

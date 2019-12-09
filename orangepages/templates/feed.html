@@ -170,7 +170,7 @@
                 <i class="fa fa-heart"></i> {{post.likes|length}}
             </a>
             {% else %}
-            <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}" class="card-link">
+            <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=True) }}" class="card-link">
                 <i class="fa fa-heart-o"></i> {{post.likes|length}}
             </a>
             {% endif %}

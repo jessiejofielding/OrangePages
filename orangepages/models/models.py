@@ -1,14 +1,14 @@
 import datetime
 
 from flask import Flask
-from sqlalchemy import and_, create_engine, desc, or_
+from sqlalchemy import and_, create_engine, desc, or_, PrimaryKeyConstraint
 from sqlalchemy.orm import backref, relationship
 from collections import defaultdict
 
 import config
 import flask_sqlalchemy as fsq
 import orangepages.models.statuses as st
-from orangepages import app
+from orangepages import app, admin
 import os
 import cloudinary
 import cloudinary.uploader
@@ -301,13 +301,17 @@ class Group(db.Model):
 #-----------------------------------------------------------------------
 class Relationship(db.Model):
     """ Relationship table """
-    user1id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user1id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user1 = relationship('User',
                         foreign_keys=[user1id])
-    user2id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user2id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user2 = relationship('User',
                         foreign_keys=[user2id])
     status = db.Column(db.String(50))
+    __table_args__ = (
+        PrimaryKeyConstraint('user1id', 'user2id'),
+        {},
+    )
 
     def change_status(self, status):
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
@@ -321,6 +325,14 @@ class Relationship(db.Model):
             # add to "Friend" group
             if self.status != st.friends:
                 self.user1.add_friend(self.user2)
+                self.user2.add_friend(self.user1)
+
+        if status == st.unfriend:
+            # remove from "Friend" group
+            if self.status == st.friends:
+                self.user1.unfriend(self.user2)
+                self.user2.unfriend(self.user1)
+    
         self.status = status
 
     def __init__(self, user1, user2, status):
@@ -338,6 +350,7 @@ class Relationship(db.Model):
         #     user1 = temp
         # rel = Relationship.query.filter(user1=user1, user2=user2)
         # status = rel.status
+        # return status
         pass
 
 #-----------------------------------------------------------------------

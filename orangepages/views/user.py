@@ -10,7 +10,7 @@ from orangepages.views.util import cur_user, cur_uid, render
 
 
 
-page = Blueprint('user', __name__)
+page = Blueprint('user_page', __name__)
 
 
 # def upload_pic(image):

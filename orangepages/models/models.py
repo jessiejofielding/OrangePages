@@ -84,7 +84,8 @@ class User(db.Model):
         if image is not None:
             self._img = True
             db.session.commit()
-            cloudinary.uploader.upload(image, public_id = self.uid)
+            tig = cloudinary.uploader.upload(image)
+            self._pic = tig['public_id']
             # subpath = self.uid + "_pic.jpeg"
             # self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
             # image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
@@ -94,7 +95,7 @@ class User(db.Model):
 
     def get_img(self):
         if self._img:
-            x = cloudinary.CloudinaryImage(self.uid).url
+            x = cloudinary.CloudinaryImage(self._pic).url
             # print(x)
             return x
         else:
@@ -370,6 +371,7 @@ class Post(db.Model):
     creator = relationship('User', back_populates='_posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     has_img = db.Column(db.Boolean(), default=False)
+    _pic = db.Column(db.String(50))
 
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
@@ -436,7 +438,8 @@ class Post(db.Model):
     def add_img(self, image):
         if image is not None:
             self.has_img = True
-            cloudinary.uploader.upload(image, public_id = str(self.pid))
+            tig = cloudinary.uploader.upload(image)
+            self._pic = tig['public_id']
             db.session.commit()
         # if image is not None:
         #     subpath = str(self.pid) + "_pic.jpeg"
@@ -446,7 +449,7 @@ class Post(db.Model):
 
     def get_img(self):
         if self.has_img:
-            x = cloudinary.CloudinaryImage(str(self.pid)).url
+            x = cloudinary.CloudinaryImage(self._pic).url
             return x
         else:
             return ""

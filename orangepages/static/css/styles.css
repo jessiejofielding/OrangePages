@@ -10,7 +10,7 @@
 html {
     position: relative !important;
     min-height: 100% !important;
-    background-image: url("https://i.imgur.com/iSUEg3V.jpg");
+    /*background-image: url("https://i.imgur.com/iSUEg3V.jpg");*/
 }
 
 body {
@@ -38,6 +38,78 @@ form {
       display: none;
     }
   }
+}
+
+/* orange radio buttons */
+/* Customize the label (the container) */
+.radio-wrapper {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-wrapper input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.custom-radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radio-wrapper:hover input ~ .custom-radio {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.radio-wrapper input:checked ~ .custom-radio {
+  background-image: url(orange.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.custom-radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.radio-wrapper input:checked ~ .custom-radio:after {
+  display: block;
+}
+
+/*sidebar styles*/
+#sticky-sidebar {
+  position:fixed;
+  max-width: 20%;
+  background-color: white;
+  min-height: 100%;
+}
+
+#sidebar-buttons {
+  margin-top:30%;
 }
 
 /*form styles*/
@@ -76,11 +148,11 @@ form {
     display: none;
 }
 
-/*inputs*/
+/*Inputs*/
 #msform input, #msform textarea {
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 0px;
+    border-radius: 25px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
@@ -89,7 +161,19 @@ form {
     font-size: 13px;
 }
 
-#msform input:focus, #msform textarea:focus {
+#msform select {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
+
+#msform input:focus, #msform textarea:focus, #msform select:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -136,11 +220,12 @@ form {
 
 /*headings*/
 .fs-title {
-    font-size: 18px;
-    text-transform: uppercase;
+    font-size: 25px;
+  /*  text-transform: uppercase;*/
     color: #2C3E50;
     margin-bottom: 10px;
     letter-spacing: 2px;
+    font-family:raleway;
     font-weight: bold;
 }
 
@@ -154,6 +239,7 @@ form {
 /*progressbar*/
 #progressbar {
     margin-bottom: 30px;
+    margin-left: 28%;
     overflow: hidden;
     /*CSS counters to number the steps*/
     counter-reset: step;
@@ -164,7 +250,7 @@ form {
     color: white;
     text-transform: uppercase;
     font-size: 9px;
-    width: 33.33%;
+    width: 20%;
     float: left;
     position: relative;
     letter-spacing: 1px;
@@ -204,7 +290,7 @@ form {
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before, #progressbar li.active:after {
-    background: lightgrey;
+    background: #ff8f00;
     color: white;
 }
 

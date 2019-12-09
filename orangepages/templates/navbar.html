@@ -1,6 +1,49 @@
 
-<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary main-nav" style="box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);">
-    <div class="container justify-content-center">
+
+<nav class="navbar navbar-fixed-top navbar-expand-sm bg-white main-nav">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Left</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="//codeply.com">Codeply</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+                <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" class="  search-query form-control" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="button">
+                                        <span class=" glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--     <div class="container justify-content-center">
         <ul class="nav navbar-nav flex-fill justify-content-start">
             <li class="nav-item active">
                 <img 
@@ -38,12 +81,12 @@
                         <i class="fa fa-heart"></i>
                         <span class="sr-only">(current)</span>
                 </a>     
-            </li>
-            {% if user is not none %}
+            </li> -->
+<!--             {% if user is not none %}
             <li>
                 <a class="nav-link" href="/notifications">
                         <i class="fa fa-bell"></i>
-                        <!-- @frontend pwease make this pwetty -->
+                         @frontend pwease make this pwetty
                         {% if user._unread_notifs > 0 %}
                             ({{user._unread_notifs}})
                         {% endif %}
@@ -52,5 +95,5 @@
             </li>
             {% endif %}
         </ul>
-    </div>
+    </div>  -->
 </nav>

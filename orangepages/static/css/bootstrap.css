@@ -2315,6 +2315,8 @@ input[type="button"].btn-block {
   vertical-align: middle; }
   .btn-group > .btn,
   .btn-group-vertical > .btn {
+    margin-bottom:10px !important;
+    border-radius:10px !important;
     position: relative;
     flex: 1 1 auto; }
     .btn-group > .btn:hover,

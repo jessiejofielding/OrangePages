@@ -49,14 +49,33 @@ def create_user():
     netid = cur_uid()
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
-    email = request.form.get('email')
+    rescollege = request.form.get('rescollege')
+    school = request.form.get('school') # this is AB or BSE lol
+    major = request.form.get('major')
+    year = request.form.get('year')
+    food = request.form.get('food')
+    building = request.form.get('building')
+    room = request.form.get('room')
     hometown = request.form.get('hometown')
     state = request.form.get('state')
     country = request.form.get('country')
-    year = request.form.get('year')
-    major = request.form.get('major')
-    room = request.form.get('room')
-    building = request.form.get('building')
+    team = request.form.get('team')
+    groups = request.form.get('groups')
+    certificate = request.form.get('certificate')
+    birthday = request.form.get('birthday')
+
+    use_photo = request.form.get('photo')
+
+    affiliations = []
+
+    if request.form.get('rca'):
+        affiliations.append('RCA')
+    if request.form.get('paa'):
+        affiliations.append('PAA')
+    if request.form.get('share_peer'):
+        affiliations.append('Share Peer')
+    
+    email = netid + "@princeton.edu"
 
     # Create and update user
     user = User(netid, firstname, lastname, email)

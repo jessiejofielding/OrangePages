@@ -10,6 +10,11 @@ import flask_sqlalchemy as fsq
 import orangepages.models.statuses as st
 from orangepages import app
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+# from urllib2 import urlopen
+import requests
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
@@ -17,6 +22,9 @@ db = fsq.SQLAlchemy(app)
 
 DEF_IMG = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
 
+def url_exists(url):
+    request = requests.get(url)
+    return request.status_code == 200
 
 #-----------------------------------------------------------------------
 class User(db.Model):
@@ -76,18 +84,29 @@ class User(db.Model):
 
     def add_img(self, image):
         if image is not None:
-            subpath = self.uid + "_pic.jpeg"
-            self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
-            image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
-            db.session.commit()
+            cloudinary.uploader.upload(image, public_id = self.uid)
+            # subpath = self.uid + "_pic.jpeg"
+            # self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
+            # image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+            # db.session.commit()
+
+            # cloudinary.uploader.upload(image, public_id = self.uid)
 
     def get_img(self):
-        img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
+        x = cloudinary.CloudinaryImage(self.uid).url
+        print(x)
 
-        if os.path.isfile(img_path_check):
-            return self.img
+        if url_exists(x):
+            return x
         else:
             return DEF_IMG
+
+        # img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
+        #
+        # if os.path.isfile(img_path_check):
+        #     return self.img
+        # else:
+        #     return DEF_IMG
 
     # def pic_path(self):
     #     return app.config["IMAGE_UPLOADS_RELATIVE"] + self.uid
@@ -412,18 +431,26 @@ class Post(db.Model):
 
     def add_img(self, image):
         if image is not None:
-            subpath = str(self.pid) + "_pic.jpeg"
-            self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
-            image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
-            db.session.commit()
+            cloudinary.uploader.upload(image, public_id = str(self.pid))
+        # if image is not None:
+        #     subpath = str(self.pid) + "_pic.jpeg"
+        #     self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
+        #     image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
+        #     db.session.commit()
 
     def get_img(self):
-        img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
-
-        if os.path.isfile(img_path_check):
-            return self.img
+        x = cloudinary.CloudinaryImage(str(self.pid)).url
+        print(x)
+        if url_exists(x):
+            return x
         else:
             return ""
+        # img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
+        #
+        # if os.path.isfile(img_path_check):
+        #     return self.img
+        # else:
+        #     return ""
 
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)

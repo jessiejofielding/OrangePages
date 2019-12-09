@@ -14,6 +14,8 @@ psycopg2-binary = "==2.7.5"
 flask-sqlalchemy = "*"
 cloudinary = "*"
 flask-cas = "*"
+requests = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

@@ -38,13 +38,13 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
-                                {% if user._pic is none: %}
+                                {% if user.get_img() is none: %}
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                    <img class="rounded-circle" width="45" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png' alt="">
                                 </div>
                                 {% else: %}
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="45" height=auto
+                                    <img class="rounded-circle" width="45" height="45"
                                         src='{{user.get_img()}}'
                                         alt="failed to load">
                                 </div>

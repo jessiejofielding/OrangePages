@@ -59,8 +59,8 @@ class User(db.Model):
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
-    img = db.Column(db.String(1000))
-    _img = db.Column(db.Integer, default=1)
+    _img = db.Column(db.Boolean(), default = False)
+    # _img = db.Column(db.Integer, default=1)
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -75,8 +75,6 @@ class User(db.Model):
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
 
-        self.img = DEF_IMG
-
     # TO REMOVE
     def update_pic(self, image):
         subpath = self.uid + "_pic.jpeg"
@@ -84,6 +82,8 @@ class User(db.Model):
 
     def add_img(self, image):
         if image is not None:
+            self._img = True
+            db.session.commit()
             cloudinary.uploader.upload(image, public_id = self.uid)
             # subpath = self.uid + "_pic.jpeg"
             # self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
@@ -93,13 +93,17 @@ class User(db.Model):
             # cloudinary.uploader.upload(image, public_id = self.uid)
 
     def get_img(self):
-        x = cloudinary.CloudinaryImage(self.uid).url
-        print(x)
-
-        if url_exists(x):
+        if self._img:
+            x = cloudinary.CloudinaryImage(self.uid).url
+            # print(x)
             return x
         else:
             return DEF_IMG
+
+        # if url_exists(x):
+        #     return x
+        # else:
+        #     return DEF_IMG
 
         # img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
         #
@@ -365,7 +369,7 @@ class Post(db.Model):
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = relationship('User', back_populates='_posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
-    img = db.Column(db.String(1000))
+    has_img = db.Column(db.Boolean(), default=False)
 
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
@@ -431,7 +435,9 @@ class Post(db.Model):
 
     def add_img(self, image):
         if image is not None:
+            self.has_img = True
             cloudinary.uploader.upload(image, public_id = str(self.pid))
+            db.session.commit()
         # if image is not None:
         #     subpath = str(self.pid) + "_pic.jpeg"
         #     self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
@@ -439,12 +445,16 @@ class Post(db.Model):
         #     db.session.commit()
 
     def get_img(self):
-        x = cloudinary.CloudinaryImage(str(self.pid)).url
-        print(x)
-        if url_exists(x):
+        if self.has_img:
+            x = cloudinary.CloudinaryImage(str(self.pid)).url
             return x
         else:
             return ""
+        # print(x)
+        # if url_exists(x):
+        #     return x
+        # else:
+        #     return ""
         # img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
         #
         # if os.path.isfile(img_path_check):

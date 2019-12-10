@@ -1,48 +1,26 @@
 
-
+ <!-- Navigation -->
 <nav class="navbar navbar-fixed-top navbar-expand-sm bg-white main-nav">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Left</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="//codeply.com">Codeply</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
-    </div>
-    <div class="mx-auto order-0">
-                <div id="custom-search-input">
-                            <div class="input-group col-md-12">
-                                <input type="text" class="  search-query form-control" placeholder="Search" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="button">
-                                        <span class=" glyphicon glyphicon-search"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Right</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
-    </div>
+  <div class="col-xs-2 text-center navbar-brand">
+    <a class="navbar-brand" href="/"><img 
+    src="./static/css/orange.svg" 
+    height="30"
+    width="50" /></a>
+  </div>
+  <ul class="col-xs-6 navbar-nav mx-auto">
+    <li class="navbar-search nav-item w-100">
+
+        <form action="/search" class="navbar-form navbar-search" method="get">
+            <div class="input-group">
+                <input class="navbar-search form-control" type="text" name="query" placeholder="    Search OrangePages" aria-label="Search">    
+            </div>
+        </form>
+    </li> 
+  </ul>
+  <div class="col-xs-2">
+  </div>
 </nav>
+
 <!--     <div class="container justify-content-center">
         <ul class="nav navbar-nav flex-fill justify-content-start">
             <li class="nav-item active">
@@ -96,4 +74,3 @@
             {% endif %}
         </ul>
     </div>  -->
-</nav>

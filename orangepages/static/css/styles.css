@@ -110,6 +110,16 @@ form {
 
 #sidebar-buttons {
   margin-top:30%;
+  font-family: raleway;
+}
+
+.btn-sidebar {
+  font-weight: bold !important;
+}
+
+.btn-sidebar:hover {
+  color:#f25500 !important; 
+  background-color: #ffdfc7;
 }
 
 /*form styles*/
@@ -3292,6 +3302,12 @@ input[type="button"].btn-block {
   content: "";
   background: no-repeat center center;
   background-size: 100% 100%; }
+
+.navbar-search {
+  border-radius: 50px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 @media (max-width: 575.98px) {
   .navbar-expand-sm > .container,

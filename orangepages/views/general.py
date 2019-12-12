@@ -2,7 +2,7 @@ from flask import redirect
 from flask import Blueprint
 from flask_cas_fix import login, logout, login_required
 from orangepages.models.models import User
-from orangepages.views.util import cur_user, render
+from orangepages.views.util import cur_user, render, user_required
 
 
 page = Blueprint('general', __name__)
@@ -17,7 +17,7 @@ def home():
 
 
 @page.route('/login')
-#@login_required
+@login_required
 def login():
     if cur_user() is None:
         return redirect('/create-user')
@@ -25,15 +25,12 @@ def login():
 
 
 @page.route('/logout')
-# not sure about this
 def logout_route():
     return logout() # (cas logout)
 
 
 @page.route('/feed', methods=['GET'])
-#@login_required
+@user_required
 def feed():
-    if cur_user() is None:
-        return redirect('/create-user')
     posts = cur_user().get_feed()
     return render('feed.html', posts=posts)

@@ -1,7 +1,7 @@
 from flask import request, redirect, make_response
 from flask import Blueprint, render_template, send_from_directory
 from orangepages.models.models import db, User, Group, Post, Comment, Tag, NType, Notification
-from orangepages.views.util import cur_user, cur_uid, render
+from orangepages.views.util import cur_user, cur_uid, render, user_required
 from orangepages import app
 import os
 # from flask_login import current_user, login_required
@@ -9,7 +9,9 @@ import os
 
 page = Blueprint('post_page', __name__)
 
+
 @page.route('/create-post', methods=['POST', 'GET'])
+@user_required
 def create_post():
     if request.method=='GET':
         return render('post_create.html')
@@ -81,8 +83,10 @@ def create_post():
             post.add_img(image)
 
     return redirect("/feed")
+    
 
 @page.route('/post/<int:postid>', methods=['GET'])
+@user_required
 def view_post(postid):
     post = Post.query.get(postid)
     if post is None:
@@ -97,7 +101,9 @@ def view_post(postid):
     return render("post.html", post=post, comments=comments,
     num_likers = num_likers, tags=tags)
 
+
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
+@user_required
 def comment(postid):
     post = Post.query.get(postid)
     if post is None:
@@ -128,6 +134,7 @@ def comment(postid):
 #     return
 
 @page.route('/post/<int:post_id>/<isLike>')
+@user_required
 def like(post_id, isLike):
     # # TODO:
     post = Post.query.get(post_id)
@@ -153,6 +160,7 @@ def like(post_id, isLike):
 
 # Might need FIXME
 @page.route('/post/<int:post_id>/tag')
+@user_required
 def add_tag(post_id):
     post = Post.query.get(post_id)
     if post is None:
@@ -188,6 +196,7 @@ def add_tag(post_id):
 
 # uploads an image
 @page.route("/upload-image", methods=["GET", "POST"])
+@user_required
 def upload_image():
     if request.method == "POST":
         if request.files:
@@ -198,7 +207,9 @@ def upload_image():
 
     return render_template("/upload_image.html")
 
+
 @page.route('/uploads/<filename>')
+@user_required
 def uploaded_file(filename):
     name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
     # print(name)

@@ -6,7 +6,7 @@ from sqlalchemy import exc
 from orangepages import app
 import os.path
 
-from orangepages.views.util import cur_user, cur_uid, render
+from orangepages.views.util import cur_user, cur_uid, render, user_required
 
 
 
@@ -19,11 +19,8 @@ page = Blueprint('user_page', __name__)
 #             image = request.files["image"]
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
-#@login_required
+@user_required
 def view_profile(lookup_id):
-
-    if cur_user() is None:
-        return redirect('/create-user')
 
     # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
     # img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
@@ -99,10 +96,8 @@ def create_user():
 
 
 @page.route('/edit-user', methods=['GET', 'POST'])
-#@login_required
+@user_required
 def edit_user():
-    if cur_user() is None:
-        return redirect('/create-user')
 
     if request.method=='POST':
         # Get form fields
@@ -138,12 +133,9 @@ def edit_user():
 
 
 @page.route('/notifications', methods=['GET'])
-#@login_required
+@user_required
 def view_notifs():
     user = cur_user()
-
-    if user is None:
-        return redirect('/create-user')
 
     # Order of next few lines matter, pls don't rearrange
     notifs = user.notifs.all()
@@ -156,11 +148,9 @@ def view_notifs():
 
 
 @page.route('/clear-notifs', methods=['GET'])
-#@login_required
+@user_required
 def clear_notifs():
     user = cur_user()
-    if user is None:
-        return redirect('/create-user')
 
     notifs = user.notifs.all()
     for notif in notifs:

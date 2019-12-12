@@ -4,7 +4,7 @@ from orangepages.models.models import db, User, NType, Notification, Relationshi
 from flask_cas_fix import login_required
 from sqlalchemy import exc, and_
 
-from orangepages.views.util import cur_user, cur_uid, render
+from orangepages.views.util import cur_user, cur_uid, render, user_required
 import orangepages.models.statuses as st
 
 
@@ -12,6 +12,7 @@ page = Blueprint('friend', __name__)
 
 
 @page.route('/profile/friend-request', methods=['POST'])
+@user_required
 def friend_request():
     user1 = cur_user()
     friend_uid = request.form.get('content')
@@ -45,6 +46,7 @@ def friend_request():
 
 
 @page.route('/profile/add-friend', methods=['POST'])
+@user_required
 def add_friend():
     user1 = cur_user()
     friend_uid = request.form.get('content')
@@ -76,6 +78,7 @@ def add_friend():
     return redirect(request.referrer)
 
 @page.route('/profile/unfriend', methods=['POST'])
+@user_required
 def unfriend():
     user1 = cur_user()
     friend_uid = request.form.get('content')
@@ -109,6 +112,7 @@ def unfriend():
 #     friend_list = friend_list, lookup_user=user)
 
 @page.route('/profile/<string:lookup_id>/friends-list', methods=['GET'])
+@user_required
 def friends_list(lookup_id):
     user = User.query.get(lookup_id)
     if user is None:

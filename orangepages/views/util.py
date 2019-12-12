@@ -58,5 +58,5 @@ def user_required(func):
         if cur_user() is None:
             return redirect('/')
         else:
-            return function(*args, **kwargs)
+            return func(*args, **kwargs)
     return wrap

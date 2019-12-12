@@ -21,14 +21,10 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
 
         <script type="text/javascript" src="/static/js/timestamp.js"></script>
-        <script>
-            // Material Select Initialization
-            $(document).ready(function () {
-                $('.mdb-select').materialSelect();
-            });
-        </script>
 
     </head>
+
+    <body>
 
     {% include 'navbar.html' %}
     <!-- Create a post -->
@@ -189,7 +185,7 @@
 
     {% include 'footer.html' %}
 
-    <body>
+    
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
@@ -202,6 +198,12 @@
             // Material Select Initialization
             $(document).ready(function () {
                 $('.mdb-select').materialSelect();
+            });
+
+            // Name of file appears on upload
+            $(".custom-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
         </script>
     </body>

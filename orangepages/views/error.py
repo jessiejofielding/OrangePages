@@ -15,4 +15,6 @@ page = Blueprint('error', __name__)
 
 @page.app_errorhandler(404)
 def not_found(e):
-    return render('404.html'), 404
+    return render('message.html',
+            title='Oops.',
+            message="This page doesn't exist.")

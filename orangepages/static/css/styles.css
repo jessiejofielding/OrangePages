@@ -44,6 +44,83 @@ form {
 .post-card {
 }
 
+.post-title {
+  color: black;
+  font-family: raleway;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.post-subtitle {
+  color: grey;
+  font-family: raleway;
+  font-size: 14px;
+}
+
+.post-text {
+  font-family: raleway;
+ /* margin-top: 5px;*/
+}
+
+.post-file-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  margin: 0;
+  opacity: 0; }
+  .post-file-input:focus ~ .post-file-label {
+    border-color: #ff9c5a;
+    box-shadow: 0 0 0 0.2rem rgba(217, 87, 0, 0.25); }
+  .post-file-input:disabled ~ .post-file-label {
+    background-color: #e9ecef; }
+  .post-file-input ~ .post-file-label[data-browse]::after {
+    content: attr(data-browse); }
+
+.post-file-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border-radius: 0.25rem; }
+  .post-file-label::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: calc(1.5em + 0.75rem);
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #e9ecef;
+    border-left: inherit;
+    border-radius: 0 0.25rem 0.25rem 0; }
+
+.post-title:hover {
+  color:#f25500 !important;
+  text-decoration-line: none !important;
+}
+
+.tag-pill {
+  background-color:#f25500 !important;
+  border-color: #f25500 !important;
+  margin: 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
 .feed-profile {
   width: 50px;
   height: 50px;
@@ -3543,6 +3620,9 @@ input[type="button"].btn-block {
 .card-text:last-child {
   margin-bottom: 0; }
 
+.card-link {
+  color:#f25500;
+}
 .card-link:hover {
   text-decoration: none; }
 

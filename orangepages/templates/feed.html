@@ -10,26 +10,33 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
 
 <!--JS-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<script type="text/javascript" src="/static/js/timestamp.js"></script>
+
+
+
 <body>
 {% include 'navbar.html' %}
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet"/>
   <div class="row">
-    <div class="col-lg-3 col-sm-6 ml-2 border-right">
+    <div class="col-lg-3 col-sm-5 ml-2 border-right">
       <div class="sidebar sticky-top">
-      <div id="sidebar-buttons" class="btn-group-vertical btn-group-lg">
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-home mr-1"></i>Home</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-bell mr-1"></i>Notifications</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user mr-1"></i>Profile</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-friends mr-1"></i>Friends</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-cog mr-1"></i>Settings and Privacy</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-info-circle mr-1"></i>About</a>
-        <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-phone mr-1"></i>Contact Us</a>
-      </div>
+        <div id="sidebar-buttons" class="btn-group-vertical btn-group-lg">
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-home mr-1"></i>Home</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-bell mr-1"></i>Notifications
+            {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user mr-1"></i>Profile</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-friends mr-1"></i>Friends</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-cog mr-1"></i>Settings and Privacy</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-info-circle mr-1"></i>About</a>
+          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-phone mr-1"></i>Contact Us</a>
+        </div>
       </div>
     </div>
     
     <!-- Make a post -->
-    <div class="col-lg-8 col-sm-6 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
+    <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
       <div class="post-card card border-left-0 border-top-0 rounded-0" style="border-bottom-width: 10px;">
         <div class="container-fluid">
           <div class="row">
@@ -48,10 +55,124 @@
               <textarea name="content" class="make-post form-control border-0" id="message" rows="3"placeholder="Write a post..."></textarea>
             </div>
           </div>
+
+          <div class="row">
+            <!-- Upload an image -->
+            <div class="col-1">
+            </div>
+
+            <div class="col-1">
+              <div class="form-group">
+                  <div class="custom-file">
+                      <input type="file" class="post-file-input" id="customFile">
+                      <label class="post-file-label" for="customFile"><i class="fas fa-image"></i></label>
+                  </div>
+              </div>
+            </div>
+
+            <!-- Add tags -->
+            <div class="col-1">
+            <a href="/" class="btn-sidebar btn"><i class="fas fa-hashtag mr-1"></i></a>
+            </div>
+
+            <div class="col-7">
+            </div>
+
+            <div class="col-2">
+              <button type="button" class="btn-sidebar btn">Share</button>
+            </div>
+          </div>
         </div>
       </div>
-    
 
+      <!-- TODO: if no posts, display a message -->
+    {% if not posts: %}
+    {% endif %}
+
+
+    {% for post in posts: %}
+    <div class="post-card card border-left-0 border-top-0 rounded-0">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Profile photo -->
+            <div class="col-2">
+              {%if user._pic is none:%}
+              <i class="fa fa-user feed-profile rounded-circle"></i>
+              {%else:%}
+              <img class="feed-profile rounded-circle" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{post.creator._pic}}.png'
+                            alt="failed to load">
+              {%endif%}
+            </div>
+
+            <!-- User and netid -->
+            <div class="col-3">
+              <a href='profile/{{ post.creator.uid }}' class="post-title">{{post.creator.firstname}}
+                                {{post.creator.lastname}} <h6 class="post-subtitle"> @{{post.creator.uid}} </h6> </a>
+            </div>
+
+            <!-- Time elapsed -->
+            <div class="col">
+              <div class="post-subtitle">
+                <i class="fas fa-clock"></i>
+                <script type="text/javascript">
+                    getTimeAgo("{{ post.date }}");
+                </script>
+              </div>
+            
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="row">
+            <div class="col-2"> </div>
+              <div class="col-10">
+                <div class="post-text mb-1">
+                  {{post.content}}
+                </div>
+                {% if post.tags|length %}
+                  {% for tag in post.tags: %}
+                  <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
+                      class="btn btn-primary btn-sm tag-pill mb-1">
+                      #{{ tag.tid }}
+                  </button>
+                  {% endfor %}
+                  {% endif %}
+              </div>
+
+            </div>
+            
+            <div class="row">
+              <div class="col-2"> 
+              </div>
+              <div class="col-2">
+                {% if user.liked_post(post.pid) %}
+                <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}" class="card-link">
+                    <i class="fas fa-heart"></i> {{post.likes|length}}
+                </a>
+                {% else %}
+                <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}" class="card-link">
+                    <i class="far fa-heart"></i> {{post.likes|length}}
+                </a>
+                {% endif %}
+              </div>
+              <div class="col-2">
+                <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
+                    {{post.get_comments()|length}}</a>
+              </div>
+              <div class="col-4">
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn-sidebar btn">Share</button>
+              </div>
+            </div>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+</html>
 
 <!-- 
 
@@ -66,30 +187,5 @@
                                 </div> -->
 
 
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
 
-      this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be this is where the main content will be
-    </div>
-  </div>
-</body>
 
-</html>

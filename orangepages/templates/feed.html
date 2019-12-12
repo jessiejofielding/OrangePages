@@ -166,7 +166,7 @@
         </div>
         <div class="card-footer">
             {% if user.liked_post(post.pid) %}
-            <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}" class="card-link">
+            <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=False) }}" class="card-link">
                 <i class="fa fa-heart"></i> {{post.likes|length}}
             </a>
             {% else %}

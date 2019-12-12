@@ -5,6 +5,8 @@ from flask import request, render_template, redirect
 from orangepages.models.models import User, Group
 from orangepages import cas
 
+from flask_cas_fix import login_required
+from functools import wraps
 
 
 #-----------------------------------------------------------------------
@@ -46,3 +48,15 @@ def public_group():
 # current user (since navbar always needs it)
 def render(*args, **kwargs):
     return render_template(args, **kwargs, user=cur_user())
+
+
+# Decorator. Redirects to home page if trying to access page
+# that requires a current User.
+def user_required(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        if cur_user() is None:
+            return redirect('/')
+        else:
+            return func(*args, **kwargs)
+    return wrap

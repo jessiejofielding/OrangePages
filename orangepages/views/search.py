@@ -1,7 +1,7 @@
 from flask import request, make_response
 from flask import Blueprint, render_template
 from orangepages.models.models import User, Tag
-from orangepages.views.util import render, cur_user
+from orangepages.views.util import render, cur_user, user_required
 
 
 page = Blueprint('testsearch', __name__)
@@ -9,6 +9,7 @@ page = Blueprint('testsearch', __name__)
 
 
 @page.route('/search')
+@user_required
 def search_user():
     query_list = request.args.get('query').split(' ')
 

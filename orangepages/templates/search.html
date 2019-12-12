@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
 
         <script type="text/javascript" src="/static/js/timestamp.js"></script>
-        
+
     </head>
 
 
@@ -38,14 +38,14 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
-                                {% if user._pic is none: %}
+                                {% if user.get_img() is none: %}
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                    <img class="rounded-circle" width="45" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png' alt="">
                                 </div>
                                 {% else: %}
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="45"
-                                        src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_80,w_80,g_face,r_10/{{user._pic}}.png'
+                                    <img class="rounded-circle" width="45" height="45"
+                                        src='{{user.get_img()}}'
                                         alt="failed to load">
                                 </div>
                                 {% endif %}
@@ -128,11 +128,11 @@
                     </div>
                     <div class="card-footer">
                         {% if user.liked_post(post.pid) %}
-                        <a href="{{ url_for('post.like', post_id=post.pid, isLike=False) }}" class="card-link">
+                        <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=False) }}" class="card-link">
                             <i class="fa fa-heart"></i> {{post.likes|length}}
                         </a>
                         {% else %}
-                        <a href="{{ url_for('post.like', post_id=post.pid, isLike=True) }}" class="card-link">
+                        <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=True) }}" class="card-link">
                             <i class="fa fa-heart-o"></i> {{post.likes|length}}
                         </a>
                         {% endif %}
@@ -152,7 +152,7 @@
         <script src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/toggle-like.js"></script>
     </body>
-    
+
     {% include 'footer.html' %}
 
 </html>

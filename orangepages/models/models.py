@@ -1,19 +1,30 @@
 import datetime
 
 from flask import Flask
-from sqlalchemy import and_, create_engine, desc, or_
+from sqlalchemy import and_, create_engine, desc, or_, PrimaryKeyConstraint
 from sqlalchemy.orm import backref, relationship
 from collections import defaultdict
 
 import config
 import flask_sqlalchemy as fsq
 import orangepages.models.statuses as st
-from orangepages import app
+from orangepages import app, admin
+import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+# from urllib2 import urlopen
+import requests
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = fsq.SQLAlchemy(app)
 
+DEF_IMG = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
+
+def url_exists(url):
+    request = requests.get(url)
+    return request.status_code == 200
 
 #-----------------------------------------------------------------------
 class User(db.Model):
@@ -48,6 +59,8 @@ class User(db.Model):
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
+    _img = db.Column(db.Boolean(), default = False)
+    # _img = db.Column(db.Integer, default=1)
 
     def __init__(self, netid, firstname, lastname, email):
         self.uid = netid
@@ -62,6 +75,46 @@ class User(db.Model):
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
 
+    # TO REMOVE
+    def update_pic(self, image):
+        subpath = self.uid + "_pic.jpeg"
+        image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+
+    def add_img(self, image):
+        if image is not None:
+            self._img = True
+            db.session.commit()
+            tig = cloudinary.uploader.upload(image)
+            self._pic = tig['public_id']
+            # subpath = self.uid + "_pic.jpeg"
+            # self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
+            # image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
+            # db.session.commit()
+
+            # cloudinary.uploader.upload(image, public_id = self.uid)
+
+    def get_img(self):
+        if self._img:
+            x = cloudinary.CloudinaryImage(self._pic).url
+            # print(x)
+            return x
+        else:
+            return DEF_IMG
+
+        # if url_exists(x):
+        #     return x
+        # else:
+        #     return DEF_IMG
+
+        # img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
+        #
+        # if os.path.isfile(img_path_check):
+        #     return self.img
+        # else:
+        #     return DEF_IMG
+
+    # def pic_path(self):
+    #     return app.config["IMAGE_UPLOADS_RELATIVE"] + self.uid
 
     def update_info(self, firstname, lastname, email):
         self.firstname = firstname
@@ -115,7 +168,7 @@ class User(db.Model):
         for group in self.groups_in:
             group_ids.append(group.gid)
         users = db.session.query(User).\
-            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes ) for val in args))
+            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes) for val in args))
         # or_(privacy[str(x)[5:]] == g for g in group_ids)
         return users
 
@@ -248,13 +301,17 @@ class Group(db.Model):
 #-----------------------------------------------------------------------
 class Relationship(db.Model):
     """ Relationship table """
-    user1id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user1id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user1 = relationship('User',
                         foreign_keys=[user1id])
-    user2id = db.Column(db.String(20), db.ForeignKey('user.uid'), primary_key=True)
+    user2id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user2 = relationship('User',
                         foreign_keys=[user2id])
     status = db.Column(db.String(50))
+    __table_args__ = (
+        PrimaryKeyConstraint('user1id', 'user2id'),
+        {},
+    )
 
     def change_status(self, status):
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
@@ -268,6 +325,14 @@ class Relationship(db.Model):
             # add to "Friend" group
             if self.status != st.friends:
                 self.user1.add_friend(self.user2)
+                self.user2.add_friend(self.user1)
+
+        if status == st.unfriend:
+            # remove from "Friend" group
+            if self.status == st.friends:
+                self.user1.unfriend(self.user2)
+                self.user2.unfriend(self.user1)
+    
         self.status = status
 
     def __init__(self, user1, user2, status):
@@ -285,6 +350,7 @@ class Relationship(db.Model):
         #     user1 = temp
         # rel = Relationship.query.filter(user1=user1, user2=user2)
         # status = rel.status
+        # return status
         pass
 
 #-----------------------------------------------------------------------
@@ -317,6 +383,9 @@ class Post(db.Model):
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = relationship('User', back_populates='_posts_made')
     date = db.Column(db.DateTime, default=datetime.datetime.now)
+    has_img = db.Column(db.Boolean(), default=False)
+    _pic = db.Column(db.String(50))
+
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
 
@@ -329,6 +398,9 @@ class Post(db.Model):
 
     def add_group(self, group):
         if group not in self.groups: self.groups.append(group)
+
+    def remove_group(self, group):
+        if group in self.groups: self.groups.remove(group)
 
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
@@ -343,18 +415,15 @@ class Post(db.Model):
     def get_tags(self):
         return self.tags
 
-    def add_like(self, liker):
-        print(liker.firstname, "liked post", self.pid)
-        self.likes.append(liker)
-
-    def remove_group(self, group):
-        self.groups.remove(group)
-
     def remove_tag(self, tag):
         if tag not in self.tags:
             print("Post did not have this tag")
         else:
             self.tags.remove(tag)
+
+    def add_like(self, liker):
+        print(liker.firstname, "liked post", self.pid)
+        self.likes.append(liker)
 
     def unlike(self, unliker):
         if unliker not in self.likes:
@@ -379,12 +448,43 @@ class Post(db.Model):
         comments = c.order_by(desc(Comment.date)).all()
         return comments
 
+    def add_img(self, image):
+        if image is not None:
+            self.has_img = True
+            tig = cloudinary.uploader.upload(image)
+            self._pic = tig['public_id']
+            db.session.commit()
+        # if image is not None:
+        #     subpath = str(self.pid) + "_pic.jpeg"
+        #     self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
+        #     image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
+        #     db.session.commit()
+
+    def get_img(self):
+        if self.has_img:
+            x = cloudinary.CloudinaryImage(self._pic).url
+            return x
+        else:
+            return ""
+        # print(x)
+        # if url_exists(x):
+        #     return x
+        # else:
+        #     return ""
+        # img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
+        #
+        # if os.path.isfile(img_path_check):
+        #     return self.img
+        # else:
+        #     return ""
+
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 
     def __init__(self, content, creator, groups, tags=[]):
         self.content = content
         self.creator = creator
+        self.img = ""
         # self.add_group(public_group())
         for group in groups:
             self.add_group(group)

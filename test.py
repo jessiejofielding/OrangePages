@@ -1,4 +1,16 @@
-from orangepages import app
+from orangepages import app, admin
+
+from flask_admin.contrib.sqla import ModelView
+from orangepages.models.models import db, User, Post, Relationship, Group, Comment, Tag, Notification
+
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Post, db.session))
+admin.add_view(ModelView(Group, db.session))
+admin.add_view(ModelView(Tag, db.session))
+admin.add_view(ModelView(Comment, db.session))
+admin.add_view(ModelView(Relationship, db.session))
+admin.add_view(ModelView(Notification, db.session))
+
 app.run(host='0.0.0.0', port=5000, debug=True)
 
 # from orangepages.views.test_local import add_tag, search_tag

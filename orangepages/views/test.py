@@ -173,9 +173,9 @@ def login():
 
     user = User.query.get(netid)
     if user is None:
-        response = make_response(redirect('create-user'))
+        response = make_response(redirect('/create-user'))
     else:
-        response = make_response(redirect('feed'))
+        response = make_response(redirect('/feed'))
     return set_uid(response, netid)
 
 
@@ -229,6 +229,12 @@ def create_user():
     user = User(netid, firstname, lastname, email)
     user.update_optional_info(firstname,lastname,email,
         hometown,state,country,year,major,room,building)
+
+    if "image" in request.files:
+        image = request.files["image"]
+        if image.filename is not '':
+            print("IMAGE", image)
+            user.add_img(image)
 
     try:
         db.session.add(user)

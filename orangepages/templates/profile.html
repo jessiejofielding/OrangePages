@@ -4,20 +4,21 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
 
+
+<head>
+    <title>{{user.firstname}} {{user.lastname}} - Orange Pages</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
+</head>
+
 <body>
-
-    <head>
-        <title>{{user.firstname}} {{user.lastname}} - Orange Pages</title>
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
-        <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
-    </head>
 
     {% include 'navbar.html' %}
 
@@ -26,20 +27,22 @@
             <div class="col-sm-12 col-md-4">
                 <div id="user-box" class="card" style="width: 100%">
                     <div class="card-body text-center">
-                        {%if lookup._pic is none:%}
+                      <!-- @frontend -->
+                        <img src='{{lookup.get_img()}}' width=150 height=auto alt="failed to load">
+                        <!-- {%if lookup._pic is none:%}
                         <i class="fa fa-user fa-5x"></i>
                         {%else:%}
                         <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
                             alt="failed to load">
-                        {%endif%}
+                        {%endif%} -->
                         <br>
                         <br>
                         <h3 class="card-title"><strong>{{lookup.firstname}} {{lookup.lastname}}</strong></h3>
                         <p class="card-text">netid: {{lookup.uid}}</p>
                         {% if user.is_friend(lookup) %}
-                        
+
                         <form method="post" action="/profile/unfriend" class="inline">
-                            <button type="submit" class="btn btn-primary" 
+                            <button type="submit" class="btn btn-primary"
                             name="content" value="{{ lookup.uid }}" class="link-button">
                                 <span class="friends"><i class="fa fa-check"></i> Friends</span>
                                 <span class="unfriend"><i class="fa fa-times"></i> Unfriend</span>
@@ -48,14 +51,14 @@
 
                         {% elif user.friend_requested(lookup) %}
 
-                            <button type="submit" class="btn btn-primary" 
+                            <button type="submit" class="btn btn-primary"
                             name="content" value="{{ lookup.uid }}" class="link-button">
                                 <i class="fa fa-check"></i> Friend Request Sent
                             </button>
 
                         {% elif lookup.friend_requested(user) %}
                             <form method="post" action="/profile/add-friend" class="inline">
-                            <button type="submit" class="btn btn-primary" 
+                            <button type="submit" class="btn btn-primary"
                             name="content" value="{{ lookup.uid }}" class="link-button">
                                 <i class="fa fa-plus"></i> Accept Friend Request
                             </button>
@@ -64,7 +67,7 @@
                         {% else %}
 
                         <form method="post" action="/profile/friend-request" class="inline">
-                            <button type="submit" class="btn btn-primary" 
+                            <button type="submit" class="btn btn-primary"
                             name="content" value="{{ lookup.uid }}" class="link-button">
                                 <i class="fa fa-plus"></i> Add Friend
                             </button>
@@ -74,6 +77,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col">
                 <form id="msform" class="is-readonly">
                     <fieldset>
@@ -145,5 +149,7 @@
     </div>
 
     {% include 'footer.html' %}
+
+</body>
 
 </html>

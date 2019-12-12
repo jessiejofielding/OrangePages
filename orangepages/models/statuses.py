@@ -1,1 +1,1 @@
-request1_2, request2_1, block2_1, block1_2, friends, bothblock, accept, none = range(8)
+request1_2, request2_1, block2_1, block1_2, friends, unfriend, bothblock, accept, none = range(9)

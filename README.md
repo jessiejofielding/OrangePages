@@ -8,3 +8,7 @@ Exit shell with
 ```exit```  
 The requirements.txt file is replaced with Pipfile.lock.
 Install requirements with ```pipenv install``` and update requirements with ```pipenv lock```
+
+
+small frontend things:
+1. make margin below friends page higher

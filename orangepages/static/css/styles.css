@@ -62,6 +62,18 @@ form {
  /* margin-top: 5px;*/
 }
 
+.post-btn {
+  font-weight: bold !important;
+  font-size: 16px !important;
+  color:#f25500 !important;
+}
+
+.post-btn:hover {
+  font-weight: bold;
+  font-size: 16px;
+  color: grey !important;
+}
+
 .post-file-input {
   position: relative;
   z-index: 2;
@@ -3337,13 +3349,19 @@ input[type="button"].btn-block {
     justify-content: space-between; }
 
 .navbar-brand {
-  display: inline-block;
+  background-image: url(orange.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+/*  display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
-  white-space: nowrap; }
+  white-space: nowrap;*/ }
   .navbar-brand:hover, .navbar-brand:focus {
     text-decoration: none; }
 

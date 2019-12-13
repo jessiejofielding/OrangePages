@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
 <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
 
 <!-- Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
@@ -12,9 +14,23 @@
 <!--JS-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/timestamp.js"></script>
+<script src="/static/js/toggle-like.js"></script>
+<script src="/static/js/bootstrap-tagsinput.js"></script>
+<script src="/static/js/disable-input.js"></script>
 
-
+<script>
+            // Material Select Initialization
+            $(document).ready(function () {
+                $('.mdb-select').materialSelect();
+            });
+            // Name of file appears on upload
+            $(".post-file-input").on("change", function() {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".post-file-label").addClass("selected").html(fileName);
+            });
+</script>
 
 <body>
 {% include 'navbar.html' %}
@@ -24,10 +40,12 @@
       <div class="sidebar sticky-top">
         <div id="sidebar-buttons" class="btn-group-vertical btn-group-lg">
           <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-home mr-1"></i>Home</a>
-          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-bell mr-1"></i>Notifications
+
+          <!-- TODO: verify that notifications appear -->
+          <a href="/notifications" class="btn-sidebar btn text-left"><i class="fas fa-bell mr-1"></i>Notifications
             {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
-          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user mr-1"></i>Profile</a>
-          <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-friends mr-1"></i>Friends</a>
+          <a href="/profile/{{user.uid}}" class="btn-sidebar btn text-left"><i class="fas fa-user mr-1"></i>Profile</a>
+          <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar btn text-left"><i class="fas fa-user-friends mr-1"></i>Friends</a>
           <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-user-cog mr-1"></i>Settings and Privacy</a>
           <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-info-circle mr-1"></i>About</a>
           <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-phone mr-1"></i>Contact Us</a>
@@ -36,7 +54,8 @@
     </div>
     
     <!-- Make a post -->
-    <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
+    <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:95px;" id="main">
+      <form action="create-post" method="post">
       <div class="post-card card border-left-0 border-top-0 rounded-0" style="border-bottom-width: 10px;">
         <div class="container-fluid">
           <div class="row">
@@ -56,33 +75,50 @@
             </div>
           </div>
 
+          <!-- Tags -->
+          <div class="row" >
+            <div class="col-1"> </div>
+            <div class="col-11 mb-1 collapse" id="tagsCollapse">
+            <input name="tags" data-role="tagsinput" id="tags" class="form-control noEnterSubmit"
+                                placeholder="enter tags here..."></input>
+            </div>
+          </div>
+
           <div class="row">
             <!-- Upload an image -->
             <div class="col-1">
             </div>
 
             <div class="col-1">
-              <div class="form-group">
-                  <div class="custom-file">
-                      <input type="file" class="post-file-input" id="customFile">
-                      <label class="post-file-label" for="customFile"><i class="fas fa-image"></i></label>
+              <div class="form-group post-btn">
+                  <div class="custom-file post-btn">
+                      <input type="file" class="post-file-input post-btn" id="customFile">
+                      <label class="post-file-label post-btn" for="customFile"><i class="fas fa-image"></i></label>
                   </div>
               </div>
             </div>
 
             <!-- Add tags -->
             <div class="col-1">
-            <a href="/" class="btn-sidebar btn"><i class="fas fa-hashtag mr-1"></i></a>
+              <button class="post-btn btn" type="button" data-toggle="collapse" data-target="#tagsCollapse" aria-expanded="false" aria-controls="tagsCollapse"><i class="fas fa-hashtag mr-1"></i></button>
             </div>
 
             <div class="col-7">
+               <button type="submit" class="btn btn-primary tag-pill">Share</button>
             </div>
 
             <div class="col-2">
-              <button type="button" class="btn-sidebar btn">Share</button>
+              <div class="btn-group">   
+                  <select name="visibility" class="form-control" id="visibility">
+                      <option>Public</option>
+                      <option>Friends</option>
+                      <option>Just me</option>
+                  </select>
+             </div>
             </div>
           </div>
         </div>
+      </form>
       </div>
 
       <!-- TODO: if no posts, display a message -->
@@ -169,22 +205,14 @@
       </div>
       {% endfor %}
     </div>
+
+    <div class="col" style="margin-top:75px;">
+      <h6 class="btn-sidebar mt-5"> Suggested friends here? </h6>
+    </div>
   </div>
 </body>
 
 </html>
-
-<!-- 
-
-
-             <textarea name="content" class="make-post form-control border-0" id="message" rows="3"placeholder="Write a post..."></textarea>
-                            <input name="tags" data-role="tagsinput" id="tags" class="form-control noEnterSubmit"
-                                placeholder="enter some tags"></input>
-                         
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input" name="image" id="image">
-                                  <label class="custom-file-label" for="image">Select image</label>
-                                </div> -->
 
 
 

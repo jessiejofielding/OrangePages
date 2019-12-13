@@ -33,7 +33,7 @@ form {
       }
     }
   }
-  &.is-editing { 
+  &.is-editing {
     .btn-edit{
       display: none;
     }
@@ -216,7 +216,7 @@ form {
 }
 
 .btn-sidebar:hover {
-  color:#f25500 !important; 
+  color:#f25500 !important;
   background-color: #ffdfc7;
 }
 
@@ -3118,7 +3118,7 @@ input[type="button"].btn-block {
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
   margin: 0;
-  opacity: 0; }
+  opacity: 1; }
   .custom-file-input:focus ~ .custom-file-label {
     border-color: #ff9c5a;
     box-shadow: 0 0 0 0.2rem rgba(217, 87, 0, 0.25); }

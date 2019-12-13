@@ -54,10 +54,6 @@ def create_post():
         split_str = str.split(' ',  2)
         possible_netid = split_str[0]
         possible_user = User.query.get(possible_netid)
-        # print("possible_user", possible_user)
-        #
-        # print("len(split_str)", len(split_str))
-        # print(split_str)
 
         if possible_user is not None:
             notif = Notification(user, possible_user, NType.TAGGED, post)
@@ -83,7 +79,7 @@ def create_post():
             post.add_img(image)
 
     return redirect("/feed")
-    
+
 
 @page.route('/post/<int:postid>', methods=['GET'])
 @user_required
@@ -171,8 +167,6 @@ def add_tag(post_id):
     tag_str = request.form.get('content')
 
     post.add_tag_str(tag_str)
-    # tag = Tag(tag_str)
-    # post.add_tag(tag)
 
     return redirect(request.referrer)
 
@@ -195,22 +189,22 @@ def add_tag(post_id):
 # @page.route('/post/<int:post_id>/num-likers', methods=['GET'])
 
 # uploads an image
-@page.route("/upload-image", methods=["GET", "POST"])
-@user_required
-def upload_image():
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
+# @page.route("/upload-image", methods=["GET", "POST"])
+# @user_required
+# def upload_image():
+#     if request.method == "POST":
+#         if request.files:
+#             image = request.files["image"]
+#
+#             image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
+#             return redirect(request.referrer)
+#
+#     return render_template("/upload_image.html")
 
-            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-            return redirect(request.referrer)
 
-    return render_template("/upload_image.html")
-
-
-@page.route('/uploads/<filename>')
-@user_required
-def uploaded_file(filename):
-    name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
-    # print(name)
-    return render_template("img.html", img_name=name)
+# @page.route('/uploads/<filename>')
+# @user_required
+# def uploaded_file(filename):
+#     name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
+#     # print(name)
+#     return render_template("img.html", img_name=name)

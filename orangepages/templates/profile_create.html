@@ -26,7 +26,7 @@ $(document).ready(function() {
         console.log(val);
         if (val != "none") {
             $("#country").html("<option value='usa'>United States</option>");
-        } 
+        }
         else {
              $("#country").html("<option value=''>Choose an option...</option>\
                             <option value='Afghanistan'>Afghanistan</option>\
@@ -329,7 +329,7 @@ $(document).ready(function() {
 <!-- MultiStep Form -->
 <div class="row">
     <div class="col-md-12 col-md-offset-3">
-        <form id="msform" action="create-user" method="POST">
+        <form id="msform" action="create-user" method="POST" enctype="multipart/form-data">
             <!-- progressbar -->
             <ul id="progressbar">
                 <li class="active">Basic Info</li>
@@ -372,7 +372,7 @@ $(document).ready(function() {
                                 <option value="BSE">BSE</option>
                             </select>
                         </div>
-                        
+
                         <div class="input-group">
                             <select name="major" class="selectpircker form-control" id="major">
                                  <option value='aas'>African American Studies</option>
@@ -436,6 +436,7 @@ $(document).ready(function() {
                     <div class="form-check form-check-inline">
                         <label onclick="collapse()" class="radio-wrapper fs-subtitle">Upload profile picture
                           <input class="input" type="radio" name="photo" value="yes">
+                          <!-- <label class="custom-file-label" for="image">Select image...</label> -->
                           <span class="custom-radio"></span>
                         </label>
                     </div>
@@ -445,7 +446,7 @@ $(document).ready(function() {
                     <div class="form-group row justify-content-center mt-4">
                         <div class="col-sm-9">
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" type="file" placeholder="Upload your file">
+                                <input class="custom-file-input"  name="image" id="image" type="file" placeholder="Upload your file">
                             </div>
                         </div>
                     </div>
@@ -827,7 +828,7 @@ $(document).ready(function() {
             <fieldset>
                 <h2 class="fs-title">Additional Information</h2>
                 <h2 class="fs-subtitle">Extra optional details.</h2>
-                
+
                 <h3 class="fs-subtitle">Are you an athlete?</h3>
 
                 <div class="form-group row justify-content-center">

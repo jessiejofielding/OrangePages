@@ -73,7 +73,7 @@ def create_user():
     state = request.form.get('state')
     country = request.form.get('country')
     team = request.form.get('team')
-    groups = request.form.get('groups')
+    activities = request.form.get('groups')
     certificate = request.form.get('certificate')
     birthday = request.form.get('birthday')
 
@@ -91,21 +91,26 @@ def create_user():
     email = netid + "@princeton.edu"
 
     # Create and update user
-    user = User(netid, firstname, lastname, email)
-    user.update_optional_info(firstname,lastname,email,
-        hometown,state,country,year,major,room,building)
+    user = User(netid)
+    user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
+    user.update_optional_info(hometown, state, country, room, building, food,
+    team, activities, certificate, birthday, affiliations)
 
-    if "image" in request.files:
+    if use_photo:
+        # TODO: tigerbook API
+        pass
+
+    elif "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':
-            print("IMAGE", image)
+            # print("IMAGE", image)
             user.add_img(image)
 
-    try:
-        db.session.add(user)
-        db.session.commit()
-    except exc.IntegrityError as e:
-        db.session().rollback()
+    # try:
+    #     db.session.add(user)
+    #     db.session.commit()
+    # except exc.IntegrityError as e:
+    #     db.session().rollback()
 
     return render('message.html',
         title='Success',

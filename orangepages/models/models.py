@@ -35,7 +35,7 @@ class User(db.Model):
     _firstname = db.Column(db.Integer, default=1)
     lastname = db.Column(db.String(50))
     _lastname = db.Column(db.Integer, default=1)
-    email = db.Column(db.String(50), unique=True)
+    email = db.Column(db.String(50))
     _email = db.Column(db.Integer, default=1)
     hometown = db.Column(db.String(50))
     _hometown = db.Column(db.Integer, default=1)
@@ -47,10 +47,24 @@ class User(db.Model):
     _year = db.Column(db.Integer, default=1)
     major = db.Column(db.String(50))
     _major = db.Column(db.Integer, default=1)
+    rescollege = db.Column(db.String(50))
+    _rescollege = db.Column(db.Integer, default=1)
+    school = db.Column(db.String(50))
+    _school = db.Column(db.Integer, default=1)
     room = db.Column(db.String(50))
     _room = db.Column(db.Integer, default=1)
     building = db.Column(db.String(50))
     _building = db.Column(db.Integer, default=1)
+    food = db.Column(db.String(50))
+    _food = db.Column(db.Integer, default=1)
+    team = db.Column(db.String(50))
+    _team = db.Column(db.Integer, default=1)
+    activities = db.Column(db.String(100))
+    _activities = db.Column(db.Integer, default=1)
+    certificate = db.Column(db.String(100))
+    _certificate = db.Column(db.Integer, default=1)
+    birthday = db.Column(db.String(50))
+    _birthday = db.Column(db.Integer, default=1)
 
     _unread_notifs = db.Column(db.Integer, default=0)
 
@@ -60,11 +74,9 @@ class User(db.Model):
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
     _img = db.Column(db.Boolean(), default = False)
-    # _img = db.Column(db.Integer, default=1)
 
-    def __init__(self, netid, firstname, lastname, email):
+    def __init__(self, netid):
         self.uid = netid
-        self.update_info(firstname, lastname, email)
         # every user is a member of the group public
         public = Group.query.get(1)
         public.add_member(self)
@@ -74,6 +86,8 @@ class User(db.Model):
 
         # For 'Just Me' privacy uhhh
         self._groups.append(Group(netid, self, [self]))
+        db.session.add(self)
+        db.session.commit()
 
     # TO REMOVE
     def update_pic(self, image):
@@ -83,54 +97,48 @@ class User(db.Model):
     def add_img(self, image):
         if image is not None:
             self._img = True
-            db.session.commit()
             tig = cloudinary.uploader.upload(image)
             self._pic = tig['public_id']
-            # subpath = self.uid + "_pic.jpeg"
-            # self.img = app.config["IMAGE_UPLOADS_RELATIVE"] + subpath
-            # image.save(os.path.join(app.config["IMAGE_UPLOADS"], subpath))
-            # db.session.commit()
+            db.session.commit()
 
-            # cloudinary.uploader.upload(image, public_id = self.uid)
 
     def get_img(self):
         if self._img:
             x = cloudinary.CloudinaryImage(self._pic).url
-            # print(x)
+
             return x
         else:
             return DEF_IMG
 
-        # if url_exists(x):
-        #     return x
-        # else:
-        #     return DEF_IMG
 
-        # img_path_check = app.config["IMAGE_UPLOADS"] + self.uid + "_pic.jpeg"
-        #
-        # if os.path.isfile(img_path_check):
-        #     return self.img
-        # else:
-        #     return DEF_IMG
 
-    # def pic_path(self):
-    #     return app.config["IMAGE_UPLOADS_RELATIVE"] + self.uid
-
-    def update_info(self, firstname, lastname, email):
+    def update_public_info(self, firstname, lastname, email, rescollege, school, 
+    major, year):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
+        self.rescollege = rescollege
+        self.school = school
+        self.major = major
+        self.year = year
+        db.session.commit()
 
-    def update_optional_info(self, firstname, lastname, email, hometown,
-    state, country, year, major, room, building):
-        self.update_info(firstname, lastname, email)
+
+    def update_optional_info(self, hometown, state, country, room, building, food,
+    team, activities, certificate, birthday, affiliations):
         self.hometown = hometown
         self.state = state
         self.country = country
-        self.year = year
-        self.major = major
         self.room = room
         self.building = building
+        self.food = food
+        self.team = team 
+        self.activities = activities
+        self.certificate = certificate
+        self.birthday = birthday
+        for affil in affiliations:
+            pass
+        db.session.commit()
 
     # for debugging
     # def __repr__(self):

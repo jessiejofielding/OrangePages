@@ -135,9 +135,12 @@ def edit_user():
         major = request.form.get('major')
         room = request.form.get('room')
         building = request.form.get('building')
+        affiliations = []
 
         # Update user
-        cur_user().update_optional_info(firstname,lastname,email,
+        # cur_user().update_optional_info(firstname,lastname,email,
+        #     hometown,state,country,year,major,room,building, affiliations)
+        cur_user().update_profile_info(firstname,lastname,email,
             hometown,state,country,year,major,room,building)
 
         if "image" in request.files:
@@ -182,3 +185,47 @@ def clear_notifs():
 
     db.session.commit()
     return redirect(request.referrer)
+
+
+@page.route('/settings', methods=['GET', 'POST'])
+@user_required
+def edit_settings():
+    user = cur_user()
+    if request.method=='GET':
+        names = ['netid', 'firstname', 'lastname', 'email', 'hometown', 
+            'state', 'country', 'year', 'major', 'rescollege', 'school', 
+            'room', 'building', 'food', 'team', 'activities', 
+            'certificate', 'birthday']
+        privs = user.group_to_priv(user.get_attr_priv())
+        cur_privacy = {}
+        for name, priv in zip(names, privs):
+            cur_privacy[name] = priv
+            print(name + " " + priv)
+        return render('settings.html', cur_privacy = cur_privacy)
+
+    # Get form fields
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    email = request.form.get('email')
+    hometown = request.form.get('hometown')
+    state = request.form.get('state')
+    country = request.form.get('country')
+    year = request.form.get('year')
+    major = request.form.get('major')
+    room = request.form.get('room')
+    building = request.form.get('building')
+
+    # The fields that arent out there yet
+    uid = rescollege = school = food = team = \
+        activities = certificate = birthday = 'Public'
+
+
+    user.update_privacy(uid, firstname, lastname, email, hometown, state, 
+        country, year, major, rescollege, school, room, building, food, 
+        team, activities, certificate, birthday)
+
+
+    return render('message.html',
+        title='Success!',
+        message='Your settings have been saved.')
+

@@ -1,5 +1,6 @@
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
+    SQLALCHEMY_DATABASE_URI = 'postgres://nmhcywqweatsfl:e21c40997b10f441ef74bc5f4cf8d9a6e3b2de3717c76f98efa4cfb03f95c81a@ec2-174-129-254-223.compute-1.amazonaws.com:5432/ddqrp7b6ke1cnf'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     CAS_SERVER = "https://fed.princeton.edu"

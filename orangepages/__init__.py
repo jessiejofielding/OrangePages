@@ -19,11 +19,11 @@ cas = CAS(app, '/cas')
 app.config.from_object(config.Config)
 
 # print(os.environ.get('CLOUDINARY_CLOUD_NAME'))
-Cloud.config(
-  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME') ,
-  api_key = os.environ.get('CLOUDINARY_API_KEY') ,
-  api_secret = os.environ.get('CLOUDINARY_API_SECRET')
-)
+# Cloud.config(
+#   cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME') ,
+#   api_key = os.environ.get('CLOUDINARY_API_KEY') ,
+#   api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+# )
 
 # Import and register views.
 from orangepages.views import general, post, search, user, error, test, friend

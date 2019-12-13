@@ -1,7 +1,9 @@
+import os
 class Config(object):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
-    SQLALCHEMY_DATABASE_URI = 'postgres://nmhcywqweatsfl:e21c40997b10f441ef74bc5f4cf8d9a6e3b2de3717c76f98efa4cfb03f95c81a@ec2-174-129-254-223.compute-1.amazonaws.com:5432/ddqrp7b6ke1cnf'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 
     CAS_SERVER = "https://fed.princeton.edu"
     CAS_AFTER_LOGIN = 'root'
@@ -14,6 +16,7 @@ class Config(object):
     IMAGE_UPLOADS_RELATIVE = "../static/uploads/"
     IMAGE_UPLOADS_POSTS = "./orangepages/static/uploads/posts/"
     IMAGE_UPLOADS_RELATIVE_POSTS = "../static/uploads/posts/"
+
 
 # TODO: we can have different configurations for production etc as we need
 

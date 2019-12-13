@@ -87,7 +87,7 @@ def create_user():
         affiliations.append('PAA')
     if request.form.get('share_peer'):
         affiliations.append('Share Peer')
-    
+
     email = netid + "@princeton.edu"
 
     # Create and update user
@@ -100,7 +100,7 @@ def create_user():
         # TODO: tigerbook API
         pass
 
-    elif "image" in request.files:
+    if "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':
             # print("IMAGE", image)

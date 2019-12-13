@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-<body style="background-color:#333333;">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+<script type="text/javascript" src="/static/js/timestamp.js"></script>
+
+<body>
+
     <head>
         <title>Orange Pages</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -8,19 +15,26 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
         <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css"/>
-        <link rel="stylesheet" href="/static/css/styles.css" type="text/css"/>
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
     </head>
 
-{% include 'navbar.html' %}
-{% include 'footer.html' %}
+    {% include 'navbar.html' %}
 
-    <div class="jumbotron">
-        <h1 class="display-4">{{title}}</h1>
-        <p class="lead">
-            {{message}}
-            <br>
-            <a href='/'> back home </a>
-        </p>
+
+    <div class="post container" style="width: 95%">
+             <div class="card-body">
+                <h1>{{title}}</h1>
+                <p>
+                    {{message}}
+                    <br>
+                    <a href='/'> back home </a>
+                </p>
+            </div>       
     </div>
+
+    {% include 'footer.html' %}
+
+</html>

@@ -64,7 +64,8 @@
 
             {% if notif.unread %}
                 <!-- @frontend lol sorry please fix -->
-                <div style='color:red; font-weight: bold; transform:rotate(20deg); position:absolute;'> UNREAD </div>
+                <span class="badge badge-pill badge-danger">Unread</span>
+                <br>
             {% endif %}
             
             <a href='{{notif.link_to()}}' style="width:100%; height:100%;">
@@ -74,7 +75,6 @@
                         getTimeAgo("{{ notif.date }}");
                     </script>
                 </div>
-
                 <a href='/profile/{{ notif.sender_id() }}'>
                     {{notif.sender_name()}}
                 </a> {{notif.text}}

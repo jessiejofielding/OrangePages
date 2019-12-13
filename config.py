@@ -11,7 +11,8 @@ class Config(object):
 
     IMAGE_UPLOADS = "./orangepages/static/uploads/"
     IMAGE_UPLOADS_RELATIVE = "../static/uploads/"
-
+    IMAGE_UPLOADS_POSTS = "./orangepages/static/uploads/posts/"
+    IMAGE_UPLOADS_RELATIVE_POSTS = "../static/uploads/posts/"
 
 # TODO: we can have different configurations for production etc as we need
 

@@ -67,6 +67,8 @@
                             </script>
                         </div>
                         <p class="card-text">
+                            <img src="{{post.get_img()}}" width="200px">
+                            <br/>
                             {{post.content}}
                             {% if tags|length %}
                             <br>
@@ -156,7 +158,7 @@
                             </div>
                             <div>
                                 <div class="dropdown">
-                                    <div class="text-muted h7 mb-2"> 
+                                    <div class="text-muted h7 mb-2">
                                         <i class="fa fa-clock-o"></i>
                                         <script type="text/javascript">
                                             getTimeAgo("{{ comment.date }}");

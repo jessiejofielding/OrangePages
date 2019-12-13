@@ -3,22 +3,35 @@ from flask import Blueprint, render_template
 from orangepages.models.models import db, User
 from flask_cas_fix import login_required
 from sqlalchemy import exc
+from orangepages import app
+import os.path
 
-from orangepages.views.util import cur_user, cur_uid, render
+from orangepages.views.util import cur_user, cur_uid, render, user_required
 
 
 
-page = Blueprint('user', __name__)
+page = Blueprint('user_page', __name__)
 
+
+# def upload_pic(image):
+#     if request.method == "POST":
+#         if request.files:
+#             image = request.files["image"]
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
-#@login_required
+@user_required
 def view_profile(lookup_id):
 
-    if cur_user() is None:
-        return redirect('/create-user')
+    # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    # img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
+    #
+    # if os.path.isfile(img_path_check):
+    #     img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
+    # else:
+    #     img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
 
     if cur_uid() == lookup_id:
+        # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id
         return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
@@ -26,8 +39,9 @@ def view_profile(lookup_id):
         return render('message.html',
             title='Error',
             message="This user doesn't exist.")
-        
+
     friends_list = lookup.friend_list()
+
 
     return render('profile.html', lookup=lookup,friends_list=friends_list)
 
@@ -43,7 +57,6 @@ def create_user():
 
     if request.method=='GET':
         return render('profile_create.html')
-
 
     # Get form fields
     netid = cur_uid()
@@ -82,6 +95,12 @@ def create_user():
     user.update_optional_info(firstname,lastname,email,
         hometown,state,country,year,major,room,building)
 
+    if "image" in request.files:
+        image = request.files["image"]
+        if image.filename is not '':
+            print("IMAGE", image)
+            user.add_img(image)
+
     try:
         db.session.add(user)
         db.session.commit()
@@ -96,10 +115,8 @@ def create_user():
 
 
 @page.route('/edit-user', methods=['GET', 'POST'])
-#@login_required
+@user_required
 def edit_user():
-    if cur_user() is None:
-        return redirect('/create-user')
 
     if request.method=='POST':
         # Get form fields
@@ -117,6 +134,13 @@ def edit_user():
         # Update user
         cur_user().update_optional_info(firstname,lastname,email,
             hometown,state,country,year,major,room,building)
+
+        if "image" in request.files:
+            image = request.files["image"]
+            if image.filename is not '':
+                print("IMAGE", image)
+                cur_user().add_img(image)
+
         db.session.commit()
 
     return redirect('/profile/'+cur_uid())
@@ -128,29 +152,24 @@ def edit_user():
 
 
 @page.route('/notifications', methods=['GET'])
-#@login_required
+@user_required
 def view_notifs():
     user = cur_user()
-
-    if user is None:
-        return redirect('/create-user')
 
     # Order of next few lines matter, pls don't rearrange
     notifs = user.notifs.all()
     unread_count = user._unread_notifs
     user.reset_unread()
     for notif, i in zip(notifs, range(unread_count)):
-        notif.unread = True # Do not commit to db session 
+        notif.unread = True # Do not commit to db session
 
     return render('notifs.html', notifs=notifs)
 
 
 @page.route('/clear-notifs', methods=['GET'])
-#@login_required
+@user_required
 def clear_notifs():
     user = cur_user()
-    if user is None:
-        return redirect('/create-user')
 
     notifs = user.notifs.all()
     for notif in notifs:
@@ -158,5 +177,3 @@ def clear_notifs():
 
     db.session.commit()
     return redirect(request.referrer)
-
-

@@ -128,11 +128,9 @@ def comment(postid):
         content = request.form.get('content')
 
         comment = Comment(postid, content, user)
-        db.session.add(comment)
 
         if(post.creator is not user):
             notif = Notification(user, post.creator, NType.COMMENTED, post)
-            db.session.add(notif)
 
         db.session.commit()
 
@@ -159,8 +157,6 @@ def like(post_id, isLike):
         post.add_like(user)
         if(post.creator is not user):
             notif = Notification(user, post.creator, NType.LIKED, post)
-            db.session.add(notif)
-
     else:
         post.unlike(user)
 

@@ -380,6 +380,8 @@ class Group(db.Model):
         self.owner = owner
         for member in members:
             self.add_member(member)
+        db.session.add(self)
+        db.session.commit()
 
 #-----------------------------------------------------------------------
 class Relationship(db.Model):
@@ -424,6 +426,8 @@ class Relationship(db.Model):
         self.user2 = user2
         self.status = st.none
         self.change_status(status)
+        db.session.add(self)
+        db.session.commit()
 
     def get_status(user1, user2):
         # TODO: finish implementing this - jf
@@ -454,6 +458,8 @@ class Comment(db.Model):
         self.postid = postid
         self.content = content
         self.creator = creator
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return "Comment %s by %s" % (self.content, self.creator)
@@ -587,6 +593,7 @@ class Tag(db.Model):
 
     def __init__(self, tag):
         self.tid = tag
+        # db.session.add(self) REVIEW do we need this
 
     def __repr__(self):
         return "<Tag: %s>" % (self.tid)

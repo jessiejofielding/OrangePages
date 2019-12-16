@@ -102,7 +102,10 @@
                         <a href="/post/{{post.pid}}/edit" class="card-link"><i class="fa fa-mail-forward"></i> Edit Post</a>
                         {% endif %}
 
+                        {% if post.last_edited %}
+                        <br />
                         Last edited: {{ post.last_edited }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

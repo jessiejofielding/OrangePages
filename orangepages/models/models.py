@@ -474,8 +474,7 @@ class Post(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     has_img = db.Column(db.Boolean(), default=False)
     _pic = db.Column(db.String(50))
-
-    last_edited = db.Column(db.DateTime, default=datetime.datetime.now)
+    last_edited = db.Column(db.DateTime)
 
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
@@ -542,7 +541,8 @@ class Post(db.Model):
             self.tags.remove(tag)
 
     def update_last_edit(self):
-        self.last_edited = datetime.datetime.now
+        self.last_edited = datetime.datetime.now()
+        db.session.commit()
 
     def add_like(self, liker):
         print(liker.firstname, "liked post", self.pid)
@@ -606,7 +606,6 @@ class Post(db.Model):
     def __init__(self, creator):
         self.creator = creator
         self.img = ""
-
         # self.update_info(content, groups, tags)
         db.session.add(self)
         db.session.commit()

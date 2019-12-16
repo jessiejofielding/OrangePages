@@ -28,11 +28,15 @@ def edit_post(postid):
     post = Post.query.get(postid)
 
     if request.method=='GET':
-        return render('post_edit.html', post=post)
+        if cur_user() != post.creator:
+            return redirect("/feed")
+        else:
+            return render('post_edit.html', post=post)
 
+    post.update_last_edit()
     edit_post_util(post, request)
 
-    return redirect("/feed")
+    return redirect('/post/'+ str(post.pid))
 
 def edit_post_util(post, request):
     user = cur_user()

@@ -13,25 +13,12 @@ from orangepages.views.util import cur_user, cur_uid, render, user_required
 page = Blueprint('user_page', __name__)
 
 
-# def upload_pic(image):
-#     if request.method == "POST":
-#         if request.files:
-#             image = request.files["image"]
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 @user_required
 def view_profile(lookup_id):
 
-    # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    # img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
-    #
-    # if os.path.isfile(img_path_check):
-    #     img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    # else:
-    #     img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
-
     if cur_uid() == lookup_id:
-        # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id
         return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
@@ -192,9 +179,9 @@ def clear_notifs():
 def edit_settings():
     user = cur_user()
     if request.method=='GET':
-        names = ['netid', 'firstname', 'lastname', 'email', 'hometown', 
-            'state', 'country', 'year', 'major', 'rescollege', 'school', 
-            'room', 'building', 'food', 'team', 'activities', 
+        names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
+            'state', 'country', 'year', 'major', 'rescollege', 'school',
+            'room', 'building', 'food', 'team', 'activities',
             'certificate', 'birthday']
         privs = user.group_to_priv(user.get_attr_priv())
         cur_privacy = {}
@@ -220,12 +207,11 @@ def edit_settings():
         activities = certificate = birthday = 'Public'
 
 
-    user.update_privacy(uid, firstname, lastname, email, hometown, state, 
-        country, year, major, rescollege, school, room, building, food, 
+    user.update_privacy(uid, firstname, lastname, email, hometown, state,
+        country, year, major, rescollege, school, room, building, food,
         team, activities, certificate, birthday)
 
 
     return render('message.html',
         title='Success!',
         message='Your settings have been saved.')
-

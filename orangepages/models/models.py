@@ -112,7 +112,7 @@ class User(db.Model):
 
 
 
-    def update_public_info(self, firstname, lastname, email, rescollege, school, 
+    def update_public_info(self, firstname, lastname, email, rescollege, school,
     major, year):
         self.firstname = firstname
         self.lastname = lastname
@@ -132,7 +132,7 @@ class User(db.Model):
         self.room = room
         self.building = building
         self.food = food
-        self.team = team 
+        self.team = team
         self.activities = activities
         self.certificate = certificate
         self.birthday = birthday
@@ -152,10 +152,10 @@ class User(db.Model):
     # helpers ---------------------------------------------------------
     # all attribute privacies as a list of gids
     def get_attr_priv(self):
-        return (self._uid, self._firstname, self._lastname, self._email, 
-            self._hometown, self._state, self._country, self._year, 
-            self._major, self._rescollege, self._school, self._room, 
-            self._building, self._food, self._team, self._activities, 
+        return (self._uid, self._firstname, self._lastname, self._email,
+            self._hometown, self._state, self._country, self._year,
+            self._major, self._rescollege, self._school, self._room,
+            self._building, self._food, self._team, self._activities,
             self._certificate, self._birthday)
 
     # return list of privacy strings as list of corr. group ids
@@ -174,8 +174,8 @@ class User(db.Model):
     def group_to_priv(self, groups):
         mapping = {
             1: 'Public',
-            self._groups[0].gid: 'Friends', 
-            self._groups[1].gid: 'Just me' 
+            self._groups[0].gid: 'Friends',
+            self._groups[1].gid: 'Just me'
         }
         privs = []
         for group in groups:
@@ -184,13 +184,13 @@ class User(db.Model):
 
     # -----------------------------------------------------------------
 
-    def update_privacy(self, uid, first, last, email, hometown, state, 
-        country, year, major, rescollege, school, room, building, food, 
+    def update_privacy(self, uid, first, last, email, hometown, state,
+        country, year, major, rescollege, school, room, building, food,
         team, activities, certificate, birthday):
 
         # print('\n\n update priv raw params:\n')
-        # for i in (uid, first, last, email, hometown, 
-        #             state, country, year, major, rescollege, school, room, 
+        # for i in (uid, first, last, email, hometown,
+        #             state, country, year, major, rescollege, school, room,
         #             building, food, team, activities, certificate, birthday):
         #     print(i+ ' ')
         # print('\n\n')
@@ -201,7 +201,7 @@ class User(db.Model):
         self._building, self._food, self._team, self._activities, \
         self._certificate, self._birthday = \
         self.priv_to_group((uid, first, last, email, hometown,
-            state, country, year, major, rescollege, school, room, 
+            state, country, year, major, rescollege, school, room,
             building, food, team, activities, certificate, birthday))
 
 
@@ -212,7 +212,7 @@ class User(db.Model):
         #     print(i)
         # print('\n\n')
 
-        
+
         db.session.commit()
 
     # for debugging
@@ -415,7 +415,7 @@ class Relationship(db.Model):
             if self.status == st.friends:
                 self.user1.unfriend(self.user2)
                 self.user2.unfriend(self.user1)
-    
+
         self.status = status
 
     def __init__(self, user1, user2, status):
@@ -485,6 +485,16 @@ class Post(db.Model):
     def remove_group(self, group):
         if group in self.groups: self.groups.remove(group)
 
+    # 'Friends' or 'Public'; visibility is a string sorry
+    def set_visibility(self, visibility):
+        if visibility == 'Public':
+            self.add_group(Group.query.get(1))
+        elif visibility == 'Friends':
+            self.remove_group(Group.query.get(1))
+            self.add_group(self.creator._groups[0]) # friends group
+
+        self.add_group(self.creator._groups[1]) # just me group
+
     def add_tag(self, tag):
         if tag not in self.tags: self.tags.append(tag)
 
@@ -537,11 +547,6 @@ class Post(db.Model):
             tig = cloudinary.uploader.upload(image)
             self._pic = tig['public_id']
             db.session.commit()
-        # if image is not None:
-        #     subpath = str(self.pid) + "_pic.jpeg"
-        #     self.img = app.config["IMAGE_UPLOADS_RELATIVE_POSTS"] + subpath
-        #     image.save(os.path.join(app.config["IMAGE_UPLOADS_POSTS"], subpath))
-        #     db.session.commit()
 
     def get_img(self):
         if self.has_img:
@@ -549,31 +554,28 @@ class Post(db.Model):
             return x
         else:
             return ""
-        # print(x)
-        # if url_exists(x):
-        #     return x
-        # else:
-        #     return ""
-        # img_path_check = app.config["IMAGE_UPLOADS_POSTS"] + str(self.pid) + "_pic.jpeg"
-        #
-        # if os.path.isfile(img_path_check):
-        #     return self.img
-        # else:
-        #     return ""
 
-    def __repr__(self):
-        return "Post %s by %s" % (self.content, self.creator)
-
-    def __init__(self, content, creator, groups, tags=[]):
+    def update_info(self, content, groups=[], tags=[]):
         self.content = content
-        self.creator = creator
-        self.img = ""
-        # self.add_group(public_group())
+
         for group in groups:
             self.add_group(group)
 
         for tag_str in tags:
             self.add_tag_str(tag_str)
+
+        db.session.commit()
+
+    def __repr__(self):
+        return "Post %s by %s" % (self.content, self.creator)
+
+    def __init__(self, creator):
+        self.creator = creator
+        self.img = ""
+
+        # self.update_info(content, groups, tags)
+        db.session.add(self)
+        db.session.commit()
 
 
 #-----------------------------------------------------------------------
@@ -651,6 +653,9 @@ class Notification(db.Model):
             self.postid = post.pid
 
         self.text = NType.text[action]
+
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         string = "To %s: %s %s\n"

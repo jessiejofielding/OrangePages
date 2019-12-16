@@ -475,6 +475,8 @@ class Post(db.Model):
     has_img = db.Column(db.Boolean(), default=False)
     _pic = db.Column(db.String(50))
 
+    last_edited = db.Column(db.DateTime, default=datetime.datetime.now)
+
     likes = relationship('User', secondary=post_liker,
                             backref=backref('posts_liked', lazy='dynamic'))
 
@@ -490,6 +492,25 @@ class Post(db.Model):
 
     def remove_group(self, group):
         if group in self.groups: self.groups.remove(group)
+
+    def get_visibility(self):
+        if Group.query.get(1) in self.groups:
+            return "Everyone can see this"
+        elif self.creator._groups[0] in self.groups:
+            return "Only your friends can see this"
+        else:
+            return "Only you can see this"
+
+        # vis_str = "Visible to: "
+        # for group in self.groups:
+        #     if group == self.creator._groups[0]:
+        #         vis_str += "your friends" + ", "
+        #     elif group == self.creator._groups[1]:
+        #         vis_str += "yourself" + ", "
+        #     else:
+        #         vis_str += group.title + ", "
+        # vis_str = vis_str[:-1]
+        # return vis_str
 
     # 'Friends' or 'Public'; visibility is a string sorry
     def set_visibility(self, visibility):
@@ -519,6 +540,9 @@ class Post(db.Model):
             print("Post did not have this tag")
         else:
             self.tags.remove(tag)
+
+    def update_last_edit(self):
+        self.last_edited = datetime.datetime.now
 
     def add_like(self, liker):
         print(liker.firstname, "liked post", self.pid)

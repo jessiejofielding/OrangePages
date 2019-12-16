@@ -43,6 +43,7 @@
 </script>
 
 <body>
+  <h1>you're on the page to edit post {{post.pid}}</h1>
 <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:95px;" id="main">
 <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data">
   <div class="post-card card border-left-0 border-top-0 rounded-0" style="border-bottom-width: 10px;">
@@ -103,7 +104,7 @@
         </div>
 
         <div class="col-7">
-           <button type="submit" class="btn btn-primary tag-pill">Share</button>
+           <button type="submit" class="btn btn-primary tag-pill">Save</button>
         </div>
 
         <div class="col-2">
@@ -121,6 +122,10 @@
         </button>
       </div>
     </div>
+  </form>
+
+  <form action="/post/{{post.pid}}/delete" method="post">
+    <button type="submit" class="btn btn-primary tag-pill">Delete post</button>
   </form>
 </div>
 </body>

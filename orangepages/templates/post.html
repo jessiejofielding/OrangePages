@@ -93,6 +93,9 @@
                             <span>Like</span><span class="hidden">Unlike</span>
                         </a>
                         <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                        {% if post.creator == user %}
+                        <a href="/post/{{post.pid}}/edit" class="card-link"><i class="fa fa-mail-forward"></i> Edit Post</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

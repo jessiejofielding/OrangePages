@@ -572,6 +572,10 @@ class Post(db.Model):
 
         db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def __repr__(self):
         return "Post %s by %s" % (self.content, self.creator)
 

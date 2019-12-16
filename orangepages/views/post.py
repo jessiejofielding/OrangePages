@@ -93,6 +93,12 @@ def edit_post_util(post, request):
 
     post.update_info(content, groups=[], tags=tags)
 
+@page.route('/post/<int:postid>/delete', methods=['POST'])
+@user_required
+def delete_post(postid):
+    post = Post.query.get(postid)
+    post.delete()
+    return redirect("/feed")
 
 
 @page.route('/post/<int:postid>', methods=['GET'])

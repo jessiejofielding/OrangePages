@@ -1,6 +1,6 @@
 from flask import request, make_response, redirect
 from flask import Blueprint, render_template
-from orangepages.models.models import db, User
+from orangepages.models.models import db, User, Notification
 from flask_cas_fix import login_required
 from sqlalchemy import exc
 from orangepages import app
@@ -169,6 +169,18 @@ def clear_notifs():
     notifs = user.notifs.all()
     for notif in notifs:
         notif.delete()
+
+    db.session.commit()
+    return redirect(request.referrer)
+
+@page.route('/clear-notif/<int:id>', methods=['POST'])
+@user_required
+def clear_single_notif(id):
+    user = cur_user()
+    print('clearing notif id', id)
+
+    notif = Notification.query.get(id)
+    notif.delete()
 
     db.session.commit()
     return redirect(request.referrer)

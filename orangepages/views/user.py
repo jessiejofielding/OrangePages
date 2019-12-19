@@ -29,8 +29,12 @@ def view_profile(lookup_id):
 
     friends_list = lookup.friend_list()
 
+    # maps attr to attr content for lookup user, with consideration of lookup
+    # user's privacy settings
+    lookup_priv = cur_user().lookup_user(lookup_id)
 
-    return render('profile.html', lookup=lookup,friends_list=friends_list)
+    return render('profile.html', lookup_priv=lookup_priv,
+    lookup=lookup,friends_list=friends_list)
 
 
 

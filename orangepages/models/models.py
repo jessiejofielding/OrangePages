@@ -230,6 +230,32 @@ class User(db.Model):
         self.hometown, self.state, self.country, self.year,
         self.major, self.room, self.building)
 
+    # returns a map of the lookup_user's attributes, with consideration
+    # of their privacy settings
+    def lookup_user(self, uid):
+        lookup_user = User.query.get(uid)
+
+        names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
+            'state', 'country', 'year', 'major', 'room', 'building']
+
+        # im so sorry
+        vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname,
+        lookup_user.email, lookup_user.hometown, lookup_user.state,
+        lookup_user.country, lookup_user.year,
+        lookup_user.major, lookup_user.room, lookup_user.building]
+
+        privs = lookup_user.get_attr_priv() # gid allowed to view each attr
+
+        lookup = {}
+        for name, priv, val in zip(names, privs, vals):
+            if Group.query.get(priv) in self.groups_in.all():
+                lookup[name] = val
+            else:
+                lookup[name] = ""
+            print(name + " " + lookup[name])
+
+        return lookup
+
     # Returns a list of users who have any visible attritute that matches
     # the given arguments. Any number of arguments can be given.
     def search(self, *args):
@@ -399,24 +425,25 @@ class Relationship(db.Model):
     )
 
     def change_status(self, status):
+        # print('status', type(status), 'st.unfriend', type(st.unfriend))
         if ((status == st.request2_1) and (self.status == st.request1_2)) or \
             ((status == st.request1_2) and (self.status == st.request2_1)):
             status = st.friends
 
-        if status == st.accept:
+        if int(status) == st.accept:
             status = st.friends
 
-        if status == st.friends:
+        if int(status) == st.friends:
             # add to "Friend" group
             if self.status != st.friends:
                 self.user1.add_friend(self.user2)
                 self.user2.add_friend(self.user1)
 
-        if status == st.unfriend:
+        if int(status) == st.unfriend:
             # remove from "Friend" group
-            if self.status == st.friends:
+            if int(self.status) == st.friends:
                 self.user1.unfriend(self.user2)
-                self.user2.unfriend(self.user1)
+                #self.user2.unfriend(self.user1)
 
         self.status = status
 

@@ -45,13 +45,14 @@ def edit_post_util(post, request):
     # TAGS Parse tags and add them - list of tag STRINGS
     tags = []
     tags_raw =  request.form.get('tags')
+    print(tags_raw)
     if tags_raw is not None:
-        tags_str1 = tags_raw.replace(" ", "")
-        tags_str2 = tags_str1.split(',')
 
-        for tag_str in tags_str2:
-            if tag_str != "":
-                tags.append(tag_str)
+        tags_str = tags_raw.split(' ')
+
+        for tag in tags_str:
+            if tag != "":
+                tags.append(tag)
 
     # GROUPS
     # groups = []

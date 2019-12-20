@@ -33,7 +33,9 @@ $(function() {
 	});
 
 	$('#form-tags-5').tagsInput({
-		'delimiter': ';'
+        'delimiter': ' ',
+        'unique': true,
+        'maxChars': 50,
 	});
 
 	$('#form-tags-6').tagsInput({

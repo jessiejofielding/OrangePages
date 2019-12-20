@@ -32,8 +32,8 @@ display:block;
 max-width:100%;
 word-wrap:break-word;
 color:#fff;
-padding:5px 30px 5px 5px;
-height:22px;
+padding:7px 30px 5px 8px;
+height:25px;
 border-radius: 15px;
 margin:0 5px 5px 0
 }
@@ -51,18 +51,20 @@ text-decoration:none;
 text-align:center;
 color:white;
 line-height:30px;
-padding:0;border:0
+padding:0;
+border:0;
+outline: none;
 }
 
 .tagsinput .tag .tag-remove:after,.tagsinput .tag .tag-remove:before{
 background:white;
 position:absolute;
 display:block;
-width:10px;
-height:2px;
-top:10px;
+width:12px;
+height:3px;
+top:11px;
 left:10px;
-content:''
+content:'';
 }
 
 .tagsinput .tag .tag-remove:before{

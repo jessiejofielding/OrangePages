@@ -1,3 +1,5 @@
+textarea, select, input, button { outline: none; }
+
 .tagsinput,.tagsinput *{
 box-sizing:border-box
 }
@@ -31,8 +33,8 @@ max-width:100%;
 word-wrap:break-word;
 color:#fff;
 padding:5px 30px 5px 5px;
-height:20px;
-border-radius: 10px;
+height:22px;
+border-radius: 15px;
 margin:0 5px 5px 0
 }
 
@@ -85,7 +87,7 @@ background:0 0;
 display:block;
 width:100%;
 font-size:14px;
-line-height:20px;
+line-height:10px;
 padding:5px;
 border:0;
 margin:0 5px 5px 0

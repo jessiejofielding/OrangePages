@@ -37,12 +37,14 @@ class User(db.Model):
     _lastname = db.Column(db.Integer, default=1)
     email = db.Column(db.String(50))
     _email = db.Column(db.Integer, default=1)
+
     hometown = db.Column(db.String(50))
     _hometown = db.Column(db.Integer, default=1)
     state = db.Column(db.String(50))
     _state = db.Column(db.Integer, default=1)
     country = db.Column(db.String(50))
     _country = db.Column(db.Integer, default=1)
+
     year = db.Column(db.String(50))
     _year = db.Column(db.Integer, default=1)
     major = db.Column(db.String(50))
@@ -55,6 +57,7 @@ class User(db.Model):
     _room = db.Column(db.Integer, default=1)
     building = db.Column(db.String(50))
     _building = db.Column(db.Integer, default=1)
+
     food = db.Column(db.String(50))
     _food = db.Column(db.Integer, default=1)
     team = db.Column(db.String(50))
@@ -236,13 +239,15 @@ class User(db.Model):
         lookup_user = User.query.get(uid)
 
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
-            'state', 'country', 'year', 'major', 'room', 'building']
+            'state', 'country', 'year', 'major', 'rescollege', 'school',
+            'room', 'building', 'food', 'team', 'activities', 'certificate',
+            'birthday']
 
-        # im so sorry
-        vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname,
-        lookup_user.email, lookup_user.hometown, lookup_user.state,
-        lookup_user.country, lookup_user.year,
-        lookup_user.major, lookup_user.room, lookup_user.building]
+        vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname, lookup_user.email,
+            lookup_user.hometown, lookup_user.state, lookup_user.country, lookup_user.year,
+            lookup_user.major, lookup_user.rescollege, lookup_user.school, lookup_user.room,
+            lookup_user.building, lookup_user.food, lookup_user.team, lookup_user.activities,
+            lookup_user.certificate, lookup_user.birthday]
 
         privs = lookup_user.get_attr_priv() # gid allowed to view each attr
 
@@ -252,7 +257,7 @@ class User(db.Model):
                 lookup[name] = val
             else:
                 lookup[name] = ""
-            print(name + " " + lookup[name])
+            print(name + " " + str(lookup[name]))
 
         return lookup
 

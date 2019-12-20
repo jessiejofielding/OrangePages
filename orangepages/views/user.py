@@ -57,6 +57,7 @@ def create_user():
     school = request.form.get('school') # this is AB or BSE lol
     major = request.form.get('major')
     year = request.form.get('year')
+
     food = request.form.get('food')
     building = request.form.get('building')
     room = request.form.get('room')
@@ -80,6 +81,7 @@ def create_user():
         affiliations.append('Share Peer')
 
     email = netid + "@princeton.edu"
+
 
     # Create and update user
     user = User(netid)
@@ -126,13 +128,27 @@ def edit_user():
         major = request.form.get('major')
         room = request.form.get('room')
         building = request.form.get('building')
+
+        rescollege = request.form.get('rescollege')
+        school = request.form.get('school')
+
+        food = request.form.get('food')
+        team = request.form.get('team')
+        activities = request.form.get('activities')
+        certificate = request.form.get('certificate')
+        birthday = request.form.get('birthday')
         affiliations = []
 
         # Update user
         # cur_user().update_optional_info(firstname,lastname,email,
         #     hometown,state,country,year,major,room,building, affiliations)
-        cur_user().update_profile_info(firstname,lastname,email,
-            hometown,state,country,year,major,room,building)
+
+        # cur_user().update_profile_info(firstname,lastname,email,
+        #     hometown,state,country,year,major,room,building)
+
+        cur_user().update_public_info(firstname,lastname, email, rescollege, school, major, year)
+        cur_user().update_optional_info(hometown, state, country, room, building, food,
+        team, activities, certificate, birthday, affiliations)
 
         if "image" in request.files:
             image = request.files["image"]

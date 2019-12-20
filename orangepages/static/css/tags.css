@@ -27,7 +27,7 @@ border-color:#ccc
 
 .tagsinput .tag{
 position:relative;
-background:#ff7b00;
+background:var(--new-orange);
 display:block;
 max-width:100%;
 word-wrap:break-word;

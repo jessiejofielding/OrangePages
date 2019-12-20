@@ -65,7 +65,7 @@ form {
 .post-btn {
   font-weight: bold !important;
   font-size: 16px !important;
-  color:#f25500 !important;
+  color:(--new-orange) !important;
 }
 
 .post-btn:hover {
@@ -118,13 +118,13 @@ form {
     border-radius: 0 0.25rem 0.25rem 0; }
 
 .post-title:hover {
-  color:#f25500 !important;
+  color: var(--new-orange) !important;
   text-decoration-line: none !important;
 }
 
 .tag-pill {
-  background-color:#f25500 !important;
-  border-color: #f25500 !important;
+  background-color: var(--new-orange) !important;
+  border-color: var(--new-orange) !important;
   margin: 1px;
   text-align: center;
   text-decoration: none;
@@ -216,7 +216,7 @@ form {
 }
 
 .btn-sidebar:hover {
-  color:#f25500 !important;
+  color: var(--new-orange)!important;
   background-color: #ffdfc7;
 }
 
@@ -3639,7 +3639,7 @@ input[type="button"].btn-block {
   margin-bottom: 0; }
 
 .card-link {
-  color:#f25500;
+  color: var(--new-orange);
 }
 .card-link:hover {
   text-decoration: none; }

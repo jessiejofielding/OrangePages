@@ -3335,10 +3335,15 @@ input[type="button"].btn-block {
   display: block; }
 
 .navbar {
-  position: relative;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0; /* required */
+  z-index: 10;
+  background: white;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  border-bottom: 1px solid lightgrey;
   justify-content: space-between;
   padding: 0.5rem 1rem; }
   .navbar > .container,
@@ -3409,6 +3414,7 @@ input[type="button"].btn-block {
 
 .navbar-search {
   border-radius: 50px;
+  width: 250px;
   margin-top: 0;
   margin-bottom: 0;
 }

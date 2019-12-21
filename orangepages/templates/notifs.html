@@ -1,73 +1,140 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<head>
+    <title>Orange Pages | Notifications</title>
+    <meta name="viewport" content="width=device-width,
+                                  initial-scale=1">
 
-<script type="text/javascript" src="/static/js/timestamp.js"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/timestamp.js"></script>
+    <script src="/static/js/toggle-like.js"></script>
+    <script src="/static/js/bootstrap-tagsinput.js"></script>
+    <script src="/static/js/disable-input.js"></script>
+
+</head>
 
 <body>
-
-    <head>
-        <title>{{user.firstname}} {{user.lastname}} - Orange Pages</title>
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
-        <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
-    </head>
-
     {% include 'navbar.html' %}
+    <div class="row">
+        <div class="col-lg-3 col-sm-5 ml-2 border-right">
+            <div class="sidebar sticky-top">
+                <div id="sidebar-buttons" class="btn-group-vertical btn-group-lg">
+                    <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-home mr-1"></i>Home</a>
 
-
-    <div class="post container" style="width: 95%">
-        {%if notifs|length == 0%}
-             <div class="card-body">
-                No notifications!
-            </div>
-
-        {% else %}
-            <div class="card-body">
-                <a href="/clear-notifs"> Clear notifications </a>
-            </div>
-            <hr style="margin: 0px; border: 0.5px solid lightgray">
-
-        {%endif%}
-
-        {% for notif in notifs: %}
-        
-        <div class="card-body">
-
-            {% if notif.unread %}
-                <!-- @frontend lol sorry please fix -->
-                <span class="badge badge-pill badge-danger">Unread</span>
-                <br>
-            {% endif %}
-            
-            <a href='{{notif.link_to()}}' style="width:100%; height:100%;">
-                
-                <div class="text-muted"> <i class="fa fa-clock-o"></i>
-                    <script type="text/javascript">
-                        getTimeAgo("{{ notif.date }}");
-                    </script>
+                    <!-- TODO: verify that notifications appear -->
+                    <a href="/notifications" class="btn-sidebar btn text-left"><i
+                            class="fas fa-bell mr-1"></i>Notifications
+                        {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
+                    <a href="/profile/{{user.uid}}" class="btn-sidebar btn text-left"><i
+                            class="fas fa-user mr-1"></i>Profile</a>
+                    <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar btn text-left"><i
+                            class="fas fa-user-friends mr-1"></i>Friends</a>
+                    <a href="/settings" class="btn-sidebar btn text-left"><i class="fas fa-user-cog mr-1"></i>Settings
+                        and Privacy</a>
+                    <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-info-circle mr-1"></i>About</a>
+                    <a href="/" class="btn-sidebar btn text-left"><i class="fas fa-phone mr-1"></i>Contact Us</a>
                 </div>
-                <a href='/profile/{{ notif.sender_id() }}'>
-                    {{notif.sender_name()}}
-                </a> {{notif.text}}
-
-            </a>
-            
+            </div>
         </div>
-        
-        <hr style="margin: 0px; border: 0.5px solid lightgray">
-        {% endfor %}
 
-    </div>
+        <!-- Main page -->
+        <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
+            <div class="post container" style="width: 95%">
+                {%if notifs|length == 0%}
+                <div class="card-body">
+                    No notifications!
+                </div>
 
-    {% include 'footer.html' %}
+                {% else %}
+                <div class="card-body">
+                    <a href="/clear-notifs"> Clear notifications </a>
+                </div>
+                <hr style="margin: 0px; border: 0.5px solid lightgray">
+
+                {%endif%}
+
+                {% for notif in notifs: %}
+
+                <div class="card-body">
+
+                    {% if notif.unread %}
+                    <!-- @frontend lol sorry please fix -->
+                    <span class="badge badge-pill badge-danger">Unread</span>
+                    <br>
+                    {% endif %}
+
+                    <a href='{{notif.link_to()}}' style="width:100%; height:100%;">
+
+                        <div class="text-muted"> <i class="fa fa-clock-o"></i>
+                            <script type="text/javascript">
+                                getTimeAgo("{{ notif.date }}");
+                            </script>
+                        </div>
+                        <a href='/profile/{{ notif.sender_id() }}'>
+                            {{notif.sender_name()}}
+                        </a> {{notif.text}}
+                        <form action="clear-notif/{{notif.nid}}" method="post">
+                            <button type="button" class="btn btn-primary tag-pill" type="submit">clear</button><br>
+                        </form>
+                    </a>
+
+                </div>
+
+                <hr style="margin: 0px; border: 0.5px solid lightgray">
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        <div class="col" style="margin-top:75px;">
+            <div class="row">
+                <div class="col">
+                    <div id="user-box" class="card" style="width: 100%">
+                        <div class="card-body text-center">
+                            {%if user._pic is none:%}
+                            <i class="fa fa-user fa-5x"></i>
+                            {%else:%}
+                            <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
+                                alt="failed to load">
+                            {%endif%}
+                            <br>
+                            <br>
+                            <h3 class="card-title"><strong>{{user.firstname}} {{user.lastname}}</strong></h3>
+                            <p class="card-text">netid: {{user.uid}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('.js-edit').on('click', function () {
+            var $form = $(this).closest('form');
+            $form.toggleClass('is-readonly is-editing');
+            var isReadonly = $form.hasClass('is-readonly');
+            $form.find('input,select,textarea').prop('disabled', isReadonly);
+        });
+    });
+</script>
 
 </html>

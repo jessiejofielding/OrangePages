@@ -20,12 +20,10 @@ def friend_request():
 
     if user1.uid < user2.uid:
         status = st.request1_2
-        try: 
+        try:
             rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
         except:
             rel = Relationship(user1, user2, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
 
     if user2.uid < user1.uid:
@@ -33,14 +31,10 @@ def friend_request():
         try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
         except:
             rel = Relationship(user2, user1, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
 
     notif = Notification(user1, user2, NType.REQUESTED)
-    db.session.add(notif)
-    db.session.commit()
-    
+
     return redirect(request.referrer)
 
 
@@ -54,26 +48,20 @@ def add_friend():
     # user1.add_friend(user2)
 
     status = st.friends
-    
+
     if user1.uid < user2.uid:
         try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
-        except: 
+        except:
             rel = Relationship(user1, user2, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
 
     if user2.uid < user1.uid:
         try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
         except:
             rel = Relationship(user2, user1, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
 
     notif = Notification(user1, user2, NType.ACCEPTED)
-    db.session.add(notif)
-    db.session.commit()
 
     return redirect(request.referrer)
 
@@ -88,20 +76,16 @@ def unfriend():
 
     if user1.uid < user2.uid:
         try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
-        except: 
+        except:
             rel = Relationship(user1, user2, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
 
     if user2.uid < user1.uid:
         try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
         except:
             rel = Relationship(user2, user1, status)
-            db.session.add(rel)
-            db.session.commit()
         rel.change_status(status)
-        
+
     return redirect(request.referrer)
 
 # @page.route('/friends-list', methods=['GET'])

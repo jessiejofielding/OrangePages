@@ -1,6 +1,24 @@
 
-<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-primary main-nav" style="box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);">
-    <div class="container justify-content-center">
+ <!-- Navigation -->
+<nav class="navbar navbar-fixed-top navbar-expand-sm bg-white main-nav">
+  <div class="col-xs-2 ml-0 text-center">
+    <a class="navbar-brand" href="/"></a>
+  </div>
+  <ul class="col-xs-6 navbar-nav mx-auto">
+    <li class="navbar-search nav-item w-100">
+
+        <form action="/search" class="navbar-form navbar-search" method="get">
+            <div class="input-group">
+                <input class="navbar-search form-control" type="text" name="query" placeholder="    Search OrangePages" aria-label="Search">    
+            </div>
+        </form>
+    </li> 
+  </ul>
+  <div class="col-xs-2">
+  </div>
+</nav>
+
+<!--     <div class="container justify-content-center">
         <ul class="nav navbar-nav flex-fill justify-content-start">
             <li class="nav-item active">
                 <img
@@ -37,11 +55,13 @@
                 <a class="nav-link" href="/profile/{{user.uid}}/friends-list">
                         <i class="fa fa-heart"></i>
                         <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            {% if user is not none %}
+                </a>     
+            </li> -->
+<!--             {% if user is not none %}
             <li>
-                <li class="nav-item">
+                <a class="nav-link" href="/notifications">
+                        <i class="fa fa-bell"></i>
+                         @frontend pwease make this pwetty
                         {% if user._unread_notifs > 0 %}
                         <span class="badge badge-pill badge-danger" style="float:right;margin-bottom:-10px; font-size: 9px">{{user._unread_notifs}}</span>
                         {% endif %}
@@ -50,5 +70,4 @@
             </li>
             {% endif %}
         </ul>
-    </div>
-</nav>
+    </div>  -->

@@ -42,6 +42,11 @@
                                 <div class="ml-2">
                                     <div class="h5 m-0"> {{post.creator.firstname}} {{post.creator.lastname}}</div>
                                 </div>
+                                <div class="ml-2">
+                                    {% if post.creator == user %}
+                                    {{post.get_visibility()}}
+                                    {% endif %}
+                                </div>
                             </div>
                             <div>
                                 <div class="dropdown">
@@ -93,6 +98,14 @@
                             <span>Like</span><span class="hidden">Unlike</span>
                         </a>
                         <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                        {% if post.creator == user %}
+                        <a href="/post/{{post.pid}}/edit" class="card-link"><i class="fa fa-mail-forward"></i> Edit Post</a>
+                        {% endif %}
+
+                        {% if post.last_edited %}
+                        <br />
+                        Last edited: {{ post.last_edited }}
+                        {% endif %}
                     </div>
                 </div>
             </div>

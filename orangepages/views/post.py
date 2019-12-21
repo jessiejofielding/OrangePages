@@ -17,73 +17,94 @@ def create_post():
         return render('post_create.html')
 
     user = cur_user()
+    post = Post(user)
+
+    edit_post_util(post, request)
+
+    return redirect("/feed")
+
+@page.route('/post/<int:postid>/edit', methods=['POST', 'GET'])
+def edit_post(postid):
+    post = Post.query.get(postid)
+
+    if request.method=='GET':
+        if cur_user() != post.creator:
+            return redirect("/feed")
+        else:
+            return render('post_edit.html', post=post)
+
+    post.update_last_edit()
+    edit_post_util(post, request)
+
+    return redirect('/post/'+ str(post.pid))
+
+def edit_post_util(post, request):
+    user = cur_user()
     content = request.form.get('content')
 
-    # Parse tags and add them - list of tag STRINGS
+    # TAGS Parse tags and add them - list of tag STRINGS
     tags = []
     tags_raw =  request.form.get('tags')
+    print(tags_raw)
     if tags_raw is not None:
-        tags_str1 = tags_raw.replace(" ", "")
-        tags_str2 = tags_str1.split(',')
 
-        for tag_str in tags_str2:
-            if tag_str != "":
-                tags.append(tag_str)
+        tags_str = tags_raw.split(' ')
 
-    # TO FIX
-    groups = []
+        for tag in tags_str:
+            if tag != "":
+                tags.append(tag)
+
+    # GROUPS
+    # groups = []
     visibility = request.form.get('visibility')
+
+    post.set_visibility(visibility)
     # hardcoded, one group only rn
-    if visibility == 'Public':
-        groups.append(Group.query.get(1))
-    elif visibility == 'Friends':
-        groups.append(user._groups[0]) # friends group
+    # if visibility == 'Public':
+    #     groups.append(Group.query.get(1))
+    # elif visibility == 'Friends':
+    #     groups.append(user._groups[0]) # friends group
+    #
+    # groups.append(user._groups[1]) # just me group
 
-    groups.append(user._groups[1]) # just me group
-
-
-    post = Post(content, user, groups, tags)
-    db.session.add(post)
-    db.session.commit()
-
+    # TAGGING PEOPLE
     # In content, look for the string right after the @ sign
-    after_sign = content.split("@")
-    # determine if string is a valid netid
+    if content:
+        after_sign = content.split("@")
+        # determine if string is a valid netid
 
-    for str in after_sign:
-        split_str = str.split(' ',  2)
-        possible_netid = split_str[0]
-        possible_user = User.query.get(possible_netid)
-        # print("possible_user", possible_user)
-        #
-        # print("len(split_str)", len(split_str))
-        # print(split_str)
+        for str in after_sign:
+            split_str = str.split(' ',  2)
+            possible_netid = split_str[0]
+            possible_user = User.query.get(possible_netid)
 
-        if possible_user is not None:
-            notif = Notification(user, possible_user, NType.TAGGED, post)
-            db.session.add(notif)
-            db.session.commit()
-        elif len(split_str) > 1:
-            possible_firstname = split_str[0]
-            possible_lastname = split_str[1]
-            # print(possible_firstname, possible_lastname)
+            if possible_user is not None:
+                notif = Notification(user, possible_user, NType.TAGGED, post)
+            elif len(split_str) > 1:
+                possible_firstname = split_str[0]
+                possible_lastname = split_str[1]
 
-            p = db.session.query(User)
-            p = p.filter(User.firstname == possible_firstname)
-            p = p.filter(User.lastname == possible_lastname)
+                p = db.session.query(User)
+                p = p.filter(User.firstname == possible_firstname)
+                p = p.filter(User.lastname == possible_lastname)
 
-            for tagged_user in p.all():
-                notif = Notification(user, tagged_user, NType.TAGGED, post)
-                db.session.add(notif)
-                db.session.commit()
+                for tagged_user in p.all():
+                    notif = Notification(user, tagged_user, NType.TAGGED, post)
 
     if "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':
             post.add_img(image)
 
+    post.update_info(content, groups=[], tags=tags)
+
+@page.route('/post/<int:postid>/delete', methods=['POST'])
+@user_required
+def delete_post(postid):
+    post = Post.query.get(postid)
+    post.delete()
     return redirect("/feed")
-    
+
 
 @page.route('/post/<int:postid>', methods=['GET'])
 @user_required
@@ -118,11 +139,9 @@ def comment(postid):
         content = request.form.get('content')
 
         comment = Comment(postid, content, user)
-        db.session.add(comment)
 
         if(post.creator is not user):
             notif = Notification(user, post.creator, NType.COMMENTED, post)
-            db.session.add(notif)
 
         db.session.commit()
 
@@ -149,8 +168,6 @@ def like(post_id, isLike):
         post.add_like(user)
         if(post.creator is not user):
             notif = Notification(user, post.creator, NType.LIKED, post)
-            db.session.add(notif)
-
     else:
         post.unlike(user)
 
@@ -171,8 +188,6 @@ def add_tag(post_id):
     tag_str = request.form.get('content')
 
     post.add_tag_str(tag_str)
-    # tag = Tag(tag_str)
-    # post.add_tag(tag)
 
     return redirect(request.referrer)
 
@@ -193,24 +208,3 @@ def add_tag(post_id):
 #         message=likersStr)
 
 # @page.route('/post/<int:post_id>/num-likers', methods=['GET'])
-
-# uploads an image
-@page.route("/upload-image", methods=["GET", "POST"])
-@user_required
-def upload_image():
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
-
-            image.save(os.path.join(app.config["IMAGE_UPLOADS"], image.filename))
-            return redirect(request.referrer)
-
-    return render_template("/upload_image.html")
-
-
-@page.route('/uploads/<filename>')
-@user_required
-def uploaded_file(filename):
-    name = app.config["IMAGE_UPLOADS_RELATIVE"] + filename
-    # print(name)
-    return render_template("img.html", img_name=name)

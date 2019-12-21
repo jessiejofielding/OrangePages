@@ -1,6 +1,6 @@
 from flask import request, make_response, redirect
 from flask import Blueprint, render_template
-from orangepages.models.models import db, User
+from orangepages.models.models import db, User, Notification
 from flask_cas_fix import login_required
 from sqlalchemy import exc
 from orangepages import app
@@ -13,25 +13,12 @@ from orangepages.views.util import cur_user, cur_uid, render, user_required
 page = Blueprint('user_page', __name__)
 
 
-# def upload_pic(image):
-#     if request.method == "POST":
-#         if request.files:
-#             image = request.files["image"]
 
 @page.route('/profile/<string:lookup_id>', methods=['GET'])
 @user_required
 def view_profile(lookup_id):
 
-    # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    # img_path_check = app.config["IMAGE_UPLOADS"] + lookup_id + "_pic.jpeg"
-    #
-    # if os.path.isfile(img_path_check):
-    #     img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id + "_pic.jpeg"
-    # else:
-    #     img_path = 'https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png'
-
     if cur_uid() == lookup_id:
-        # img_path = app.config["IMAGE_UPLOADS_RELATIVE"] + lookup_id
         return render('profile_user.html')
 
     lookup = User.query.get(lookup_id)
@@ -42,8 +29,12 @@ def view_profile(lookup_id):
 
     friends_list = lookup.friend_list()
 
+    # maps attr to attr content for lookup user, with consideration of lookup
+    # user's privacy settings
+    lookup_priv = cur_user().lookup_user(lookup_id)
 
-    return render('profile.html', lookup=lookup,friends_list=friends_list)
+    return render('profile.html', lookup_priv=lookup_priv,
+    lookup=lookup,friends_list=friends_list)
 
 
 
@@ -62,31 +53,57 @@ def create_user():
     netid = cur_uid()
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
-    email = request.form.get('email')
+    rescollege = request.form.get('rescollege')
+    school = request.form.get('school') # this is AB or BSE lol
+    major = request.form.get('major')
+    year = request.form.get('year')
+
+    food = request.form.get('food')
+    building = request.form.get('building')
+    room = request.form.get('room')
     hometown = request.form.get('hometown')
     state = request.form.get('state')
     country = request.form.get('country')
-    year = request.form.get('year')
-    major = request.form.get('major')
-    room = request.form.get('room')
-    building = request.form.get('building')
+    team = request.form.get('team')
+    activities = request.form.get('groups')
+    certificate = request.form.get('certificate')
+    birthday = request.form.get('birthday')
+
+    use_photo = request.form.get('photo')
+
+    affiliations = []
+
+    if request.form.get('rca'):
+        affiliations.append('RCA')
+    if request.form.get('paa'):
+        affiliations.append('PAA')
+    if request.form.get('share_peer'):
+        affiliations.append('Share Peer')
+
+    email = netid + "@princeton.edu"
+
 
     # Create and update user
-    user = User(netid, firstname, lastname, email)
-    user.update_optional_info(firstname,lastname,email,
-        hometown,state,country,year,major,room,building)
+    user = User(netid)
+    user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
+    user.update_optional_info(hometown, state, country, room, building, food,
+    team, activities, certificate, birthday, affiliations)
+
+    if use_photo:
+        # TODO: tigerbook API
+        pass
 
     if "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':
-            print("IMAGE", image)
+            # print("IMAGE", image)
             user.add_img(image)
 
-    try:
-        db.session.add(user)
-        db.session.commit()
-    except exc.IntegrityError as e:
-        db.session().rollback()
+    # try:
+    #     db.session.add(user)
+    #     db.session.commit()
+    # except exc.IntegrityError as e:
+    #     db.session().rollback()
 
     return render('message.html',
         title='Success',
@@ -112,9 +129,26 @@ def edit_user():
         room = request.form.get('room')
         building = request.form.get('building')
 
+        rescollege = request.form.get('rescollege')
+        school = request.form.get('school')
+
+        food = request.form.get('food')
+        team = request.form.get('team')
+        activities = request.form.get('activities')
+        certificate = request.form.get('certificate')
+        birthday = request.form.get('birthday')
+        affiliations = []
+
         # Update user
-        cur_user().update_optional_info(firstname,lastname,email,
-            hometown,state,country,year,major,room,building)
+        # cur_user().update_optional_info(firstname,lastname,email,
+        #     hometown,state,country,year,major,room,building, affiliations)
+
+        # cur_user().update_profile_info(firstname,lastname,email,
+        #     hometown,state,country,year,major,room,building)
+
+        cur_user().update_public_info(firstname,lastname, email, rescollege, school, major, year)
+        cur_user().update_optional_info(hometown, state, country, room, building, food,
+        team, activities, certificate, birthday, affiliations)
 
         if "image" in request.files:
             image = request.files["image"]
@@ -158,3 +192,58 @@ def clear_notifs():
 
     db.session.commit()
     return redirect(request.referrer)
+
+@page.route('/clear-notif/<int:id>', methods=['POST'])
+@user_required
+def clear_single_notif(id):
+    user = cur_user()
+    print('clearing notif id', id)
+
+    notif = Notification.query.get(id)
+    notif.delete()
+
+    db.session.commit()
+    return redirect(request.referrer)
+
+
+@page.route('/settings', methods=['GET', 'POST'])
+@user_required
+def edit_settings():
+    user = cur_user()
+    if request.method=='GET':
+        names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
+            'state', 'country', 'year', 'major', 'rescollege', 'school',
+            'room', 'building', 'food', 'team', 'activities',
+            'certificate', 'birthday']
+        privs = user.group_to_priv(user.get_attr_priv())
+        cur_privacy = {}
+        for name, priv in zip(names, privs):
+            cur_privacy[name] = priv
+            print(name + " " + priv)
+        return render('settings.html', cur_privacy = cur_privacy)
+
+    # Get form fields
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    email = request.form.get('email')
+    hometown = request.form.get('hometown')
+    state = request.form.get('state')
+    country = request.form.get('country')
+    year = request.form.get('year')
+    major = request.form.get('major')
+    room = request.form.get('room')
+    building = request.form.get('building')
+
+    # The fields that arent out there yet
+    uid = rescollege = school = food = team = \
+        activities = certificate = birthday = 'Public'
+
+
+    user.update_privacy(uid, firstname, lastname, email, hometown, state,
+        country, year, major, rescollege, school, room, building, food,
+        team, activities, certificate, birthday)
+
+
+    return render('message.html',
+        title='Success!',
+        message='Your settings have been saved.')

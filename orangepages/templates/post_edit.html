@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--CSS-->
+<link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+
+<!--JS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/timestamp.js"></script>
+<script src="/static/js/toggle-like.js"></script>
+<script src="/static/js/bootstrap-tagsinput.js"></script>
+<script src="/static/js/disable-input.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#hide").toggle()
+        $('.js-edit').on('click', function () {
+            var $form = $(this).closest('form');
+            $form.toggleClass('is-readonly is-editing');
+            var isReadonly = $form.hasClass('is-readonly');
+            $form.find('input,select,textarea').prop('disabled', isReadonly);
+            $("#hide").toggle()
+        });
+                // Name of file appears on upload
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+    });
+
+
+</script>
+
+<body>
+  <h1>you're on the page to edit post {{post.pid}}</h1>
+<div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:95px;" id="main">
+<form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data">
+  <div class="post-card card border-left-0 border-top-0 rounded-0" style="border-bottom-width: 10px;">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Profile photo -->
+        <div class="col-1">
+          {%if user._pic is none:%}
+          <i class="fa fa-user feed-profile rounded-circle"></i>
+          {%else:%}
+          <img class="feed-profile rounded-circle" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
+                        alt="failed to load">
+          {%endif%}
+        </div>
+
+        <!-- Post input -->
+        <div class="col-11">
+          <input type="text" class="form-control is-disabled" name="content"
+          id="message" rows="3" value={{post.content}} disabled>
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      {% for tag in post.get_tags(): %}
+      <button type="button" class="btn btn-primary btn-sm tag-pill"
+          onclick="location.href='/search?query={{ tag.tid }}'">
+          #{{ tag.tid }}
+      </button>
+      {% endfor %}
+      <br />
+      <div class="row" >
+        <div class="col-1"> </div>
+        <div class="col-11 mb-1 collapse" id="tagsCollapse">
+        <input name="tags" data-role="tagsinput" id="tags" class="form-control noEnterSubmit"
+                            placeholder="enter tags here..."></input>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Upload an image -->
+        <div class="col-1">
+        </div>
+
+        <div class="col-1">
+          <div class="form-group">
+              <div class="custom-file">
+                  <input type="file" class="post-file-input" onchange='loadFile(event)' name="image" id="customFile">
+                  <label class="post-file-label" for="customFile"><i class="fas fa-image"></i></label>
+                  <img id='uploaded' width="100" />
+              </div>
+          </div>
+        </div>
+
+        <!-- Add tags -->
+        <div class="col-1">
+          <button class="post-btn btn" type="button" data-toggle="collapse" data-target="#tagsCollapse" aria-expanded="false" aria-controls="tagsCollapse"><i class="fas fa-hashtag mr-1"></i></button>
+        </div>
+
+        <div class="col-7">
+           <button type="submit" class="btn btn-primary tag-pill">Save</button>
+        </div>
+
+        <div class="col-2">
+          <div class="btn-group">
+              <select name="visibility" class="form-control" id="visibility">
+                  <option>Public</option>
+                  <option>Friends</option>
+                  <option>Just me</option>
+              </select>
+         </div>
+        </div>
+
+        <button type="button" class="btn btn-primary tag-pill btn-edit js-edit">
+            Edit
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <form action="/post/{{post.pid}}/delete" method="post">
+    <button type="submit" class="btn btn-primary tag-pill">Delete post</button>
+  </form>
+</div>
+</body>

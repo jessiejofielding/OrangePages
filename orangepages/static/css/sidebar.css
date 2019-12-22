@@ -34,7 +34,7 @@ a:focus {
 }
 
 #sidebar {
-    width: 250px;
+    width: 300px;
     position: fixed;
     top: 0;
     left: 0;
@@ -46,7 +46,7 @@ a:focus {
 }
 
 #sidebar.active {
-    margin-left: -250px;
+    margin-left: -300px;
 }
 
 #sidebar .sidebar-header {
@@ -79,6 +79,27 @@ a:focus {
 a[aria-expanded="true"] {
     color: #fff;
     background: var(--sec-orange);
+}
+
+#dismiss {
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    line-height: 35px;
+    text-align: center;
+    background: var(--new-orange);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: var(--new-orange);
 }
 
 a[data-toggle="collapse"] {
@@ -127,7 +148,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: calc(100% - 250px);
+    width: calc(100% - 300px);
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
@@ -151,7 +172,7 @@ a.article:hover {
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+        margin-left: -300px;
     }
     #sidebar.active {
         margin-left: 0;
@@ -160,9 +181,9 @@ a.article:hover {
         width: 100%;
     }
     #content.active {
-        width: calc(100% - 250px);
+        width: calc(100% - 300px);
     }
-    #sidebarCollapse span {
+    .sidebarCollapse span {
         display: none;
     }
 }

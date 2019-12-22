@@ -30,12 +30,15 @@ position:relative;
 background:var(--new-orange);
 display:block;
 max-width:100%;
-word-wrap:break-word;
+word-wrap: normal;
 color:#fff;
 padding:7px 30px 5px 8px;
 height:25px;
 border-radius: 15px;
-margin:0 5px 5px 0
+margin:0 5px 5px 0;
+display: inline-block;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 .tagsinput .tag .tag-remove{

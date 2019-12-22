@@ -3339,7 +3339,7 @@ input[type="button"].btn-block {
   position: -webkit-sticky;
   top: 0; /* required */
   z-index: 10;
-  background: white;
+  background: var(--new-orange);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -3358,8 +3358,8 @@ input[type="button"].btn-block {
   background-repeat: no-repeat;
   background-size: contain;
   width: 50px;
-  height: 50px;
-  margin-top: 20px;
+  height: 30px;
+  margin-top: 10px;
 /*  display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;

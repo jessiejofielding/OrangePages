@@ -5,7 +5,7 @@
   <title>Orange Pages | Feed</title>
   <meta name="viewport" content="width=device-width,
                     initial-scale=1">
-  <meta http-equiv="refresh" content="20" />
+  <!-- <meta http-equiv="refresh" content="20" /> -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!--CSS-->
@@ -68,56 +68,39 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
+                <h3>Orange Pages</h3>
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
+                <li>
+                    <a href="/" class="btn-sidebar"><i class="fas fa-home mr-1"></i>Home</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="/notifications" class="btn-sidebar"><i class="fas fa-bell mr-1"></i>Notifications
+                      {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
+                    <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>Profile</a>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
+                    <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar"><i
+                      class="fas fa-user-friends mr-1"></i>Friends</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="/settings" class="btn-sidebar"><i class="fas fa-user-cog mr-1"></i>Settings and
+                      Privacy</a>
+                </li>
+                <li>
+                    <a href="/" class="btn-sidebar"><i class="fas fa-info-circle mr-1"></i>About</a>
+                </li>
+                <li>
+                    <a href="/" class="btn-sidebar"><i class="fas fa-phone mr-1"></i>Contact Us</a>
                 </li>
             </ul>
 
             <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                    <a href="/logout" class="article">Logout</a>
                 </li>
             </ul>
         </nav>

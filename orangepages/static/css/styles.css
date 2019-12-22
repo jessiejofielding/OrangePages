@@ -46,19 +46,19 @@ form {
 
 .post-title {
   color: black;
-  font-family: raleway;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
   font-size: 16px;
 }
 
 .post-subtitle {
   color: grey;
-  font-family: raleway;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
 }
 
 .post-text {
-  font-family: raleway;
+  font-family: 'Poppins', sans-serif;
  /* margin-top: 5px;*/
 }
 
@@ -130,7 +130,7 @@ form {
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 30px;
 }
 
 .feed-profile {
@@ -208,7 +208,7 @@ form {
 
 #sidebar-buttons {
   margin-top:30%;
-  font-family: raleway;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-sidebar {
@@ -333,7 +333,7 @@ form {
     color: #2C3E50;
     margin-bottom: 10px;
     letter-spacing: 2px;
-    font-family:raleway;
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
 }
 
@@ -357,7 +357,7 @@ form {
     list-style-type: none;
     color: white;
     font-size: 10px;
-    font-family: raleway;
+    font-family: 'Poppins', sans-serif;
     width: 20%;
     float: left;
     position: relative;

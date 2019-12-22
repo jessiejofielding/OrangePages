@@ -35,7 +35,7 @@ $(function() {
 	$('#form-tags-5').tagsInput({
         'delimiter': ' ',
         'unique': true,
-        'maxChars': 50,
+        'maxChars': 70,
 	});
 
 	$('#form-tags-6').tagsInput({

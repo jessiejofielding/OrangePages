@@ -32,82 +32,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/timestamp.js"></script>
-
-    <script>
-      // Material Select Initialization
-      $(document).ready(function () {
-        $('.mdb-select').materialSelect();
-      });
-      // Name of file appears on upload
-      $(".post-file-input").on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".post-file-label").addClass("selected").html(fileName);
-      });
-    </script>
-
-    <script>$(document).ready(function () {
-
-        $("#sidebar").mCustomScrollbar({
-          theme: "minimal"
-        });
-
-        $('#sidebarCollapse').on('click', function () {
-          $('#sidebar').toggleClass('active');
-        });
-
-      });</script>
+    <script type="text/javascript" src="/static/js/feed.js"></script>
 
   </head>
 
   <!-- Everything goes in a wrapper -->
   <div class="wrapper">
 
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-
-      <!-- Back arrow for Sidebar -->
-      <div id="dismiss">
-        <i class="fas fa-arrow-left"></i>
-      </div>
-
-      <div class="sidebar-header">
-        <h3>Orange Pages</h3>
-      </div>
-
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a href="/" class="btn-sidebar"><i class="fas fa-home mr-1"></i>Home</a>
-        </li>
-        <li>
-          <a href="/notifications" class="btn-sidebar"><i class="fas fa-bell mr-1"></i>Notifications
-            {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
-        </li>
-        <li>
-          <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>Profile</a>
-        </li>
-        <li>
-          <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar"><i
-              class="fas fa-user-friends mr-1"></i>Friends</a>
-        </li>
-        <li>
-          <a href="/settings" class="btn-sidebar"><i class="fas fa-user-cog mr-1"></i>Settings and
-            Privacy</a>
-        </li>
-        <li>
-          <a href="/" class="btn-sidebar"><i class="fas fa-info-circle mr-1"></i>About</a>
-        </li>
-        <li>
-          <a href="/" class="btn-sidebar"><i class="fas fa-phone mr-1"></i>Contact Us</a>
-        </li>
-      </ul>
-
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a href="/logout" class="article">Logout</a>
-        </li>
-      </ul>
-    </nav>
+    {% include 'sidebar.html' %}
 
     <div id="content">
       {% include 'navbar.html' %}
@@ -115,7 +47,6 @@
       <div class="col">
       </div>
       <div class="col" style="width: 650px; float: none; margin: 0 auto;">
-
 
         <!-- Make a post -->
         <div class="col" id="main">

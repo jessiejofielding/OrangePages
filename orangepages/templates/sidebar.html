@@ -2,28 +2,28 @@
     <nav id="sidebar">
       <a class="navbar-brand" href="/"></a>
       <ul class="list-unstyled components">
-        <li class="active">
+        <li id="Home">
           <a href="/" class="btn-sidebar"><i class="fas fa-home mr-1"></i>Home</a>
         </li>
-        <li>
+        <li id="Notifications">
           <a href="/notifications" class="btn-sidebar"><i class="fas fa-bell mr-1"></i>Notifications
             {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
         </li>
-        <li>
+        <li id="Profile">
           <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>Profile</a>
         </li>
-        <li>
+        <li id="Friends">
           <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar"><i
               class="fas fa-user-friends mr-1"></i>Friends</a>
         </li>
-        <li>
+        <li id="Settings and Privacy">
           <a href="/settings" class="btn-sidebar"><i class="fas fa-user-cog mr-1"></i>Settings and
             Privacy</a>
         </li>
-        <li>
+        <li id="About">
           <a href="/" class="btn-sidebar"><i class="fas fa-info-circle mr-1"></i>About</a>
         </li>
-        <li>
+        <li id="Contact Us">
           <a href="/" class="btn-sidebar"><i class="fas fa-phone mr-1"></i>Contact Us</a>
         </li>
       </ul>

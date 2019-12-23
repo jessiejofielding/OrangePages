@@ -52,6 +52,8 @@
             <div class="post-card card border-left-20 border-right-20 border-top-0 rounded-0"
               style="margin-bottom: 10px;">
               <div class="container-fluid">
+
+
                 <div class="row">
                   <!-- Profile photo -->
                   <div class="col" style="padding-top: 10px; -ms-flex: 0 0 40px; flex: 0 0 40px;">
@@ -72,8 +74,7 @@
                 </div>
 
                 <!-- Tags -->
-                <div class="row">
-                  <div class="col"> </div>
+                <div class="row" style="padding-bottom: 5px">
                   <div class="col mb-1 collapse" id="tagsCollapse">
                     <input name="tags" id="form-tags-5" class="form-control noEnterSubmit"></input>
                   </div>
@@ -81,7 +82,7 @@
 
                 <div class="row">
                   <!-- Upload an image -->
-                  <div class="col">
+                  <!-- <div class="col">
                   </div>
 
                   <div class="col">
@@ -93,20 +94,30 @@
                         <img id='uploaded' width="100" />
                       </div>
                     </div>
-                  </div>
+                  </div> -->
+
+                  <div class="col">
+                      <!-- (NEW) Upload image input. TODO: make this work -->
+                        <div class="input-group-append">
+                          <label for="upload" class="btn btn-light m-0 rounded-pill px-4 upload-image" id="post-button">
+                            <i class="fa fa-cloud-upload text-muted"></i>
+                            <span><small class="text-muted">Upload Image</small></span>
+                          </label>
+                        </div>
+                      </div>
+                      <!-- This needs to be here in order for upload to work -->
+                      <input id="upload" type="file" onchange="readURL(this);" style="display: none">
 
                   <!-- Add tags -->
                   <div class="col">
-                    <button class="post-btn btn" type="button" data-toggle="collapse" data-target="#tagsCollapse"
-                      aria-expanded="false" aria-controls="tagsCollapse"><i class="fas fa-hashtag mr-1"></i></button>
+                    <button class="btn btn-light m-0 rounded-pill px-4 upload-image" id="post-button" type="button" data-toggle="collapse" data-target="#tagsCollapse"
+                      aria-expanded="false" aria-controls="tagsCollapse"><i class="fas fa-hashtag text-muted"></i>
+                      <span><small class="text-muted">Add Tags</small></span>
+                    </button>
                   </div>
 
                   <div class="col">
-                    <button type="submit" class="btn btn-primary tag-pill">Share</button>
-                  </div>
-
-                  <div class="col">
-                    <div class="btn-group">
+                    <div class="btn-group" style="width:100%">
                       <select name="visibility" class="form-control" id="visibility">
                         <option>Public</option>
                         <option>Friends</option>
@@ -117,23 +128,20 @@
                 </div>
               </div>
 
-              <div class="row py-4">
-                <div class="col-lg-6 mx-auto">
-        
-                    <!-- Upload image input-->
-                    <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                        <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
-                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-                        <div class="input-group-append">
-                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                        </div>
-                    </div>
-        
-                    <!-- Uploaded image area-->
-                    <p>The image uploaded will be rendered inside the box below.</p>
+              <div class="row">
+                <div class="col" style="margin-left: 20px; margin-right: 20px; margin-top: -10px">
+
+                    <!-- (NEW) Uploaded image area-->
                     <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
         
                 </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col" style="margin: 10px">
+                    <button type="submit" class="btn btn-primary tag-pill" style="width: 100%">Share</button>
+                  </div>
             </div>
 
           </form>
@@ -285,7 +293,7 @@
 
   <script>
     var loadFile = function (event) {
-      var image = document.getElementById('uploaded');
+      var image = document.getElementById('imageResult');
       image.src = URL.createObjectURL(event.target.files[0]);
     };
   </script>

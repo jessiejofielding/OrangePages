@@ -8005,7 +8005,7 @@ color:#ccc;opacity:1
 }
 
 .image-area::before {
-  content: 'Uploaded image result';
+  content: 'Image Preview';
   color: grey;
   font-weight: bold;
   text-transform: uppercase;
@@ -8020,4 +8020,19 @@ color:#ccc;opacity:1
 .image-area img {
   z-index: 2;
   position: relative;
+}
+
+.upload-image {
+  content: "Upload Image";
+}
+
+#post-button {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+
+  #post-button span {
+      display: none;
+  }
 }

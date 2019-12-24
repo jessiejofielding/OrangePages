@@ -605,7 +605,7 @@ class Post(db.Model):
         return comments
 
     def prev_comments(self):
-        c = self.comments.all()
+        c = self.get_comments()
         if len(c) < 3:
             return c
         return c[0:3]

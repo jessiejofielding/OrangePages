@@ -243,6 +243,19 @@
                   </div>
                 </div>
 
+                <!-- @frontend -->
+                <div class="row">
+                    <div class="col">
+                    {% for comment in post.prev_comments() %}
+                    <p>
+                        {{comment.creator.firstname}} {{comment.creator.lastname}} <br>
+                        {{comment.date}} <br>
+                        {{comment.content}}
+                    </p>
+                    {% endfor %}
+                    </div>
+                </div>
+
 
           </div>
         </div>

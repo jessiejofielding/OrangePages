@@ -598,10 +598,17 @@ class Post(db.Model):
         return self.likes
 
     def get_comments(self):
-        c = db.session.query(Comment)
-        c = c.filter(Comment.postid == self.pid)
+        c = self.comments
+        # c = db.session.query(Comment)
+        # c = c.filter(Comment.postid == self.pid)
         comments = c.order_by(desc(Comment.date)).all()
         return comments
+
+    def prev_comments(self):
+        c = self.comments.all()
+        if len(c) < 3:
+            return c
+        return c[0:3]
 
     def add_img(self, image):
         if image is not None:

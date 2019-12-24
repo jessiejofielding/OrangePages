@@ -31,7 +31,6 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/feed.js"></script>
-
   </head>
 
   <!-- Everything goes in a wrapper -->
@@ -197,6 +196,7 @@
 
                   </div>
                 </div>
+
                 <!-- Content -->
                 <div class="row">
                   <div class="col">
@@ -207,7 +207,7 @@
                     {% if post.tags|length %}
                     {% for tag in post.tags: %}
                     <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
-                      class="btn-primary btn-sm tag-pill mb-1 text-truncate">
+                      class="btn-primary btn-sm tag-pill mb-1 text-truncate" style="outline: none">
                       #{{ tag.tid }}
                     </button>
                     {% endfor %}

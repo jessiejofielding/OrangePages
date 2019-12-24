@@ -28,3 +28,14 @@ function getTimeAgo(timeString) {
         document.write(day + " " + month + year);
     }
 }
+
+window.onload = setupRefresh;
+function setupRefresh()
+{
+    setInterval(refreshBlock,10000);
+}
+
+function refreshBlock()
+{
+   $('#posts').load("feed #posts");
+}

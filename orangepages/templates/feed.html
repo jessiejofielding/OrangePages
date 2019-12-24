@@ -60,9 +60,9 @@
                     <i class="fa fa-user feed-profile rounded-circle"></i>
                     {%else:%}
                     <a href='profile/{{ user.uid }}'>
-                    <img class="feed-profile rounded-circle"
-                      src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
-                      alt="failed to load">
+                      <img class="feed-profile rounded-circle"
+                        src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
+                        alt="failed to load">
                     </a>
                     {%endif%}
                   </div>
@@ -172,6 +172,7 @@
         {% for post in posts: %}
         <div class="post-card card border-left-20 border-right-10 rounded-0" style="margin-bottom: 10px;">
           <div class="container-fluid">
+
             <div class="row">
               <!-- Profile photo -->
               <div class="col" style="padding-top: 10px; -ms-flex: 0 0 40px; flex: 0 0 40px;">
@@ -179,16 +180,12 @@
                 <i class="fa fa-user feed-profile rounded-circle"></i>
                 {%else:%}
                 <a href='profile/{{ post.creator.uid }}'>
-                <img class="feed-profile rounded-circle"
-                  src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{post.creator._pic}}.png'
-                  alt="failed to load">
-                {%endif%}
-              </a>
+                  <img class="feed-profile rounded-circle"
+                    src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{post.creator._pic}}.png'
+                    alt="failed to load">
+                  {%endif%}
+                </a>
               </div>
-
-              <div class="col">
-
-                <div class="row">
 
                   <!-- User and netid -->
                   <div class="col" style="padding-top: 10px">
@@ -210,6 +207,8 @@
 
                 <!-- Content -->
                 <div class="row">
+
+                  <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
                   <div class="col">
                     <div class="post-text mb-1">
                       {{post.content}}
@@ -228,6 +227,7 @@
                 </div>
 
                 <div class="row" style="padding-top: 3px">
+                    <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
                   <div class="col" style="padding-bottom: 5px">
                     {% if user.liked_post(post.pid) %}
                     <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=False) }}" class="card-link">
@@ -242,8 +242,7 @@
                       {{post.get_comments()|length}}</a>
                   </div>
                 </div>
-              </div>
-            </div>
+
 
           </div>
         </div>

@@ -14,15 +14,17 @@ $(document).ready(function () {
         $('.collapse.in').toggleClass('in');
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
+
+    setupNotifRefresh();
 });
 
-window.onload = setupRefresh;
-function setupRefresh()
+function setupNotifRefresh()
 {
-    setInterval(refreshBlock,10000);
+    setInterval(refreshNotif,10000);
+    console.log("DFSDF")
 }
 
-function refreshBlock()
+function refreshNotif()
 {
    $('#Notifications').load(" #Notifications");
 }

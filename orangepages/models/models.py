@@ -696,7 +696,7 @@ class Notification(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.now)
     action = db.Column(db.Integer)
     text = db.Column(db.String(500))
-    unread = db.Column(db.Boolean, default=False) # Always false
+    unread = db.Column(db.Boolean, default=True) 
 
     # target: person who receives this notification.
     # sender: person who triggered the notification.
@@ -720,7 +720,10 @@ class Notification(db.Model):
         self.target = target
         self.sender = sender
         self.action = action
-        target._unread_notifs += 1
+        if self.target._unread_notifs < 0:
+                self.target._unread_notifs = 1
+        else:
+            self.target._unread_notifs += 1
 
         if post is not None:
             self.postid = post.pid
@@ -746,7 +749,22 @@ class Notification(db.Model):
         else:
             return '/profile/' + self.sender.uid
 
+    def mark_read(self):
+        if self.unread:
+            self.unread = False
+            if self.target._unread_notifs < 0:
+                self.target._unread_notifs = 0
+            else:
+                self.target._unread_notifs -= 1
+            db.session.commit()
+
     def delete(self):
+        if self.unread:
+            if self.target._unread_notifs < 0:
+                self.target._unread_notifs = 0
+            else:
+                self.target._unread_notifs -= 1
         self.target.notifs.remove(self)
         self.sender._notifs_sent.remove(self)
         db.session.delete(self)
+        db.session.commit()

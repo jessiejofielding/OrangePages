@@ -170,15 +170,23 @@ def edit_user():
 @user_required
 def view_notifs():
     user = cur_user()
-
-    # Order of next few lines matter, pls don't rearrange
     notifs = user.notifs.all()
-    unread_count = user._unread_notifs
-    user.reset_unread()
-    for notif, i in zip(notifs, range(unread_count)):
-        notif.unread = True # Do not commit to db session
-
     return render('notifs.html', notifs=notifs)
+
+
+@page.route('/notif/<int:nid>', methods=['GET'])
+@user_required
+def notif_link(nid):
+    user = cur_user()
+
+    notif = Notification.query.get(nid)
+    if notif.target is not user:
+        return redirect(request.referrer)
+
+    if notif.unread:
+        notif.mark_read()
+    return redirect(notif.link_to())
+
 
 
 @page.route('/clear-notifs', methods=['GET'])
@@ -190,7 +198,6 @@ def clear_notifs():
     for notif in notifs:
         notif.delete()
 
-    db.session.commit()
     return redirect(request.referrer)
 
 @page.route('/clear-notif/<int:id>', methods=['POST'])
@@ -200,9 +207,10 @@ def clear_single_notif(id):
     print('clearing notif id', id)
 
     notif = Notification.query.get(id)
-    notif.delete()
 
-    db.session.commit()
+    if notif.target is user:
+        notif.delete()
+
     return redirect(request.referrer)
 
 

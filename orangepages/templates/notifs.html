@@ -43,7 +43,7 @@
         </div>
         <div class="col" style="width: 650px; float: none; margin: 0 auto;">
 
-            <div class="post container">
+            <div class="post container" id="notifs">
                 {%if notifs|length == 0%}
                 <div class="card-body" style="text-align: center;">
                     You have no notifications!
@@ -67,7 +67,7 @@
 
                         <div class="col" style="margin-top: -5px">
 
-                            <a href='{{notif.link_to()}}' style="width:100%; height:100%;">
+                            <a href='/notif/{{notif.nid}}' style="width:100%; height:100%;">
 
                                 <span class="text-muted post-subtitle"><i class="fa fa-clock-o"></i>
                                     <script type="text/javascript">
@@ -126,6 +126,17 @@
             $form.find('input,select,textarea').prop('disabled', isReadonly);
         });
     });
+
+    window.onload = setupRefresh;
+    function setupRefresh()
+    {
+        setInterval(refreshBlock,10000);
+    }
+
+    function refreshBlock()
+    {
+       $('#notifs').load(" #notifs");
+    }
 </script>
 
 

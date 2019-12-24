@@ -1,9 +1,10 @@
 $(document).ready(function () {
     $('.field textarea').on('keyup', function () {
         let empty = false;
+        var str = document.querySelector('.field textarea').value.trim();
 
         $('.field textarea').each(function () {
-            empty = ($(this).val().length) <= 0;
+            empty = str.length <= 0;
         });
 
         if (empty)
@@ -14,9 +15,10 @@ $(document).ready(function () {
 
     $('.field textarea').on('keydown', function () {
         let empty = false;
+        var str = document.querySelector('.field textarea').value.trim();
 
         $('.field textarea').each(function () {
-            empty = ($(this).val().length) <= 0;
+            empty = str.length <= 0;
         });
 
         if (empty)

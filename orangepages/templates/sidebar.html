@@ -7,7 +7,7 @@
         </li>
         <li id="Notifications">
           <a href="/notifications" class="btn-sidebar"><i class="fas fa-bell mr-1"></i>Notifications
-            {% if user._unread_notifs > 0 %}({{user._unread_notifs}}){% endif %}</a>
+            {% if user._unread_notifs > 0 %}<span class="badge badge-pill badge-danger">{{user._unread_notifs}}</span>{% endif %}</a>
         </li>
         <li id="Profile">
           <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>Profile</a>

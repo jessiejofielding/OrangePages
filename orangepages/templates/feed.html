@@ -67,8 +67,10 @@
 
                   <!-- Post input -->
                   <div class="col" style="padding: 10px">
-                    <textarea name="content" class="make-post form-control border-0" id="message" rows="3"
-                      placeholder="Write a post..."></textarea>
+                    <div class="field">
+                      <textarea name="content" class="make-post form-control border-0" id="message" rows="3"
+                        placeholder="Write a post..."></textarea>
+                    </div>
                   </div>
                 </div>
 
@@ -141,7 +143,10 @@
               <div class="row">
 
                 <div class="col" style="margin: 10px">
-                  <button type="submit" class="btn btn-primary tag-pill" style="width: 100%">Share</button>
+                  <div class="field">
+                    <button id="share" type="submit" class="btn btn-primary tag-pill" style="width: 100%"
+                      disabled="disabled">Share</button>
+                  </div>
                 </div>
               </div>
 
@@ -284,6 +289,8 @@
   <script>
     document.getElementById('Home').className = 'active';
   </script>
+
+  <script src="/static/js/disable-share.js"></script>
 
 </body>
 

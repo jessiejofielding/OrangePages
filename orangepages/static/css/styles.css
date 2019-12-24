@@ -512,12 +512,12 @@ a.article:hover {
 
 /*headings*/
 .fs-title {
-    font-size: 25px;
+    font-size: 40px;
+    margin: -15px;
   /*  text-transform: uppercase;*/
-    color: #2C3E50;
+    color: var(--new-orange);
     margin-bottom: 10px;
-    letter-spacing: 2px;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
     font-weight: bold;
 }
 
@@ -8018,4 +8018,14 @@ color:#ccc;opacity:1
   #post-button span {
       display: none;
   }
+}
+
+/* PROFILES */
+
+.avatar {
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: -130px;
+  text-align: center;
+  z-index: 99;
 }

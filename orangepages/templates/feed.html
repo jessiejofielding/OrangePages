@@ -59,9 +59,11 @@
                     {%if user._pic is none:%}
                     <i class="fa fa-user feed-profile rounded-circle"></i>
                     {%else:%}
+                    <a href='profile/{{ user.uid }}'>
                     <img class="feed-profile rounded-circle"
                       src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
                       alt="failed to load">
+                    </a>
                     {%endif%}
                   </div>
 
@@ -176,10 +178,12 @@
                 {%if user._pic is none:%}
                 <i class="fa fa-user feed-profile rounded-circle"></i>
                 {%else:%}
+                <a href='profile/{{ post.creator.uid }}'>
                 <img class="feed-profile rounded-circle"
                   src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{post.creator._pic}}.png'
                   alt="failed to load">
                 {%endif%}
+              </a>
               </div>
 
               <div class="col">
@@ -193,7 +197,7 @@
                   </div>
 
                   <!-- Time elapsed -->
-                  <div class="col" style="padding-top: 10px; -ms-flex: 0 0 80px; flex: 0 0 80px;">
+                  <div class="col" style="padding-top: 10px; text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
                     <div class="post-subtitle">
                       <i class="fas fa-clock"></i>
                       <script type="text/javascript">

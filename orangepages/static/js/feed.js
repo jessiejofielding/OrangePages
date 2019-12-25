@@ -1,6 +1,8 @@
 function getTimeAgo(timeString) {
-    var timeStamp = new Date(timeString)
-    var date = new Date()
+    var timeStamp = new Date(timeString + new Date().getTimezoneOffset());
+    console.log(timeStamp)
+    var date = new Date();
+    console.log(date)
     var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
         date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     var now = new Date(now_utc)

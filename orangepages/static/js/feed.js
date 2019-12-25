@@ -2,9 +2,7 @@ function getTimeAgo(timeString) {
     var timeStamp = new Date(timeString);
     var now = new Date();
     var offset = now.getTimezoneOffset() * 60000;
-    console.log(timeStamp)
-    console.log(now)
-    console.log(offset)
+
     var secondsPast = (now.getTime() - (timeStamp.getTime() - offset)) / 1000;
     if (secondsPast < 60) {
         document.write(parseInt(secondsPast) + 's');

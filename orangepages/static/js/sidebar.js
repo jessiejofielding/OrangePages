@@ -20,8 +20,7 @@ $(document).ready(function () {
 
 function setupNotifRefresh()
 {
-    setInterval(refreshNotif,10000);
-    console.log("DFSDF")
+    setInterval(refreshNotif,13000);
 }
 
 function refreshNotif()

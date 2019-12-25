@@ -71,7 +71,7 @@ class User(db.Model):
 
     _unread_notifs = db.Column(db.Integer, default=0)
 
-    _dateofreg = db.Column(db.DateTime, default=datetime.datetime.now)
+    _dateofreg = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
@@ -481,7 +481,7 @@ class Comment(db.Model):
     # creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic'),
         foreign_keys=[creatorid])
-    date = db.Column(db.DateTime, default=datetime.datetime.now)
+    date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     post = relationship('Post', backref=
         backref('comments', lazy='dynamic'))
@@ -503,7 +503,7 @@ class Post(db.Model):
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     creator = relationship('User', back_populates='_posts_made')
-    date = db.Column(db.DateTime, default=datetime.datetime.now)
+    date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     has_img = db.Column(db.Boolean(), default=False)
     _pic = db.Column(db.String(50))
     last_edited = db.Column(db.DateTime)
@@ -573,7 +573,7 @@ class Post(db.Model):
             self.tags.remove(tag)
 
     def update_last_edit(self):
-        self.last_edited = datetime.datetime.now()
+        self.last_edited = datetime.datetime.utcnow()
         db.session.commit()
 
     def add_like(self, liker):
@@ -693,7 +693,7 @@ class NType:
 class Notification(db.Model):
 
     nid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date = db.Column(db.DateTime, default=datetime.datetime.now)
+    date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     action = db.Column(db.Integer)
     text = db.Column(db.String(500))
     unread = db.Column(db.Boolean, default=True) 

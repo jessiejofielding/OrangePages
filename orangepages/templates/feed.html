@@ -198,9 +198,10 @@
                   <!-- Time elapsed -->
                   <div class="col" style="padding-top: 10px; text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
                     <div class="post-subtitle">
-                      <i class="fas fa-clock"></i>
+                      <i class="fas fa-clock"></i> 
+                      <span id="tstamp{{post.pid}}"></span>
                       <script type="text/javascript">
-                        getTimeAgo("{{ post.date }}");
+                        getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}" );
                       </script>
                     </div>
 

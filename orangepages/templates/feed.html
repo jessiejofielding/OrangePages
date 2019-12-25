@@ -47,7 +47,7 @@
 
         <!-- Make a post -->
         <div class="col" id="main">
-          <form action="create-post" method="post" enctype="multipart/form-data">
+          <form action="create-post" method="post" enctype="multipart/form-data" id="create-post-form">
             <div class="post-card card border-left-20 border-right-20 border-top-0 rounded-0"
               style="margin-bottom: 10px;">
               <div class="container-fluid">
@@ -147,7 +147,7 @@
                 <div class="col" style="margin: 10px">
                   <div class="field">
                     <button id="share" type="submit" class="btn btn-primary tag-pill" style="width: 100%"
-                      disabled="disabled">Share</button>
+                    onclick="disableButton(this)" disabled="disabled">Share</button>
                   </div>
                 </div>
               </div>
@@ -311,6 +311,18 @@
   </script>
 
   <script src="/static/js/disable-share.js"></script>
+
+  <script type="text/javascript">
+$(function()
+{
+  $('#create-post-form').submit(function(){
+    $('#share', this)
+      .attr('disabled', 'disabled');
+      document.getElementById("share").innerHTML="Sharing...";
+    return true;
+  });
+});
+  </script>
 
 </body>
 

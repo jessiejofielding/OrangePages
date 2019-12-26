@@ -1,148 +1,59 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
 
-<head>
-    <title>Orange Pages | Notifications</title>
-    <meta name="viewport" content="width=device-width,
-                                initial-scale=1">
-    <!-- <meta http-equiv="refresh" content="20" /> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{%if notifs|length == 0%}
+<div class="card-body" style="text-align: center;">
+    You have no notifications!
+</div>
 
-    <!--CSS-->
-    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
-    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
-        type="text/css" />
-    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        type="text/css" />
+{% else %}
+<div class="card-body" style="text-align: center">
+    <button type="button" class="btn btn-primary tag-pill">
+        <a href="/clear-notifs"> Clear All Notifications</a>
+    </button>
+</div>
+<hr style="margin: 0px; border: 0.5px solid lightgray">
 
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+{%endif%}
 
-    <!--JS-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/feed.js"></script>
+{% for notif in notifs: %}
 
-</head>
+<div class="card-body">
 
-<body>
-    {% include 'sidebar.html' %}
+    <div class="row">
 
-    <div id="content">
-        {% include 'navbar.html' %}
+        <div class="col" style="margin-top: -5px">
 
-        <!-- Main page -->
+            <a href='/notif/{{notif.nid}}' style="width:100%; height:100%;">
 
-        <div class="col">
-        </div>
-        <div class="col" style="width: 650px; float: none; margin: 0 auto;">
+                <span class="text-muted post-subtitle"><i class="fa fa-clock-o"></i>
+                    <span id="tstamp{{notif.nid}}"></span>
+                    <script type="text/javascript">
+                      getTimeAgo("{{ notif.date }}", "tstamp{{notif.nid}}" );
+                    </script>
+                </span>
 
-            <div class="post container" id="notifs">
-                {%if notifs|length == 0%}
-                <div class="card-body" style="text-align: center;">
-                    You have no notifications!
-                </div>
+                {% if notif.unread %}
+                <span class="badge badge-pill badge-danger">Unread</span>
+                {% endif %}
 
-                {% else %}
-                <div class="card-body" style="text-align: center">
-                    <button type="button" class="btn btn-primary tag-pill">
-                        <a href="/clear-notifs"> Clear All Notifications</a>
-                    </button>
-                </div>
-                <hr style="margin: 0px; border: 0.5px solid lightgray">
-
-                {%endif%}
-
-                {% for notif in notifs: %}
-
-                <div class="card-body">
-
-                    <div class="row">
-
-                        <div class="col" style="margin-top: -5px">
-
-                            <a href='/notif/{{notif.nid}}' style="width:100%; height:100%;">
-
-                                <span class="text-muted post-subtitle"><i class="fa fa-clock-o"></i>
-                                    <span id="tstamp{{notif.nid}}"></span>
-                                    <script type="text/javascript">
-                                      getTimeAgo("{{ notif.date }}", "tstamp{{notif.nid}}" );
-                                    </script>
-                                </span>
-
-                                {% if notif.unread %}
-                                <span class="badge badge-pill badge-danger">Unread</span>
-                                {% endif %}
-
-                                <br>
-                                <a href='/profile/{{ notif.sender_id() }}' class="post-title">
-                                    {{notif.sender_name()}}
-                                </a> <span class="post-text">{{notif.text}}</span>
-
-                        </div>
-                        <div class="col" style="-ms-flex: 0 0 40px; flex: 0 0 40px;">
-                            <form action="clear-notif/{{notif.nid}}" method="post">
-                                <button class="btn btn-sm btn-primary tag-pill"
-                                    type="submit">clear</button><br>
-                            </form>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <hr style="margin: 0px; border: 0.5px solid lightgray">
-                {% endfor %}
-
-            </div>
+                <br>
+                <a href='/profile/{{ notif.sender_id() }}' class="post-title">
+                    {{notif.sender_name()}}
+                </a> <span class="post-text">{{notif.text}}</span>
 
         </div>
-        <div class="col">
-        </div>
+        <div class="col" style="-ms-flex: 0 0 40px; flex: 0 0 40px;">
+            <form action="clear-notif/{{notif.nid}}" method="post">
+                <button class="btn btn-sm btn-primary tag-pill"
+                    type="submit">clear</button><br>
+            </form>
+            </a>
 
+        </div>
     </div>
 
-    </div>
-</body>
+</div>
 
-<!-- jQuery Custom Scroller CDN -->
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-<script src="/static/js/sidebar.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('.js-edit').on('click', function () {
-            var $form = $(this).closest('form');
-            $form.toggleClass('is-readonly is-editing');
-            var isReadonly = $form.hasClass('is-readonly');
-            $form.find('input,select,textarea').prop('disabled', isReadonly);
-        });
-    });
-
-    window.onload = setupRefresh;
-    function setupRefresh()
-    {
-        setInterval(refreshBlock,10000);
-    }
-
-    function refreshBlock()
-    {
-       $('#notifs').load(" #notifs");
-    }
-</script>
+<hr style="margin: 0px; border: 0.5px solid lightgray">
+{% endfor %}
 
 
-<script>
-    document.getElementById('Notifications').className = 'active';
-</script>
-
-</html>

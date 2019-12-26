@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <title>Orange Pages | Notifications</title>
+    <meta name="viewport" content="width=device-width,
+                                initial-scale=1">
+    <!-- <meta http-equiv="refresh" content="20" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
+        type="text/css" />
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" />
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/notifs.js"></script>
+
+</head>
+
+<body>
+    {% include 'sidebar.html' %}
+
+    <div id="content">
+        {% include 'navbar.html' %}
+
+        <!-- Main page -->
+
+        <div class="col">
+        </div>
+        <div class="col" style="width: 650px; float: none; margin: 0 auto;">
+
+            <div class="post container" id="notifs">
+            </div>
+
+        </div>
+        <div class="col">
+        </div>
+
+    </div>
+
+    </div>
+</body>
+
+<!-- jQuery Custom Scroller CDN -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+
+
+<script>
+    document.getElementById('Notifications').className = 'active';
+</script>
+
+</html>

@@ -15,15 +15,15 @@ $(document).ready(function () {
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
 
-    setupNotifRefresh();
+    setupSidebarRefresh();
 });
 
-function setupNotifRefresh()
+function setupSidebarRefresh()
 {
-    setInterval(refreshNotif,13000);
+    setInterval(refreshSidebar,20000);
 }
 
-function refreshNotif()
+function refreshSidebar()
 {
    $('#Notifications').load(" #Notifications");
 }

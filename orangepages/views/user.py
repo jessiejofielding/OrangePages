@@ -166,12 +166,14 @@ def edit_user():
 
 
 
-@page.route('/notifications', methods=['GET'])
+@page.route('/notifications', methods=['GET', 'POST'])
 @user_required
 def view_notifs():
     user = cur_user()
     notifs = user.notifs.all()
-    return render('notifs.html', notifs=notifs)
+    if request.method=='POST':
+        return render('notifs.html', notifs=notifs)
+    return render('notifs_page.html', notifs=notifs)
 
 
 @page.route('/notif/<int:nid>', methods=['GET'])

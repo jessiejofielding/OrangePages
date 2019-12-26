@@ -8031,16 +8031,22 @@ color:#ccc;opacity:1
 
 /* LANDING PAGE */
 
+.load-posts-div {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px;
+  z-index: 5;
+  text-align: center
+}
+
 #load-new-posts {
-  background: none;
+  background: #f9f9f9;
   font-size: 14px;
-  border: none;
-  width: 100%;
   color: darkgray;
   margin: 6px;
   outline: none;
-}
-
-#load-new-posts:hover {
-  color: gray;
+  padding: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 30px;
 }

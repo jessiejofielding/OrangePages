@@ -147,7 +147,7 @@
                 <div class="col" style="margin: 10px">
                   <div class="field">
                     <button id="share" type="submit" class="btn btn-primary tag-pill" style="width: 100%"
-                    onclick="disableButton(this)" disabled="disabled">Share</button>
+                      onclick="disableButton(this)" disabled="disabled">Share</button>
                   </div>
                 </div>
               </div>
@@ -156,13 +156,16 @@
         </div>
 
 
-    <hr style="margin-bottom: 0px">
-    <button id="load-new-posts" style="display:none;"></button>
-    <hr style="margin-top: 0px">
+        <hr style="margin-bottom: 0px">
+        <div class="load-posts-div">
+          <button id="load-new-posts" class="btn btn-light m-0 rounded-pill px-4"
+            style="display:none; background: #f9f9f9;"></button>
+        </div>
+        <hr style="margin-top: 0px">
 
-    <div id="posts">
+        <div id="posts">
 
-        <!-- <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <!-- <button type="button" id="sidebarCollapse" class="btn btn-primary">
           <i class="fas fa-align-left"></i>
           <span>Toggle Sidebar</span>
         </button>
@@ -170,14 +173,14 @@
         There will be a create post button here
         ALSO I'M STILL WORKING ON EVERYTHING
         Hopefully it will look good soon -->
-        <!-- TODO: if no posts, display a message -->
-        {% if not posts: %}
-        {% endif %}
+          <!-- TODO: if no posts, display a message -->
+          {% if not posts: %}
+          {% endif %}
 
 
-        {% include 'feed_posts.html' %}
-        
-    </div>
+          {% include 'feed_posts.html' %}
+
+        </div>
 
         <div class="post-card card border-left-20 border-bottom-20 border-right-10 rounded-0"
           style="border-bottom-width: 10px;">
@@ -228,15 +231,14 @@
   <script src="/static/js/disable-share.js"></script>
 
   <script type="text/javascript">
-$(function()
-{
-  $('#create-post-form').submit(function(){
-    $('#share', this)
-      .attr('disabled', 'disabled');
-      document.getElementById("share").innerHTML="Sharing...";
-    return true;
-  });
-});
+    $(function () {
+      $('#create-post-form').submit(function () {
+        $('#share', this)
+          .attr('disabled', 'disabled');
+        document.getElementById("share").innerHTML = "Sharing...";
+        return true;
+      });
+    });
   </script>
 
 </body>

@@ -152,10 +152,9 @@ def comment(postid):
 #     # # TODO:
 #     return
 
-@page.route('/post/<int:post_id>/<isLike>')
+@page.route('/post/<int:post_id>/like')
 @user_required
-def like(post_id, isLike):
-    # # TODO:
+def like(post_id):
     post = Post.query.get(post_id)
     if post is None:
         return render('message.html',
@@ -164,16 +163,17 @@ def like(post_id, isLike):
 
     user = cur_user()
 
-    if isLike == 'True':  #passing a string sorry
+    if user.liked_post(post_id):
+        post.unlike(user)
+    else:
         post.add_like(user)
         if(post.creator is not user):
             notif = Notification(user, post.creator, NType.LIKED, post)
-    else:
-        post.unlike(user)
 
     db.session.commit()
 
-    return redirect(request.referrer)
+    return ''
+    # return redirect(request.referrer)
 
 # Might need FIXME
 @page.route('/post/<int:post_id>/tag')

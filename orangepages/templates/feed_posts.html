@@ -59,15 +59,18 @@
           <div class="row" style="padding-top: 3px">
               <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
             <div class="col" style="padding-bottom: 5px">
+              
               {% if user.liked_post(post.pid) %}
-              <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=False) }}" class="card-link">
+              <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
                 <i class="fas fa-heart"></i> {{post.likes|length}}
               </a>
               {% else %}
-              <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=True) }}" class="card-link">
+              <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
                 <i class="far fa-heart"></i> {{post.likes|length}}
               </a>
               {% endif %}
+
+
               <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
                 {{post.get_comments()|length}}</a>
             </div>

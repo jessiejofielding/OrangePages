@@ -59,19 +59,35 @@ function getTimeAgo(timeString, spanId) {
 }
 
 
-// auto refresh
-
-window.onload = setupRefresh;
-function setupRefresh()
-{
-    setInterval(refreshFeed,20000); // 20s
-}
-
 $(document).ready(function() {
     $("#load-new-posts").click(showNewPosts); 
 });
 
 
+// liking
+var likingPost = false;
+function toggleLike(post_id) {
+    
+    let url = '/post/'+post_id+'/like';
+    
+    if(!likingPost) {
+        likingPost = true;
+        var res = $.get( url );
+        res.done(function( data ) {
+            refreshFeed();
+            likingPost = false;
+        });
+    }
+
+}
+
+
+// auto refresh
+window.onload = setupRefresh;
+function setupRefresh()
+{
+    setInterval(refreshFeed,20000); // 20s
+}
 
 
 // Refresh: update posts currently displayed on feed

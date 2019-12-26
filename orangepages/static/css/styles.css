@@ -8030,3 +8030,17 @@ color:#ccc;opacity:1
 }
 
 /* LANDING PAGE */
+
+#load-new-posts {
+  background: none;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+  color: darkgray;
+  margin: 6px;
+  outline: none;
+}
+
+#load-new-posts:hover {
+  color: gray;
+}

@@ -20,7 +20,13 @@ def not_found(e):
             message="This page doesn't exist."), 404
 
 @page.app_errorhandler(500)
-def not_found(e):
+def server_error(e):
     return render('message.html',
             title='A server error occurred.',
             message="Please try again later?"), 500
+
+@page.app_errorhandler(405)
+def not_allowed(e):
+    return render('message.html',
+            title='Not allowed',
+            message="leave"), 405

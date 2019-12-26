@@ -70,8 +70,9 @@
                             <a href='/notif/{{notif.nid}}' style="width:100%; height:100%;">
 
                                 <span class="text-muted post-subtitle"><i class="fa fa-clock-o"></i>
+                                    <span id="tstamp{{notif.nid}}"></span>
                                     <script type="text/javascript">
-                                        getTimeAgo("{{ notif.date }}");
+                                      getTimeAgo("{{ notif.date }}", "tstamp{{notif.nid}}" );
                                     </script>
                                 </span>
 

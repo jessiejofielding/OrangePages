@@ -294,6 +294,32 @@ class User(db.Model):
         posts = p.order_by(desc(Post.date)).all()
         return posts
 
+    # get all new posts since time
+    def feed_new(self, time):
+        p = db.session.query(Post).join(Post.groups).join(Group.members).filter(User.uid == self.uid)
+        p = p.filter(Post.date > time)
+        posts = p.order_by(desc(Post.date)).all()
+        return posts
+
+    # get next k posts after time
+    def feed_next(self, time, k=10):
+        p = db.session.query(Post).join(Post.groups).join(Group.members).filter(User.uid == self.uid)
+        p = p.filter(Post.date < time)
+        posts = p.order_by(desc(Post.date)).all()
+        if len(posts) < k:
+            return posts
+        return posts[0:k]
+
+    # get all posts within time range
+    def feed_range(self, t_start, t_end):
+        p = db.session.query(Post).join(Post.groups).join(Group.members).filter(User.uid == self.uid)
+        p = p.filter(Post.date <= t_start)
+        p = p.filter(Post.date >= t_end)
+        posts = p.order_by(desc(Post.date)).all()
+        return posts
+
+
+
     def liked_post(self, post_id):
         likedPost = self.posts_liked.filter(Post.pid == post_id).all()
         return len(likedPost) == 1

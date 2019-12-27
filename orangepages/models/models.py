@@ -636,6 +636,9 @@ class Post(db.Model):
             return c
         return c[0:3]
 
+    def num_comments(self):
+        return len(self.get_comments())
+
     def add_img(self, image):
         if image is not None:
             self.has_img = True

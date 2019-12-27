@@ -40,6 +40,18 @@ form {
   }
 }
 
+.comment-textarea {
+  border: 0px !important;
+}
+
+.comment-textarea:focus,.comment-textarea:active {
+  outline: 0px !important;
+  -webkit-appearance:none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none !important;
+}
 .btn:focus,.btn:active {
    outline: none !important;
    box-shadow: none !important;

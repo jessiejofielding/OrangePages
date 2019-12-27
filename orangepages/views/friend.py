@@ -20,18 +20,11 @@ def friend_request():
 
     if user1.uid < user2.uid:
         status = st.request1_2
-        try:
-            rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
-        except:
-            rel = Relationship(user1, user2, status)
-        rel.change_status(status)
+        updateRelation(user1, user2, status)
 
     if user2.uid < user1.uid:
         status = st.request2_1
-        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
-        except:
-            rel = Relationship(user2, user1, status)
-        rel.change_status(status)
+        updateRelation(user1, user2, status)
 
     notif = Notification(user1, user2, NType.REQUESTED)
 
@@ -45,21 +38,9 @@ def add_friend():
     user1 = cur_user()
     friend_uid = request.form.get('content')
     user2 = User.query.get(friend_uid)
-    # user1.add_friend(user2)
 
     status = st.friends
-
-    if user1.uid < user2.uid:
-        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
-        except:
-            rel = Relationship(user1, user2, status)
-        rel.change_status(status)
-
-    if user2.uid < user1.uid:
-        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
-        except:
-            rel = Relationship(user2, user1, status)
-        rel.change_status(status)
+    updateRelation(user1, user2, status)
 
     notif = Notification(user1, user2, NType.ACCEPTED)
 
@@ -71,20 +52,9 @@ def unfriend():
     user1 = cur_user()
     friend_uid = request.form.get('content')
     user2 = User.query.get(friend_uid)
-    # user1.unfriend(user2)
+
     status = st.unfriend
-
-    if user1.uid < user2.uid:
-        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
-        except:
-            rel = Relationship(user1, user2, status)
-        rel.change_status(status)
-
-    if user2.uid < user1.uid:
-        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
-        except:
-            rel = Relationship(user2, user1, status)
-        rel.change_status(status)
+    updateRelation(user1, user2, status)
 
     return redirect(request.referrer)
 
@@ -109,7 +79,21 @@ def friends_list(lookup_id):
     return render('friends.html',
     friend_list = friend_list, lookup_user=user)
 
-# @page.route('/profile/<string:lookup_id>/are-friends', methods=['GET'])
-# def are_friends(lookup_id):
-#     user2 = User.query.get(lookup_id)
-#     are_friends = (user2 in cur_user().friend_list())
+
+
+# ---
+
+# util
+def updateRelation(user1, user2, status):
+    if user1.uid < user2.uid:
+        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
+        except:
+            rel = Relationship(user1, user2, status)
+        rel.change_status(status)
+
+    elif user2.uid < user1.uid:
+        try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
+        except:
+            rel = Relationship(user2, user1, status)
+        rel.change_status(status)
+    return rel

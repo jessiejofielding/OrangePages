@@ -257,7 +257,7 @@ class User(db.Model):
                 lookup[name] = val
             else:
                 lookup[name] = ""
-            print(name + " " + str(lookup[name]))
+            # print(name + " " + str(lookup[name]))
 
         return lookup
 
@@ -326,50 +326,18 @@ class User(db.Model):
 
     # FRIENDS
     def add_friend(self, friend):
-        self._groups[0].members.append(friend)
-        friend._groups[0].members.append(self)
+        if not self.is_friend(friend):
+            self._groups[0].members.append(friend)
+            friend._groups[0].members.append(self)
 
-        notifs = db.session.query(Notification).filter(
-            (Notification.action == NType.REQUESTED),
-            (Notification.targetid == self.uid),
-            (Notification.senderid == friend.uid)
-            )
-
-        for notif in notifs.all():
-            print()
-            print(notif)
-            print()
-            notif.delete()
-
-        db.session.commit()
-
-        # print(self._groups[0].members)
-        # print("after adding friend, friendlist of ", self.uid, " : ", self._groups[0].members)
-        # print("after adding friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
+            db.session.commit()
 
     def unfriend(self, friend):
-        if friend in self._groups[0].members:
+        if self.is_friend(friend):
             self._groups[0].members.remove(friend)
             friend._groups[0].members.remove(self)
 
-
-            notifs = db.session.query(Notification).filter(
-                (Notification.action == NType.ACCEPTED),
-                or_(
-                    and_(Notification.targetid == self.uid,
-                    Notification.senderid == friend.uid),
-                    and_(Notification.targetid == friend.uid,
-                    Notification.senderid == self.uid)
-                    )
-            )
-            for notif in notifs.all():
-                notif.delete()
-
             db.session.commit()
-            # print("after removing friend, friendlist of ", self.uid, " : ", self._groups[0].members)
-            # print("after removing friend, friendlist of ", friend.uid, " : ", friend._groups[0].members)
-        else:
-            print(friend.uid, " not a friend of ", self.uid)
 
     def friend_list(self):
         # print(self._groups[0].members)
@@ -377,19 +345,26 @@ class User(db.Model):
 
     # is user a friend of self?
     def is_friend(self, user):
-        is_friend = (user in self.friend_list())
-        return is_friend
+        # is_friend = (user in self.friend_list())
+        # return is_friend
+        rel = Relationship.get_status(self, user)
+        return rel == st.friends
 
     # has self sent a friend request to user?
     def friend_requested(self, user):
-        notifs = self._notifs_sent.filter(Notification.targetid == user.uid)
-        notifs = notifs.filter(Notification.action == NType.REQUESTED).all()
-        return len(notifs) == 1
 
-    def reset_unread(self):
-        self._unread_notifs = 0
-        db.session.commit()
-        return
+        rel = Relationship.get_status(self, user)
+        user1 = self
+        user2 = user
+
+        if user1.uid < user2.uid:
+            return rel == st.request1_2
+
+        elif user2.uid < user1.uid:
+            return rel == st.request2_1
+
+        return False
+
 
 
 
@@ -455,29 +430,6 @@ class Relationship(db.Model):
         {},
     )
 
-    def change_status(self, status):
-        # print('status', type(status), 'st.unfriend', type(st.unfriend))
-        if ((status == st.request2_1) and (self.status == st.request1_2)) or \
-            ((status == st.request1_2) and (self.status == st.request2_1)):
-            status = st.friends
-
-        if int(status) == st.accept:
-            status = st.friends
-
-        if int(status) == st.friends:
-            # add to "Friend" group
-            if self.status != st.friends:
-                self.user1.add_friend(self.user2)
-                self.user2.add_friend(self.user1)
-
-        if int(status) == st.unfriend:
-            # remove from "Friend" group
-            if int(self.status) == st.friends:
-                self.user1.unfriend(self.user2)
-                #self.user2.unfriend(self.user1)
-
-        self.status = status
-
     def __init__(self, user1, user2, status):
         assert(user1.uid < user2.uid)
         self.user1 = user1
@@ -487,16 +439,40 @@ class Relationship(db.Model):
         db.session.add(self)
         db.session.commit()
 
+
+    def change_status(self, status):
+        # print('status', type(status), 'st.unfriend', type(st.unfriend))
+        if ((status == st.request2_1) and (self.status == st.request1_2)) or \
+            ((status == st.request1_2) and (self.status == st.request2_1)):
+            status = st.friends
+
+        if status == st.accept:
+            status = st.friends
+
+        if (status == st.friends) and (int(self.status) != st.friends):
+            self.user1.add_friend(self.user2)
+
+        if (status == st.unfriend) and (int(self.status) == st.friends):
+            self.user1.unfriend(self.user2)
+
+        self.status = status
+        db.session.commit()
+    
+
     def get_status(user1, user2):
-        # TODO: finish implementing this - jf
-        # if user1.uid > user2.uid:
-        #     temp = user2
-        #     user2 = user1
-        #     user1 = temp
-        # rel = Relationship.query.filter(user1=user1, user2=user2)
-        # status = rel.status
-        # return status
-        pass
+        
+        if user1.uid < user2.uid:
+            try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
+            except:
+                return -1
+
+        elif user2.uid < user1.uid:
+            try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
+            except:
+                return -1
+        
+        return int(rel.status)
+
 
 #-----------------------------------------------------------------------
 class Comment(db.Model):

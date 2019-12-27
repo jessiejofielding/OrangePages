@@ -87,11 +87,11 @@
                     </div>
 
                     <div class="col">
-                        <form class="is-readonly" action="/edit-user" method="post" enctype=multipart/form-data>
+                        <form id="msform" class="is-readonly" action="/edit-user" method="post" enctype=multipart/form-data>
                             <fieldset>
                             <h2 class="fs-title" style="text-align: center">{{user.firstname}} {{user.lastname}}</h2>
                             <p style="text-align: center; margin-top: -15px;">@{{user.uid}}</p>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">First Name:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="firstname"
@@ -99,7 +99,7 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Last Name:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="lastname"
@@ -107,14 +107,14 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Email:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="email"
                                         id="exampleInputPassword1" placeholder="Email" value="{{user.email}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Class Year:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="year"
@@ -122,14 +122,14 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Major:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="major"
                                         id="exampleInputPassword1" placeholder="Major" value="{{user.major}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Res College:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="rescollege"
@@ -137,7 +137,7 @@
                                         value="{{user.rescollege}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">School:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="school"
@@ -145,7 +145,7 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Hometown:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="hometown"
@@ -153,14 +153,14 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">State:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="state"
                                         id="exampleInputPassword1" placeholder="State" value="{{user.state}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Country:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="country"
@@ -168,14 +168,14 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Room:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="room"
                                         id="exampleInputPassword1" placeholder="Room" value="{{user.room}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Building:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="building"
@@ -183,21 +183,21 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Food:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="food"
                                         id="exampleInputPassword1" placeholder="Food" value="{{user.food}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Team:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="team"
                                         id="exampleInputPassword1" placeholder="Team" value="{{user.team}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Activities:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="activities"
@@ -205,7 +205,7 @@
                                         disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Certificate:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="certificate"
@@ -213,7 +213,7 @@
                                         value="{{user.certificate}}" disabled>
                                 </div>
                             </div>
-                            <div class="row" style="margin-bottom: 5px">
+                            <div class="row">
                                 <div class="col-lg-3 text-left">Birthday:</div>
                                 <div class="col-lg-9">
                                     <input type="text" class="form-control is-disabled" name="birthday"

@@ -437,11 +437,8 @@ a.article:hover {
     background: white;
     border: 0 none;
     border-radius: 0px;
-    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-    padding: 20px 30px;
     box-sizing: border-box;
-    width: 80%;
-    margin: 0 10%;
+    width: 100%;
 
     /*stacking fieldsets above each other*/
     position: relative;
@@ -454,7 +451,7 @@ a.article:hover {
 
 /*Inputs*/
 #msform input, #msform textarea {
-    padding: 15px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 25px;
     margin-bottom: 10px;
@@ -8036,7 +8033,7 @@ color:#ccc;opacity:1
 
 .avatar {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: -5px;
   margin-top: -130px;
   text-align: center;
 }

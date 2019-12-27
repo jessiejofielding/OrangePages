@@ -1,7 +1,7 @@
 import datetime
 
 from flask import Flask
-from sqlalchemy import and_, create_engine, desc, or_, PrimaryKeyConstraint
+from sqlalchemy import and_, create_engine, desc, asc, or_, PrimaryKeyConstraint
 from sqlalchemy.orm import backref, relationship
 from collections import defaultdict
 
@@ -579,7 +579,7 @@ class Post(db.Model):
         db.session.commit()
 
     def add_like(self, liker):
-        print(liker.firstname, "liked post", self.pid)
+        # print(liker.firstname, "liked post", self.pid)
         self.likes.append(liker)
 
     def unlike(self, unliker):
@@ -601,19 +601,17 @@ class Post(db.Model):
 
     def get_comments(self):
         c = self.comments
-        # c = db.session.query(Comment)
-        # c = c.filter(Comment.postid == self.pid)
         comments = c.order_by(desc(Comment.date)).all()
         return comments
 
     def prev_comments(self):
-        c = self.get_comments()
+        c = self.comments.order_by(asc(Comment.date)).all()
         if len(c) < 3:
             return c
-        return c[0:3]
+        return c[-3:]
 
     def num_comments(self):
-        return len(self.get_comments())
+        return len(self.comments.all())
 
     def add_img(self, image):
         if image is not None:

@@ -43,10 +43,64 @@
 
         <div class="col">
         </div>
-        <div class="col" style="width: 650px; float: none; margin: 0 auto;">
+        <div class="col" style="width: 600px; float: none; margin: 0 auto; padding-bottom:20px">
+
+            {%if friend_list|length == 0%}
+            <div class="card-body" style="text-align: center; color: gray">
+                You don't have any friends!<br>
+                Search for people above <i class="fa fa-arrow-up"></i>
+            </div>
+            {% else %}
+            <div class="card-body" style="text-align: center; color: gray">
+                    Your friends ({{friend_list|length}})
+                </div>
+                <hr style="margin: 0px; border: 0.5px solid lightgray">
+            {% endif %}
+
+            {% for friend in friend_list: %}
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col" style=" -ms-flex: 0 0 80px; flex: 0 0 80px;">
+                        {%if user._pic is none:%}
+                        <i class="fa fa-user feed-profile rounded-circle"></i>
+                        {%else:%}
+                        <a href='/profile/{{ friend.uid }}'>
+                            <img class=" rounded-circle"
+                                src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_70,w_70,g_face,r_10/{{friend._pic}}.png'
+                                alt="failed to load">
+                            {%endif%}
+                        </a>
+                    </div>
+
+                    <!-- User and netid -->
+                    <div class="col" style="padding-top: 8px">
+                        <a href='/profile/{{ friend.uid }}' class="post-title" style="font-size: 22px">{{friend.firstname}}
+                            {{friend.lastname}} <h6 class="post-subtitle"> @{{friend.uid}} </h6> </a>
+                    </div>
+
+                    <div class="col" style="padding-top:14px; -ms-flex: 0 0 160px; flex: 0 0 160px;">
+                            <form method="post" action="/profile/unfriend" class="inline">
+                                <button type="submit" class="btn btn-primary tag-pill" name="content"
+                                    value="{{ friend.uid }}" class="link-button" style="width: 100%">
+                                    <span class="friends"><i class="fa fa-check"></i> Friends</span>
+                                    <span class="unfriend"><i class="fa fa-times"></i> Unfriend?</span>
+                                </button>
+                            </form>
+                        </div>
+
+                </div>
+            </div>
+
+
+            <hr style="margin: 0px; border: 0.5px solid lightgray">
+
+            {% endfor %}
 
             <!-- Main page -->
-            <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
+            <!-- <div class="col-lg-6 col-sm-5 pl-0 pr-0 border-right" style="margin-top:75px;" id="main">
                 <div class="container">
                     <div class="row">
                         {%if friend_list|length == 0%}
@@ -68,7 +122,8 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
+            </div> -->
+
         </div>
         <div class="col">
         </div>

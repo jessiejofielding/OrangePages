@@ -114,13 +114,13 @@
           </div>
           {% endfor %}
 
-          <form action="/post/{{post.pid}}/comment" method="post">
+          <form id="comment{{post.pid}}">
             <div class="row" style="border-top: 1px solid #f0f0f0;">
               <div class="col-10 mt-2">
-                <textarea name="content" class="form-control comment-textarea post-subtitle" id="message" rows="2" placeholder="Write a comment..."></textarea>
+                <textarea name="content" class="form-control comment-textarea post-subtitle" rows="2" placeholder="Write a comment..."></textarea>
               </div>
               <div class="col-2 mt-2">
-                <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;"><i class="fa fa-xs fa-comment"></i></button>
+                <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;" onclick="postComment('{{post.pid}}'); return false;"><i class="fa fa-xs fa-comment"></i></button>
               </div>
             </div>
           </form>

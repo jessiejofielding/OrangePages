@@ -89,7 +89,7 @@
           <!-- Comments -->
           {% for comment in post.prev_comments() %}
           <div class="row mb-4">
-            <div class="col-1">
+            <div class="col" style="-ms-flex: 0 0 50px; flex: 0 0 50px;">
               {%if comment.creator._pic is none:%}
                    <i class="fa fa-xs fa-user rounded-circle"></i>
                    {%else:%}
@@ -99,7 +99,7 @@
                     alt="failed to load">
               {%endif%}
             </div>
-            <div class="col-10" style="background-color: #f0f0f0; border-radius: 10px;">
+            <div class="col post-comment">
               <a href='profile/{{ comment.creator.uid }}' class="post-title">{{comment.creator.firstname}}
                 {{comment.creator.lastname}} </a>
                 <i class="ml-2 post-subtitle fas fa-clock"></i> 

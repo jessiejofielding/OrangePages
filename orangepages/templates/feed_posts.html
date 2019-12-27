@@ -45,20 +45,21 @@
               </div>
               <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
               {% if post.tags|length %}
+              <div style="margin-top: 6px; margin-bottom: 6px">
               {% for tag in post.tags: %}
               <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
                 class="btn btn-primary btn-sm tag-pill text-truncate" style="outline: none">
                 #{{ tag.tid }}
               </button>
               {% endfor %}
+            </div>
               {% endif %}
             </div>
 
           </div>
 
-          <div class="row" style="padding-top: 3px; padding-bottom: 10px">
-              <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
-            <div class="col" style="padding-bottom: 5px">
+          <div class="row" style="padding: 6px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
+            <div class="col">
               
               {% if user.liked_post(post.pid) %}
               <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
@@ -70,7 +71,6 @@
               </a>
               {% endif %}
 
-
               <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
                 {{post.get_comments()|length}}</a>
             </div>
@@ -78,9 +78,9 @@
 
           {% if post.num_comments() > 3 %}
 
-          <div class="row mb-3" style="border-top: 1px solid #f0f0f0;">
+          <div class="row mb-3">
             <div class="col mt-3">
-               <a href='post/{{ post.pid }}' class="post-subtitle" style="color:var(--new-orange);"> {{post.num_comments() - 3}} more comments</a> 
+               <a href='post/{{ post.pid }}' class="post-subtitle" style="color:var(--new-orange);">{{post.num_comments() - 3}} more comment{% if post.num_comments() - 3 > 1 %}s{% endif %}</a> 
             </div>
           </div>
 
@@ -88,7 +88,7 @@
 
           <!-- Comments -->
           {% for comment in post.prev_comments() %}
-          <div class="row mb-4">
+          <div class="row mb-3 mt-3">
             <div class="col" style="-ms-flex: 0 0 50px; flex: 0 0 50px;">
               {%if comment.creator._pic is none:%}
                    <i class="fa fa-xs fa-user rounded-circle"></i>
@@ -115,12 +115,12 @@
           {% endfor %}
 
           <form id="comment{{post.pid}}">
-            <div class="row" style="border-top: 1px solid #f0f0f0;">
-              <div class="col-10 mt-2">
-                <textarea name="content" class="form-control comment-textarea post-subtitle" rows="2" placeholder="Write a comment..."></textarea>
+            <div class="row" style="border-top: 1px solid #f0f0f0; margin-top: -1px">
+              <div class="col mt-2" style="margin-bottom: 12px;">
+                <textarea name="content" class="form-control comment-textarea post-subtitle" rows="1" placeholder="Write a comment..."></textarea>
               </div>
-              <div class="col-2 mt-2">
-                <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;" onclick="postComment('{{post.pid}}'); return false;"><i class="fa fa-xs fa-comment"></i></button>
+              <div class="col mt-2" style="-ms-flex: 0 0 40px; flex: 0 0 40px; padding-left: 0px">
+                <button type="submit" class="btn btn-comment" onclick="postComment('{{post.pid}}'); return false;">Post</button>
               </div>
             </div>
           </form>

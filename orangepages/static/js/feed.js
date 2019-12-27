@@ -28,6 +28,7 @@
 //     }
 // }
 
+
 function getTimeAgo(timeString, spanId) {
     var timeStamp = new Date(timeString);
     var now = new Date();
@@ -107,6 +108,11 @@ function setupRefresh()
     setInterval(refreshFeed,20000); // 20s
 }
 
+// Don't refresh if a modal is open
+var modalOpen = false;
+
+function openModal() { modalOpen = true; }
+function closeModal() { modalOpen = false; }
 
 // Refresh: update posts currently displayed on feed
 // Check: check if there are new posts available to be displayed
@@ -114,6 +120,8 @@ var refreshingFeed = false; // sync
 var checkingFeed = false; // sync
 function refreshFeed()
 {
+    if (modalOpen) return;
+
     if(!refreshingFeed) {
         refreshingFeed = true;
         var posts = $.post( '/feed-refresh', { t_first: t_first, t_last: t_last } );

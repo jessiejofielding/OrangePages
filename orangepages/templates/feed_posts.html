@@ -1,4 +1,26 @@
 {% for post in posts: %}
+
+<script>
+  $('#modal{{post.pid}}').on('hidden.bs.modal', function (e) {
+  location.reload();
+})
+</script>
+
+<div class="modal fade" id="modal{{post.pid}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border:none;">
+        <button type="button" class="close" onclick="closeModal()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% include 'post.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="post-card card border-left-20 border-right-10 rounded-0" style="margin-bottom: 10px;">
     <div class="container-fluid">
 
@@ -70,8 +92,7 @@
               </a>
               {% endif %}
 
-
-              <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
+              <a href=# data-toggle="modal" onclick="openModal()" data-target="#modal{{post.pid}}" class="card-link"><i class="fa fa-comment"></i>
                 {{post.get_comments()|length}}</a>
             </div>
           </div>

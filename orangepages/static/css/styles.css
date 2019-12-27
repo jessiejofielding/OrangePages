@@ -8071,3 +8071,13 @@ color:#ccc;opacity:1
   padding: 5px;
   padding-left: 10px;
 }
+
+.btn-comment {
+  background: none;
+  color: var(--new-orange);
+  font-weight: bold;
+}
+
+.btn-comment:hover {
+  color: var(--sec-orange);
+}

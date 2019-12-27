@@ -20,6 +20,7 @@
         type="text/css" />
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         type="text/css" />
+        <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
 
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
@@ -66,48 +67,50 @@
                         {%endif%}
                     </div>
 
+                    <div style="margin-top: 20px"></div>
+
+                    <h2 class="fs-title" style="text-align: center">{{lookup.firstname}} {{lookup.lastname}}
+                        </h2>
+                        <p style="text-align: center; margin-top: -15px; margin-bottom: 2px">@{{lookup.uid}}</p>
+
+                        {% if user.is_friend(lookup) %}
+
+                        <form method="post" action="/profile/unfriend" class="inline">
+                            <button type="submit" class="btn btn-primary tag-pill" name="content" value="{{ lookup.uid }}"
+                                class="link-button" style="width: 100%">
+                                <span class="friends"><i class="fa fa-check"></i> Friends</span>
+                                <span class="unfriend"><i class="fa fa-times"></i> Unfriend</span>
+                            </button>
+                        </form>
+
+                        {% elif user.friend_requested(lookup) %}
+
+                        <button type="submit" class="btn btn-primary tag-pill" name="content"
+                            value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                            <i class="fa fa-check"></i> Friend Request Sent
+                        </button>
+
+                        {% elif lookup.friend_requested(user) %}
+                        <form method="post" action="/profile/add-friend" class="inline">
+                            <button type="submit" class="btn btn-primary tag-pill" name="content"
+                                value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                                <i class="fa fa-plus"></i> Accept Friend Request
+                            </button>
+                        </form>
+
+                        {% else %}
+
+                        <form method="post" action="/profile/friend-request" class="inline">
+                            <button type="submit" class="btn btn-primary tag-pill" name="content"
+                                value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                                <i class="fa fa-plus"></i> Add Friend
+                            </button>
+                        </form>
+
+                        {% endif %}
+
                     <form id="msform" class="is-readonly">
                         <fieldset>
-                            <h2 class="fs-title" style="text-align: center">{{lookup.firstname}} {{lookup.lastname}}
-                            </h2>
-                            <p style="text-align: center; margin-top: -15px; margin-bottom: 2px">@{{lookup.uid}}</p>
-
-                            {% if user.is_friend(lookup) %}
-
-                            <form method="post" action="/profile/unfriend" class="inline">
-                                <button type="submit" class="btn btn-primary" name="content" value="{{ lookup.uid }}"
-                                    class="link-button">
-                                    <span class="friends"><i class="fa fa-check"></i> Friends</span>
-                                    <span class="unfriend"><i class="fa fa-times"></i> Unfriend</span>
-                                </button>
-                            </form>
-
-                            {% elif user.friend_requested(lookup) %}
-
-                            <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                value="{{ lookup.uid }}" class="link-button">
-                                <i class="fa fa-check"></i> Friend Request Sent
-                            </button>
-
-                            {% elif lookup.friend_requested(user) %}
-                            <form method="post" action="/profile/add-friend" class="inline">
-                                <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                    value="{{ lookup.uid }}" class="link-button">
-                                    <i class="fa fa-plus"></i> Accept Friend Request
-                                </button>
-                            </form>
-
-                            {% else %}
-
-                            <form method="post" action="/profile/friend-request" class="inline">
-                                <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                    value="{{ lookup.uid }}" class="link-button">
-                                    <i class="fa fa-plus"></i> Add Friend
-                                </button>
-                            </form>
-
-                            {% endif %}
-
 
                             <div style="margin: 10px"> </div>
 
@@ -244,6 +247,8 @@
 
         </div>
     </div>
+
+
 
 </body>
 

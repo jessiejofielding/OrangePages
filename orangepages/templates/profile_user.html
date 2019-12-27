@@ -86,11 +86,13 @@
                         {%endif%}
                     </div>
 
+                    <div style="margin-top: 20px"></div>
+                    <h2 class="fs-title" style="text-align: center">{{user.firstname}} {{user.lastname}}</h2>
+                    <p style="text-align: center; margin-top: -15px;">@{{user.uid}}</p>
+
                     <div class="col">
                         <form id="msform" class="is-readonly" action="/edit-user" method="post" enctype=multipart/form-data>
                             <fieldset>
-                            <h2 class="fs-title" style="text-align: center">{{user.firstname}} {{user.lastname}}</h2>
-                            <p style="text-align: center; margin-top: -15px;">@{{user.uid}}</p>
                             <div class="row">
                                 <div class="col-lg-3 text-left">First Name:</div>
                                 <div class="col-lg-9">

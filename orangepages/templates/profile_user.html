@@ -88,8 +88,10 @@
 
                     <div style="margin-top: 20px"></div>
                     <h2 class="fs-title" style="text-align: center">{{user.firstname}} {{user.lastname}}</h2>
-                    <p style="text-align: center; margin-top: -15px;">@{{user.uid}}</p>
+                    <p style="text-align: center; margin-top: -15px; margin-bottom:0px">@{{user.uid}}</p>
 
+                    <hr style="color: #f0f0f0;">
+                    
                     <div class="col">
                         <form id="msform" class="is-readonly" action="/edit-user" method="post" enctype=multipart/form-data>
                             <fieldset>

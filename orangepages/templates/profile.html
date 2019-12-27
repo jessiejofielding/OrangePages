@@ -50,13 +50,16 @@
             </div>
 
             <div class="col" style="width: 750px; float: none; margin: 0 auto; margin-bottom: 25px;
-                margin-top: 40px">
+                margin-top: 25px">
 
                 <!-- Profile Details -->
-                <div class="card" style="border-radius: 0px; padding: 20px; padding-top: 100px">
+                <div class="card" style="border-radius: 0px; padding: 20px;">
 
+                    <div class="row">
+
+                        <div class="col-lg-3">
                     <!-- Profile picture -->
-                    <div class="avatar">
+                    <div class="avatar" style="margin:0px">
                         <!-- Profile photo -->
                         {%if user._pic is none:%}
                         <i class="fa fa-user fa-5x rounded-circle"></i>
@@ -67,7 +70,10 @@
                         {%endif%}
                     </div>
 
-                    <div style="margin-top: 20px"></div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div style="margin-top: 15px"></div>
 
                     <h2 class="fs-title" style="text-align: center">{{lookup.firstname}} {{lookup.lastname}}
                         </h2>
@@ -109,6 +115,10 @@
 
                         {% endif %}
 
+                    </div>
+
+                </div>
+                <hr style="color: #f0f0f0;">
                     <form id="msform" class="is-readonly">
                         <fieldset>
 
@@ -248,7 +258,12 @@
         </div>
     </div>
 
+        <!-- jQuery Custom Scroller CDN -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+
+        <script src="/static/js/sidebar.js"></script>
 
 </body>
 

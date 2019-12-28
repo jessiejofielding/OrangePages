@@ -1,158 +1,124 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 
 <body>
 
-    <head>
-        <title>Orange Pages | Search</title>
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <title>Orange Pages | Search</title>
+    <meta name="viewport" content="width=device-width,
+                    initial-scale=1">
+    <!-- <meta http-equiv="refresh" content="20" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
-        <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
+      type="text/css" />
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      type="text/css" />
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet" /> -->
 
-        <script type="text/javascript" src="/static/js/timestamp.js"></script>
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
 
-    </head>
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/feed.js"></script>
+  </head>
 
+  <!-- Everything goes in a wrapper -->
+  <div class="wrapper">
 
-    <!-- Navbar-->
-    {% include 'navbar.html' %}
+    {% include 'sidebar.html' %}
 
-    <div class="container" style="width: 100%">
-        <div class="row">
-            <!-- View posts -->
-            <div class="col-lg-5">
-                <div class="num-students">
-                    <text style="color:white"> Found {{user_preview_list|length}}
-                        student{% if user_preview_list|length != 1:%}s{%endif%}. </text>
-                </div>
+    <div id="content">
+      {% include 'navbar.html' %}
 
+      <div class="col" style="float: none;">
+      
+      <!-- Main content-->
+      <div class="row ml-0 mr-0">
 
-                <div class="user container card gedf-card" style="width: 90%">
-                    {% for user in user_preview_list: %}
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                {% if user.get_img() is none: %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/r3luksdmal8hwkvzfc25.png' alt="">
-                                </div>
-                                {% else: %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" height="45"
-                                        src='{{user.get_img()}}'
-                                        alt="failed to load">
-                                </div>
-                                {% endif %}
-                                <div class="ml-2">
-                                    <a class="h5 m-0" href="/profile/{{user.uid}}"> {{user.firstname}}
-                                        {{user.lastname}}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+        <!-- Post results -->
+        <div class="col">
 
-            </div>
+          <div class="num-students" style="margin-top: 30px;">
+            <text> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </text>
+          </div>
 
-
-            <div class="col-lg-7">
-                <div class="num-students">
-                    <text style="color:white"> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </text>
-                </div>
-
-                {% for post in posts: %}
-                <div class="post container card gedf-card" style="width: 90%;">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                {% if post.creator._pic is none %}
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                {% else %}
-                                <div class="mr-2">
-                                    <img src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_45,w_45,g_face,r_max/{{post.creator._pic}}.png'
-                                        alt="failed to load">
-                                </div>
-                                {% endif %}
-                                <div class="ml-2">
-                                    <div class="h5 m-0">
-                                        <a href='profile/{{ post.creator.uid }}'
-                                            class="card-link">{{post.creator.firstname}}
-                                            {{post.creator.lastname}}</a></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>
-                            <script type="text/javascript">
-                                getTimeAgo("{{ post.date }}");
-                            </script>
-                        </div>
-                        <p class="card-text">
-                            {{post.content}}
-                            {% if post.tags|length %}
-                            <br>
-                            <br>
-                            {% for tag in post.tags: %}
-                            <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
-                                class="btn btn-primary btn-sm tag-pill">
-                                #{{ tag.tid }}
-                            </button>
-                            {% endfor %}
-                            {% endif %}
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        {% if user.liked_post(post.pid) %}
-                        <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=False) }}" class="card-link">
-                            <i class="fa fa-heart"></i> {{post.likes|length}}
-                        </a>
-                        {% else %}
-                        <a href="{{ url_for('post_page.like', post_id=post.pid, isLike=True) }}" class="card-link">
-                            <i class="fa fa-heart-o"></i> {{post.likes|length}}
-                        </a>
-                        {% endif %}
-                        <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
-                            {{post.get_comments()|length}}</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+          {% for post in posts: %}
+          {% include 'post.html' %}
+          {% endfor %}          
         </div>
+
+        <!-- Comment results -->
+        <div class="col">
+           students
+        </div>
+      </div>
+           
     </div>
 
-    <body>
-        <script src="/static/js/jquery.min.js"></script>
-        <script src="/static/js/popper.min.js"></script>
-        <script src="/static/js/bootstrap.min.js"></script>
-        <script src="/static/js/toggle-like.js"></script>
-    </body>
+  </div>
 
-    {% include 'footer.html' %}
+</body>
+
+<body>
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script> -->
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+    integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+  <!-- jQuery Custom Scroller CDN -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script src="/static/js/sidebar.js"></script>
+  <script src="/static/js/tags.js"></script>
+  <script src="/static/js/upload.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
+
+  <script>
+    var loadFile = function (event) {
+      var image = document.getElementById('imageResult');
+      image.src = URL.createObjectURL(event.target.files[0]);
+    };
+  </script>
+
+  <script>
+    document.getElementById('Home').className = 'active';
+  </script>
+
+  <script src="/static/js/disable-share.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $('#create-post-form').submit(function () {
+        $('#share', this)
+          .attr('disabled', 'disabled');
+        document.getElementById("share").innerHTML = "Sharing...";
+        return true;
+      });
+    });
+  </script>
+
+</body>
 
 </html>

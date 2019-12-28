@@ -471,6 +471,9 @@ class Relationship(db.Model):
             except:
                 return -1
         
+        elif user1.uid == user2.uid:
+            return 0
+        
         return int(rel.status)
 
 

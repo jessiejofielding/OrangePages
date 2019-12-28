@@ -1,21 +1,33 @@
 
  <!-- Navigation -->
 <nav class="navbar main-nav" style="background-color: white;">
-  <button type="button" id="sidebarCollapse" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
+  <div class="row w-100">
+    <div class="col-2">
+      <button type="button" id="sidebarCollapse" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
           <i class="fas fa-align-left"></i>
-  </button>
-  <ul class="col-xs-6 navbar-nav mx-auto">
-    <li class="navbar-search nav-item w-100">
+       </button>
+    </div>
 
-        <form action="/search" class="navbar-form navbar-search" method="get">
-            <div class="input-group">
-                <input class="navbar-search form-control" type="text" name="query" placeholder="Search OrangePages" aria-label="Search">    
-            </div>
-        </form>
-    </li> 
-  </ul>
-  <div class="col-xs-2">
+    <div class="col-8 text-center">
+      <form action="/search" class="navbar-form navbar-search text-center mx-auto" method="get" style="display:block; width:500px;">
+        <div class="row">
+          <div class="col-11">
+            <input class="navbar-search form-control w-100" type="text" name="query" placeholder="Search OrangePages" aria-label="Search">
+          </div>
+          <div class="col-1">     
+            <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-2">
+    </div>
   </div>
 </nav>
+
+
 
 

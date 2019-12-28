@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!--CSS-->
+    <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -85,54 +86,55 @@
 
             <!-- User and netid -->
             <div class="col" style="padding-top: 10px;">
-              <a href='profile/{{ user.uid }}' class="post-title">{{lookup.firstname}}
-                {{lookup.lastname}} '{{lookup.year}} <h6 class="post-subtitle"> @{{lookup.uid}} </h6> </a>
+              <a href='profile/{{ lookup.uid }}' class="post-title">{{lookup.firstname}}
+                {{lookup.lastname}} {% if lookup.year != '' %}'{{lookup.year}}{% endif %} <h6 class="post-subtitle"> @{{lookup.uid}} </h6> </a>
             </div>
           </div>
 
           {% if lookup.uid != user.uid %}
             {% if user.is_friend(lookup) %}
+                  <form method="post" action="/profile/unfriend" class="inline">
+                      <button type="submit" class="btn btn-primary tag-pill" name="content"
+                          value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                          <span class="friends"><i class="fa fa-check"></i> Friends</span>
+                          <span class="unfriend"><i class="fa fa-times"></i> Unfriend?</span>
+                      </button>
+                  </form>
 
-                            <form method="post" action="/profile/unfriend" class="inline">
-                                <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                    value="{{ lookup.uid }}" class="link-button" style="width: 100%">
-                                    <span class="friends"><i class="fa fa-check"></i> Friends</span>
-                                    <span class="unfriend"><i class="fa fa-times"></i> Unfriend?</span>
-                                </button>
-                            </form>
+                  {% elif user.friend_requested(lookup) %}
 
-                            {% elif user.friend_requested(lookup) %}
+                  <button type="submit" class="btn btn-primary tag-pill" name="content"
+                      value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                      <i class="fa fa-check"></i> Friend Request Sent
+                  </button>
 
-                            <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                value="{{ lookup.uid }}" class="link-button" style="width: 100%">
-                                <i class="fa fa-check"></i> Friend Request Sent
-                            </button>
+                  {% elif lookup.friend_requested(user) %}
+                  <form method="post" action="/profile/add-friend" class="inline">
+                      <button type="submit" class="btn btn-primary tag-pill" name="content"
+                          value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                          <i class="fa fa-plus"></i> Accept Friend Request
+                      </button>
+                  </form>
 
-                            {% elif lookup.friend_requested(user) %}
-                            <form method="post" action="/profile/add-friend" class="inline">
-                                <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                    value="{{ lookup.uid }}" class="link-button" style="width: 100%">
-                                    <i class="fa fa-plus"></i> Accept Friend Request
-                                </button>
-                            </form>
+                  {% else %}
 
-                            {% else %}
+                  <form method="post" action="/profile/friend-request" class="inline">
+                      <button type="submit" class="btn btn-primary tag-pill" name="content"
+                          value="{{ lookup.uid }}" class="link-button" style="width: 100%">
+                          <i class="fa fa-plus"></i> Add Friend
+                      </button>
+                  </form>
 
-                            <form method="post" action="/profile/friend-request" class="inline">
-                                <button type="submit" class="btn btn-primary tag-pill" name="content"
-                                    value="{{ lookup.uid }}" class="link-button" style="width: 100%">
-                                    <i class="fa fa-plus"></i> Add Friend
-                                </button>
-                            </form>
-
-                            {% endif %}
+                  {% endif %}
           {% endif %}
+
+          </div>
+      </div>
           
           {% endfor %}
 
 
-        </div>
-      </div>
+        
            
     </div>
 

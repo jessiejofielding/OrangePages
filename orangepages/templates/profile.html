@@ -61,11 +61,11 @@
                             <!-- Profile picture -->
                             <div class="avatar" style="margin:0px">
                                 <!-- Profile photo -->
-                                {%if user._pic is none:%}
+                                {%if lookup._pic is none:%}
                                 <i class="fa fa-user fa-5x rounded-circle"></i>
                                 {%else:%}
                                 <img class="rounded-circle"
-                                    src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
+                                    src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{lookup._pic}}.png'
                                     alt="failed to load">
                                 {%endif%}
                             </div>

@@ -47,10 +47,27 @@ def create_user():
         return redirect('/edit-user')
 
     if request.method=='GET':
-        return render('profile_create.html')
+        from tigerbook import get_info
+        netid = cur_uid()
+        info = get_info(netid)
+        first = info['first_name']
+        last = info['last_name']
+        class_year = info['class_year']
+        rescollege = info['res_college']
+        major_code = info['major_code'].lower()
+        major_type = info['major_type']
+        return render('profile_create.html', first_name=first, last_name=last, 
+                        class_year=class_year, res_college=rescollege, major_type=major_type,
+                        major_code=major_code)
 
     # Get form fields
+    # from tigerbook import get_info
     netid = cur_uid()
+    # info = get_info(netid)
+    # return render('message.html',
+    #     title='Success',
+    #     message=info)
+
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
     rescollege = request.form.get('rescollege')

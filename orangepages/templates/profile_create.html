@@ -342,8 +342,8 @@ $(document).ready(function() {
                 <h2 class="fs-title">Create a Profile</h2>
                 <h2 class="fs-subtitle">This information will be displayed to everyone. It can be changed at any time.</h2>
                 <div class="form-group row justify-content-center">
-                    <input class="col-sm-4" style="height:10px;" type="text" name="firstname" maxlength="30" placeholder="First Name"/>
-                    <input class="col-sm-4 ml-2" style="height:10px;" type="text" name="lastname" maxlength="30" placeholder="Last Name"/>
+                    <input class="col-sm-4" style="height:10px;" type="text" name="firstname" maxlength="30" placeholder="First Name" {% if first_name is not none %} value={{first_name}} {%endif%} />
+                    <input class="col-sm-4 ml-2" style="height:10px;" type="text" name="lastname" maxlength="30" placeholder="Last Name" {% if last_name is not none %} value={{last_name}} {%endif%}/>
                 </div>
 
                 <div class="form-group row justify-content-center">
@@ -352,12 +352,12 @@ $(document).ready(function() {
                             <div class="input-group">
                                    <select name="rescollege" class="selectpicker form-control">
                                        <option value="">Choose an option...</option>
-                                       <option value="mathey">Mathey</option>
-                                       <option value="rocky">Rocky</option>
-                                       <option value="wilson">Wilson</option>
-                                       <option value="whitman">Whitman</option>
-                                       <option value="forbes">Forbes</option>
-                                       <option value="butler">Butler</option>
+                                       <option value="mathey" {% if res_college == "Mathey" %} selected {%endif%} >Mathey</option>
+                                       <option value="rocky" {% if res_college == "Rockefeller" %} selected {%endif%} >Rocky</option>
+                                       <option value="wilson" {% if res_college == "Wilson" %} selected {%endif%} >Wilson</option>
+                                       <option value="whitman" {% if res_college == "Whitman" %} selected {%endif%} >Whitman</option>
+                                       <option value="forbes" {% if res_college == "Forbes" %} selected {%endif%}>Forbes</option>
+                                       <option value="butler" {% if res_college == "Butler" %} selected {%endif%} >Butler</option>
                                    </select>
                             </div>
                     </div>
@@ -368,44 +368,44 @@ $(document).ready(function() {
                         <h2 class="fs-subtitle">What's your (prospective) major?</h2>
                         <div class="input-group">
                             <select name="school" class="selectpicker form-control" id="school">
-                                <option value="AB">AB</option>
-                                <option value="BSE">BSE</option>
+                                <option value="AB" {% if major_type == "AB" %} selected {%endif%} >AB</option>
+                                <option value="BSE" {% if major_type == "BSE" %} selected {%endif%} >BSE</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <select name="major" class="selectpircker form-control" id="major">
-                                 <option value='aas'>African American Studies</option>
-                                 <option value='ant'>Anthropology</option>
-                                 <option value='arc'>Architecture</option>
-                                 <option value='art'>Art and Archaeology</option>
-                                 <option value='ast'>Astrophysical Sciences</option>
-                                 <option value='chm'>Chemistry</option>
-                                 <option value='cla'>Classics</option>
-                                 <option value='cmp'>Comparative Literature</option>
-                                 <option value='cos'>Computer Science</option>
-                                 <option value='eas'>East Asian Studies</option>
-                                 <option value='eeb'>Ecology and Evolutionary Biology</option>
-                                 <option value='eco'>Economics</option>
-                                 <option value='eng'>English</option>
-                                 <option value='fre'>French and Italian</option>
-                                 <option value='geo'>Geosciences</option>
-                                 <option value='ger'>German</option>
-                                 <option value='his'>History</option>
-                                 <option value='mat'>Mathematics</option>
-                                 <option value='mol'>Molecular Biology</option>
-                                 <option value='mus'>Music</option>
-                                 <option value='nes'>Near Eastern Studies</option>
-                                 <option value='neu'>Neuroscience</option>
-                                 <option value='phi'>Philosophy</option>
-                                 <option value='phy'>Physics</option>
-                                 <option value='pol'>Politics</option>
-                                 <option value='psy'>Psychology</option>
-                                 <option value='rel'>Religion</option>
-                                 <option value='sla'>Slavic Languages and Literatures</option>
-                                 <option value='soc'>Sociology</option>
-                                 <option value='spa'>Spanish and Portuguese</option>
-                                 <option value='wws'>Woodrow Wilson School</option>
+                            <select name="major" class="selectpicker form-control" id="major">
+                                 <option value='aas' {% if major_code == 'aas' %} selected {%endif%}>African American Studies</option>
+                                 <option value='ant' {% if major_code == 'ant' %} selected {%endif%}>Anthropology</option>
+                                 <option value='arc' {% if major_code == 'arc' %} selected {%endif%}>Architecture</option>
+                                 <option value='art' {% if major_code == 'art' %} selected {%endif%}>Art and Archaeology</option>
+                                 <option value='ast' {% if major_code == 'ast' %} selected {%endif%}>Astrophysical Sciences</option>
+                                 <option value='chm' {% if major_code == 'chm' %} selected {%endif%}>Chemistry</option>
+                                 <option value='cla' {% if major_code == 'cla' %} selected {%endif%}>Classics</option>
+                                 <option value='cmp' {% if major_code == 'cmp' %} selected {%endif%}>Comparative Literature</option>
+                                 <option value='cos' {% if major_code == 'cos' %} selected {%endif%}>Computer Science</option>
+                                 <option value='eas' {% if major_code == 'eas' %} selected {%endif%}>East Asian Studies</option>
+                                 <option value='eeb' {% if major_code == 'eeb' %} selected {%endif%}>Ecology and Evolutionary Biology</option>
+                                 <option value='eco' {% if major_code == 'eco' %} selected {%endif%}>Economics</option>
+                                 <option value='eng' {% if major_code == 'eng' %} selected {%endif%}>English</option>
+                                 <option value='fre' {% if major_code == 'fre' %} selected {%endif%}>French and Italian</option>
+                                 <option value='geo' {% if major_code == 'geo' %} selected {%endif%}>Geosciences</option>
+                                 <option value='ger' {% if major_code == 'ger' %} selected {%endif%}>German</option>
+                                 <option value='his' {% if major_code == 'his' %} selected {%endif%}>History</option>
+                                 <option value='mat' {% if major_code == 'mat' %} selected {%endif%}>Mathematics</option>
+                                 <option value='mol' {% if major_code == 'mol' %} selected {%endif%}>Molecular Biology</option>
+                                 <option value='mus' {% if major_code == 'mus' %} selected {%endif%}>Music</option>
+                                 <option value='nes' {% if major_code == 'nes' %} selected {%endif%}>Near Eastern Studies</option>
+                                 <option value='neu' {% if major_code == 'neu' %} selected {%endif%}>Neuroscience</option>
+                                 <option value='phi' {% if major_code == 'phi' %} selected {%endif%}>Philosophy</option>
+                                 <option value='phy' {% if major_code == 'phy' %} selected {%endif%}>Physics</option>
+                                 <option value='pol' {% if major_code == 'pol' %} selected {%endif%}>Politics</option>
+                                 <option value='psy' {% if major_code == 'psy' %} selected {%endif%}>Psychology</option>
+                                 <option value='rel' {% if major_code == 'rel' %} selected {%endif%}>Religion</option>
+                                 <option value='sla' {% if major_code == 'sla' %} selected {%endif%}>Slavic Languages and Literatures</option>
+                                 <option value='soc' {% if major_code == 'soc' %} selected {%endif%}>Sociology</option>
+                                 <option value='spa' {% if major_code == 'spa' %} selected {%endif%}>Spanish and Portuguese</option>
+                                 <option value='wws' {% if major_code == 'wws' %} selected {%endif%}>Woodrow Wilson School</option>
                             </select>
                          </div>
                     </div>
@@ -417,10 +417,10 @@ $(document).ready(function() {
                         <div class="input-group">
                             <select name="year" class="selectpicker form-control" id="year">
                                 <option value="">Choose an option...</option>
-                                <option value="20">2020</option>
-                                <option value="21">2021</option>
-                                <option value="22">2022</option>
-                                <option value="23">2023</option>
+                                <option value="20" {% if class_year == 2020 %} selected {%endif%} >2020</option>
+                                <option value="21" {% if class_year == 2021 %} selected {%endif%} >2021</option>
+                                <option value="22" {% if class_year == 2022 %} selected {%endif%} >2022</option>
+                                <option value="23" {% if class_year == 2023 %} selected {%endif%} >2023</option>
                             </select>
                         </div>
                     </div>

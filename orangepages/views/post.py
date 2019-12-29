@@ -78,7 +78,7 @@ def edit_post_util(post, request):
             possible_netid = split_str[0]
             possible_user = User.query.get(possible_netid)
 
-            if possible_user is not None:
+            if possible_user is not None: #and possible_user is not cur_user():
                 notif = Notification(user, possible_user, NType.TAGGED, post)
                 content = content.replace('@' + possible_netid, "<a href='/profile/" + possible_netid + "' class='tag-link'>@" + possible_netid + "</a>")
 
@@ -91,6 +91,7 @@ def edit_post_util(post, request):
                 p = p.filter(User.lastname == possible_lastname)
 
                 for tagged_user in p.all():
+                    #if tagged_user is not cur_user():
                     name = "@" + tagged_user.firstname + " " + tagged_user.lastname
                     content = content.replace(name, "<a href='/profile/" + tagged_user.uid + "' class='tag-link'>" + name + "</a>")
                     notif = Notification(user, tagged_user, NType.TAGGED, post)
@@ -101,6 +102,8 @@ def edit_post_util(post, request):
             post.add_img(image)
 
     post.update_info(content, groups=[], tags=tags)
+    db.session.commit()
+    print(post.tags)
 
 @page.route('/post/<int:postid>/delete', methods=['POST'])
 @user_required

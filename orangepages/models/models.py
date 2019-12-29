@@ -457,10 +457,10 @@ class Relationship(db.Model):
 
         self.status = status
         db.session.commit()
-    
+
 
     def get_status(user1, user2):
-        
+
         if user1.uid < user2.uid:
             try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user1.uid), Relationship.user2.has(uid=user2.uid))).all()[0]
             except:
@@ -470,10 +470,10 @@ class Relationship(db.Model):
             try: rel = Relationship.query.filter(and_(Relationship.user1.has(uid=user2.uid), Relationship.user2.has(uid=user1.uid))).all()[0]
             except:
                 return -1
-        
+
         elif user1.uid == user2.uid:
             return 0
-        
+
         return int(rel.status)
 
 
@@ -630,11 +630,19 @@ class Post(db.Model):
         else:
             return ""
 
+    def del_img(self):
+        if self.has_img:
+            self.img = ""
+            self.has_img = False
+
     def update_info(self, content, groups=[], tags=[]):
         self.content = content
 
         for group in groups:
             self.add_group(group)
+
+        # remove old tags
+        self.tags = []
 
         for tag_str in tags:
             self.add_tag_str(tag_str)
@@ -702,7 +710,7 @@ class Notification(db.Model):
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     action = db.Column(db.Integer)
     text = db.Column(db.String(500))
-    unread = db.Column(db.Boolean, default=True) 
+    unread = db.Column(db.Boolean, default=True)
 
     # target: person who receives this notification.
     # sender: person who triggered the notification.

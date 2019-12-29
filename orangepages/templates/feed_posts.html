@@ -25,7 +25,7 @@
             <!-- Time elapsed -->
             <div class="col" style="padding-top: 10px; text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
               <div class="post-subtitle">
-                <i class="fas fa-clock"></i> 
+                <i class="fas fa-clock"></i>
                 <span id="tstamp{{post.pid}}"></span>
                 <script type="text/javascript">
                   getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}" );
@@ -41,7 +41,7 @@
             <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
             <div class="col">
               <div class="post-text mb-1">
-                {{post.content}}
+                {{post.content|safe}}
               </div>
               <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
               {% if post.tags|length %}
@@ -60,7 +60,7 @@
 
           <div class="row" style="padding: 6px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
             <div class="col">
-              
+
               {% if user.liked_post(post.pid) %}
               <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
                 <i class="fas fa-heart"></i> {{post.likes|length}}
@@ -80,7 +80,7 @@
 
           <div class="row mb-3">
             <div class="col mt-3">
-               <a href='post/{{ post.pid }}' class="post-subtitle" style="color:var(--new-orange);">{{post.num_comments() - 3}} more comment{% if post.num_comments() - 3 > 1 %}s{% endif %}</a> 
+               <a href='post/{{ post.pid }}' class="post-subtitle" style="color:var(--new-orange);">{{post.num_comments() - 3}} more comment{% if post.num_comments() - 3 > 1 %}s{% endif %}</a>
             </div>
           </div>
 
@@ -102,7 +102,7 @@
             <div class="col post-comment">
               <a href='profile/{{ comment.creator.uid }}' class="post-title">{{comment.creator.firstname}}
                 {{comment.creator.lastname}} </a>
-                <i class="ml-2 post-subtitle fas fa-clock"></i> 
+                <i class="ml-2 post-subtitle fas fa-clock"></i>
                 <span class="post-subtitle" id="tstamp{{comment.cid}}"></span>
                 <script type="text/javascript">
                   getTimeAgo("{{ comment.date }}", "tstamp{{comment.cid}}" );

@@ -80,6 +80,8 @@ def edit_post_util(post, request):
 
             if possible_user is not None:
                 notif = Notification(user, possible_user, NType.TAGGED, post)
+                content = content.replace(possible_netid, "<a href='/profile/" + possible_netid + "' class='card-link'>" + possible_netid + "</a>")
+
             elif len(split_str) > 1:
                 possible_firstname = split_str[0]
                 possible_lastname = split_str[1]
@@ -89,6 +91,8 @@ def edit_post_util(post, request):
                 p = p.filter(User.lastname == possible_lastname)
 
                 for tagged_user in p.all():
+                    name = tagged_user.firstname + " " + tagged_user.lastname
+                    content = content.replace(name, "<a href='/profile/" + tagged_user.uid + "' class='card-link'>" + name + "</a>")
                     notif = Notification(user, tagged_user, NType.TAGGED, post)
 
     if "image" in request.files:

@@ -3837,10 +3837,10 @@ input[type="button"].btn-block {
 .card-text:last-child {
   margin-bottom: 0; }
 
-.card-link {
+.card-link, .tag-link {
   color: var(--new-orange);
 }
-.card-link:hover {
+.card-link:hover, .tag-link:hover {
   text-decoration: none; }
 
 .card-link + .card-link {

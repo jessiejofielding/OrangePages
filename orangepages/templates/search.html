@@ -54,9 +54,7 @@
             <text> Found {{posts|length}} post{% if posts|length != 1:%}s{%endif%}. </text>
           </div>
 
-          {% for post in posts: %}
-          {% include 'post.html' %}
-          {% endfor %}          
+          {% include 'feed_posts.html' %}    
         </div>
 
         <!-- Student results -->

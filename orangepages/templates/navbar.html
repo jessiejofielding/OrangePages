@@ -12,7 +12,7 @@
       <form action="/search" class="navbar-form navbar-search text-center mx-auto" method="get" style="display:block; width:500px; max-width: 100%">
         <div class="row">
           <div class="col">
-            <input class="navbar-search form-control w-100" type="text" name="query" placeholder="Search OrangePages" aria-label="Search">
+            <input class="navbar-search form-control w-100" type="text" id="autocomplete" name="query" placeholder="Search OrangePages" aria-label="Search">
           </div>
           <div class="col" style="-ms-flex: 0 0 20px; flex: 0 0 20px; margin-left: -20px">     
             <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
@@ -27,6 +27,28 @@
 
   </div>
 </nav>
+
+<script>
+  jQuery.curCSS = function(element, prop, val) {
+    return jQuery(element).css(prop, val);
+  };
+  $(function() {
+    $("#autocomplete").autocomplete({
+        source:function(request, response) {
+            $.getJSON("{{url_for('testsearch.autocomplete')}}",{
+                query: request.term, 
+            }, function(data) {
+                console.log(data.results);
+                response(data.results); // matching_results from jsonify
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            window.location.href = '/profile/' + ui.item.value;
+        }
+    });
+})
+</script>
 
 
 

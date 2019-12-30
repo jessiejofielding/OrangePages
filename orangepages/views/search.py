@@ -1,12 +1,10 @@
-from flask import request, make_response
+from flask import request, make_response, jsonify
 from flask import Blueprint, render_template
 from orangepages.models.models import User, Tag
 from orangepages.views.util import render, cur_user, user_required
 
 
 page = Blueprint('testsearch', __name__)
-
-
 
 @page.route('/search')
 @user_required
@@ -35,6 +33,13 @@ def search_tag(query_list):
         tagged_posts.extend(posts)
 
     return tagged_posts
+
+@page.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    query_list = request.args.get('query').split(' ')
+    users = cur_user().search(*query_list).all()
+    results = [{'label':user.firstname + " " + user.lastname, 'value':user.uid} for user in users]
+    return jsonify(results=results)
 
 # @page.route('/searchbar-tag')
 # def searchbar_tag():

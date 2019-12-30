@@ -1,40 +1,76 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<head>
+    <title>Orange Pages | Error</title>
+    <meta name="viewport" content="width=device-width,
+                        initial-scale=1">
+    <!-- <meta http-equiv="refresh" content="20" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<script type="text/javascript" src="/static/js/timestamp.js"></script>
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
+        type="text/css" />
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" />
 
-<body>
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
 
-    <head>
-        <title>Orange Pages</title>
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
-        <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
-        <link rel="stylesheet" href="/static/css/feed.css" rel="stylesheet" />
-    </head>
-
-    {% include 'navbar.html' %}
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/feed.js"></script>
+</head>
 
 
-    <div class="post container" style="width: 95%">
-             <div class="card-body">
+<!-- Everything goes in a wrapper -->
+<div class="wrapper">
+
+    {% include 'sidebar.html' %}
+
+    <!-- Main page -->
+    <div id="content">
+        {% include 'navbar.html' %}
+
+        <div class="col">
+        </div>
+
+
+        <div class="col" style="width: 750px; float: none; margin: 0 auto; margin-bottom: 25px;
+                margin-top: 25px">
+
+
+            <div class="post container">
                 <h1>{{title}}</h1>
                 <p>
                     {{message}}
                     <br>
-                    <a href='/'> back home </a>
+                    Click <a href='/' style="color: var(--new-orange)">here</a> to return to the homepage.
                 </p>
-            </div>       
+                <hr>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col">
+
     </div>
 
-    {% include 'footer.html' %}
+    <!-- jQuery Custom Scroller CDN -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="/static/js/sidebar.js"></script>
+
+    </body>
 
 </html>

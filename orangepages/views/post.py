@@ -126,7 +126,7 @@ def view_post(postid):
     num_likers = len(post.get_likers())
     tags = post.get_tags()
 
-    return render("post.html", post=post, comments=comments,
+    return render("post_details.html", post=post, comments=comments,
     num_likers = num_likers, tags=tags)
 
 

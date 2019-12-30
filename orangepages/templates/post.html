@@ -1,3 +1,4 @@
+<body>
 <div class="post-card card border-left-20 border-right-10 rounded-0" style="margin-bottom: 15px;
 margin-top:-1px">
   <div class="container-fluid">
@@ -36,16 +37,46 @@ margin-top:-1px">
     </div>
 
     <!-- Content -->
+
     <div class="row">
+    <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data" id="edit">
 
       <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
       <div class="col">
         <div class="post-text mb-1">
-          {{post.content|safe}}
+          <div id="v-content"> {{post.content|safe}} </div>
+
+          <input type="text" id="e-content" class="form-control" name="content"
+           rows="3" value={{post.content}} style="display:none;">
+
         </div>
+
+        <!-- DISPLAY CURR IMG -->
         <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
+
+        <!-- upload new img -->
+        <div class="col" id="e-uploadImg" style="display:none;">
+          <div class="input-group-append">
+            <label for="upload" class="btn btn-light m-0 rounded-pill px-4 upload-image" id="post-button">
+              <i class="fa fa-cloud-upload text-muted"></i>
+              <span><small class="text-muted">Upload Image</small></span>
+            </label>
+          </div>
+        </div>
+        <!-- This needs to be here in order for upload to work -->
+        <input id="upload" type="file" name="image" onchange="readURL(this);" style="display: none">
+
+        <!-- DELETE IMG -->
+        <div class="col" id="e-delImg" style="display:none;">
+          <div class="form-check">
+            <input type="checkbox" id="delImg" class="form-check-input" name="delete_img">
+            <label class="form-check-label" for="delImg">Delete existing image</label>
+          </div>
+        </div>
+
+        <br />
         {% if post.tags|length %}
-        <div style="margin-top: 6px; margin-bottom: 6px">
+        <div id="v-tags" style="margin-top: 6px; margin-bottom: 6px">
           {% for tag in post.tags: %}
           <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
             class="btn btn-primary btn-sm tag-pill text-truncate" style="outline: none">
@@ -53,10 +84,47 @@ margin-top:-1px">
           </button>
           {% endfor %}
         </div>
+
         {% endif %}
+        <input name="tags" id="e-tags" data-role="tagsinput" id="form-tags-5" class="form-control"
+        placeholder="add some tags" value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}"
+        style="display:none;">
       </div>
 
+      <div id="e-visibility" style="display:none;" class="col-2">
+        <div class="btn-group">
+            <select name="visibility" class="form-control" id="visibility">
+                <option>Public</option>
+                <option>Friends</option>
+                <option>Just me</option>
+            </select>
+       </div>
+      </div>
+
+
     </div>
+
+
+
+    {% if post.creator == user %}
+    <div class="row">
+        <button type="button" onclick="toggle_save()" style="width: 100px"
+            class="btn btn-comment">
+            Edit
+        </button>
+        <button id="save" type="submit" class="btn btn-comment"
+            style="display: none; margin-left: 5px; width: 100px;">
+            Save
+        </button>
+
+        <!-- <form action="/post/{{post.pid}}/delete" method="post">
+          <button type="submit" class="btn btn-comment" id="delete-post" style="display:none;">Delete post</button>
+        </form> -->
+
+    </div>
+    {% endif %}
+
+    </form>
 
     <div class="row" style="padding: 6px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
       <div class="col">
@@ -123,7 +191,75 @@ margin-top:-1px">
 </div>
 
 <script>
-focusMethod = function setCommentFocus() {           
+focusMethod = function setCommentFocus() {
   document.getElementById("comment-input").focus();
 }
+  // i apologise for this -zx
+  function toggle_save() {
+
+      var save = document.getElementById("save");
+      // var deletePost = document.getElementById("delete-post");
+      var eContent = document.getElementById("e-content");
+      var vContent = document.getElementById("v-content");
+
+      var eTags = document.getElementById("e-tags");
+      var vTags = document.getElementById("v-tags");
+      var eVis = document.getElementById("e-visibility");
+      var eDelImg = document.getElementById("e-delImg");
+      var eUploadImg = document.getElementById("e-uploadImg");
+
+      // var list = [save, eContent, vContent];
+      // console.log(list)
+      //
+      // for (x in list) {
+      //   if (x.style.display === "none") {
+      //       x.style.display = "inline";
+      //   } else {
+      //       x.style.display = "none";
+      //   }
+      // }
+
+      if (save.style.display === "none") {
+          save.style.display = "inline";
+          // deletePost.style.display = "inline";
+      } else {
+          save.style.display = "none";
+          // deletePost.style.display = "none";
+      }
+
+      if (eContent.style.display === "none") {
+          eContent.style.display = "inline";
+          eTags.style.display = "inline";
+          eVis.style.display = "inline";
+          eDelImg.style.display = "inline";
+          eUploadImg.style.display = "inline";
+
+          vContent.style.display = "none";
+          vTags.style.display = "none";
+      } else {
+          eContent.style.display = "none";
+          eTags.style.display = "none";
+          eVis.style.display = "none";
+          eDelImg.style.display = "none";
+          eUploadImg.style.display = "none";
+
+          vContent.style.display = "inline";
+          vTags.style.display = "inline";
+
+      }
+
+      // if (vContent.style.display === "none") {
+      //     vContent.style.display = "inline";
+      // } else {
+      //     vContent.style.display = "none";
+      // }
+
+      // var formObj = document.forms.edit
+      // var fields = formObj.elements
+      // var fieldsetObj = fields.editFs
+      // fieldsetObj.disabled = !fieldsetObj.disabled;
+  }
 </script>
+<script src="/static/js/tags.js"></script>
+
+</body>

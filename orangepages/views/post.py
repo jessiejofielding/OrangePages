@@ -116,6 +116,7 @@ def edit_post_util(post, request):
 @page.route('/post/<int:postid>/delete', methods=['POST'])
 @user_required
 def delete_post(postid):
+    print("post", postid, "deleted")
     post = Post.query.get(postid)
     post.delete()
     return redirect("/feed")

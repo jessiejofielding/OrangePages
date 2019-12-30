@@ -60,14 +60,17 @@
             <div class="col" style="padding-bottom: 5px">
 
               {% if user.liked_post(post.pid) %}
-              <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
+              <a href='#' class="card-link" onclick="toggleLikePost('{{post.pid}}'); return false;">
                 <i class="fas fa-heart"></i> {{post.likes|length}}
               </a>
               {% else %}
-              <a href='#' class="card-link" onclick="toggleLike('{{post.pid}}'); return false;">
+              <a href='#' class="card-link" onclick="toggleLikePost('{{post.pid}}'); return false;">
                 <i class="far fa-heart"></i> {{post.likes|length}}
               </a>
               {% endif %}
+
+              <a href='post/{{ post.pid }}' class="card-link"><i class="fa fa-comment"></i>
+                {{post.get_comments()|length}}</a>
             </div>
           </div>
 
@@ -105,7 +108,7 @@
                 <textarea name="content" class="form-control comment-textarea post-subtitle" rows="2" placeholder="Write a comment..."></textarea>
               </div>
               <div class="col-2 mt-2">
-                <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;" onclick="postComment('{{post.pid}}'); return false;"><i class="fa fa-xs fa-comment"></i></button>
+                <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;" onclick="postCommentPost('{{post.pid}}'); return false;"><i class="fa fa-xs fa-comment"></i></button>
               </div>
             </div>
           </form>

@@ -1,4 +1,5 @@
 from flask import request, redirect, make_response
+from datetime import datetime
 from flask import Blueprint, render_template, send_from_directory
 from orangepages.models.models import db, User, Group, Post, Comment, Tag, NType, Notification
 from orangepages.views.util import cur_user, cur_uid, render, user_required
@@ -113,7 +114,7 @@ def delete_post(postid):
     return redirect("/feed")
 
 
-@page.route('/post/<int:postid>', methods=['GET'])
+@page.route('/post/<int:postid>', methods=['GET', 'POST'])
 @user_required
 def view_post(postid):
     post = Post.query.get(postid)
@@ -125,10 +126,23 @@ def view_post(postid):
     comments = post.get_comments()
     num_likers = len(post.get_likers())
     tags = post.get_tags()
+    t = datetime.utcnow()
 
-    return render("post_details.html", post=post, comments=comments,
+    return render("post_details.html", post=post, t_first=t, t_last=post.date, comments=comments,
     num_likers = num_likers, tags=tags)
 
+@page.route('/post-refresh', methods=['POST'])
+@user_required
+def post_refresh():
+    postid = request.form.get('postid')
+    post = Post.query.get(postid)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
+
+
+    return render('post.html', post=post)
 
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 @user_required
@@ -138,6 +152,7 @@ def comment(postid):
         return render('message.html',
             title='Error',
             message="This post doesn't exist.")
+
 
     if request.method=='GET':
         return render("post_comment.html", post=post)

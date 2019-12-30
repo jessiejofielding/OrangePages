@@ -16,6 +16,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="/static/js/tags.js"></script>
+
   <!-- <script type="text/javascript" src="/static/js/timestamp.js"></script> -->
   <!-- <script src="/static/js/toggle-like.js"></script>
   <script src="/static/js/bootstrap-tagsinput.js"></script>
@@ -52,7 +54,7 @@
         <div class="post-card card border-left-0 border-top-0 rounded-0" style="border-bottom-width: 10px;">
           <div class="container-fluid">
 
-      <h2>Edit post {{post.pid}}</h2>
+      <!-- <h2>Edit post {{post.pid}}</h2> -->
       <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data" id="edit">
         <fieldset id="editFs" disabled>
 
@@ -88,10 +90,22 @@
             <br />
             <div class="row" >
               <div class="col-1"> </div>
-              <label>tags</label>
+
               <input name="tags" data-role="tagsinput" id="form-tags-5" class="form-control"
                                   placeholder="add some tags" value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}">
+
+                <div class="col">
+                  <div class="btn-group">
+                      <select name="visibility" class="form-control" id="visibility">
+                          <option>Public</option>
+                          <option>Friends</option>
+                          <option>Just me</option>
+                      </select>
+                 </div>
+                </div>
             </div>
+
+            <br/>
 
             <div class="row">
               <!-- displays curr img -->
@@ -121,24 +135,15 @@
               <!-- This needs to be here in order for upload to work -->
               <input id="upload" type="file" name="image" onchange="readURL(this);" style="display: none">
 
-              <div class="col-2">
-                <div class="btn-group">
-                    <select name="visibility" class="form-control" id="visibility">
-                        <option>Public</option>
-                        <option>Friends</option>
-                        <option>Just me</option>
-                    </select>
-               </div>
+              <div class="col">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" name="delete_img" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Delete existing image</label>
+                </div>
               </div>
 
             </div>
 
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Delete existing image</label>
-              </div>
-            </div>
           </fieldset>
 
             <div class="row">
@@ -154,19 +159,16 @@
                   </button>
               </div>
 
+
+            <div class="col" style="margin-left:50px">
+            <form action="/post/{{post.pid}}/delete" method="post">
+              <button type="submit" class="btn btn-primary tag-pill">Delete post</button>
+            </form>
             </div>
 
-
+            </div>
 
         </form>
-
-        <div class="row">
-          <div class="col">
-        <form action="/post/{{post.pid}}/delete" method="post">
-          <button type="submit" class="btn btn-primary tag-pill">Delete post</button>
-        </form>
-          </div>
-        </div>
 
       </div>
       </div>

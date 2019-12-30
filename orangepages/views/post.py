@@ -97,12 +97,19 @@ def edit_post_util(post, request):
                     content = content.replace(name, "<a href='/profile/" + tagged_user.uid + "' class='tag-link'>" + name + "</a>")
                     notif = Notification(user, tagged_user, NType.TAGGED, post)
 
+    # overwrite image or delete img
+    del_img = request.form.get('delete_img')
+
+    if (del_img is not None) and (del_img == "on"):
+        post.del_img()
+
     if "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':
             post.add_img(image)
 
     post.update_info(content, groups=[], tags=tags)
+
     db.session.commit()
     print(post.tags)
 

@@ -32,22 +32,27 @@
   jQuery.curCSS = function(element, prop, val) {
     return jQuery(element).css(prop, val);
   };
-  $(function() {
-    $("#autocomplete").autocomplete({
-        source:function(request, response) {
+  jQuery.ui.autocomplete.prototype._resizeMenu = function () {
+  var ul = this.menu.element;
+  ul.outerWidth(this.element.outerWidth());
+  }
+
+  $(document).ready(function(){
+ $('#autocomplete').autocomplete({
+  source:function(request, response) {
             $.getJSON("{{url_for('testsearch.autocomplete')}}",{
                 query: request.term, 
             }, function(data) {
-                console.log(data.results);
                 response(data.results); // matching_results from jsonify
             });
-        },
-        minLength: 2,
-        select: function(event, ui) {
-            window.location.href = '/profile/' + ui.item.value;
-        }
-    });
-})
+        },  
+  select : function(event, ui){
+        // You may need to change this part, as I don't know the exact values:
+        window.location.href = "/profile/" + ui.item.value;
+    }
+ })
+});
+
 </script>
 
 

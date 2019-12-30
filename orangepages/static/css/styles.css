@@ -46,7 +46,6 @@ form {
     cursor: default;
     padding: 0;
     top: 50px !important;
-    width: 30%;
     list-style: none;
     background-color: #ffffff;
     border: 1px solid #ccc;
@@ -58,8 +57,16 @@ form {
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .ui-autocomplete > li {
+  height: 30px;
   padding: 3px 20px;
+  width: 500px;
 }
+
+.ui-autocomplete > li > a {
+  position: fixed;
+  width: 100%;
+} 
+
 .ui-autocomplete > li.ui-state-focus {
   background-color: #DDD;
 }

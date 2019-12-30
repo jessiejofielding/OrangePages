@@ -2,19 +2,19 @@
  <!-- Navigation -->
 <nav class="navbar main-nav" style="background-color: white;">
   <div class="row w-100">
-    <div class="col-2">
+    <div class="col" style="-ms-flex: 0 0 40px; flex: 0 0 40px;">
       <button type="button" id="sidebarCollapse" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
           <i class="fas fa-align-left"></i>
        </button>
     </div>
 
-    <div class="col-8 text-center">
-      <form action="/search" class="navbar-form navbar-search text-center mx-auto" method="get" style="display:block; width:500px;">
+    <div class="col" style="text-align: center; max-width: calc(100% - 80px);">
+      <form action="/search" class="navbar-form navbar-search text-center mx-auto" method="get" style="display:block; width:500px; max-width: 100%">
         <div class="row">
-          <div class="col-11">
+          <div class="col">
             <input class="navbar-search form-control w-100" type="text" name="query" placeholder="Search OrangePages" aria-label="Search">
           </div>
-          <div class="col-1">     
+          <div class="col" style="-ms-flex: 0 0 20px; flex: 0 0 20px; margin-left: -20px">     
             <button type="submit" class="btn" style="background-color: white; color: var(--new-orange); outline: none;">
               <i class="fas fa-search"></i>
             </button>
@@ -23,8 +23,8 @@
       </form>
     </div>
 
-    <div class="col-2">
-    </div>
+    <div class="col" style="-ms-flex: 0 0 20px; flex: 0 0 20px;"></div>
+
   </div>
 </nav>
 

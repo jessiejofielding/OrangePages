@@ -555,6 +555,9 @@ class Post(db.Model):
         elif visibility == 'Friends':
             self.remove_group(Group.query.get(1))
             self.add_group(self.creator._groups[0]) # friends group
+        elif visibility == 'Just me':
+            self.remove_group(Group.query.get(1))
+            self.remove_group(self.creator._groups[0])
 
         self.add_group(self.creator._groups[1]) # just me group
 

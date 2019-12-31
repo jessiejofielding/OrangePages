@@ -47,7 +47,7 @@ margin-top:-1px">
               <div id="v-content"> {{post.content|safe}} </div>
 
 
-                <textarea class="make-post form-control border-0" id="e-content" rows="3"
+                <textarea name="content" class="make-post form-control border-0" id="e-content" rows="3"
                 placeholder="Write a post..."
                 style="display:none;">{{post.content}}</textarea>
 
@@ -76,7 +76,6 @@ margin-top:-1px">
               </div>
             </div>
 
-            <br />
             {% if post.tags|length %}
             <div id="v-tags" style="margin-top: 6px; margin-bottom: 6px">
               {% for tag in post.tags: %}

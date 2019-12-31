@@ -54,8 +54,9 @@ margin-top:-1px">
             </div>
 
             <!-- DISPLAY CURR IMG -->
+            <div class="collapse show" id="imgCollapse">
             <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
-
+          </div>
             <!-- upload new img -->
             <div class="col" id="e-uploadImg" style="display:none;">
               <div class="input-group-append">
@@ -71,7 +72,9 @@ margin-top:-1px">
             <!-- DELETE IMG -->
             <div class="col" id="e-delImg" style="display:none;">
               <div class="form-check form-check-inline" style="margin-top: 20px; margin-bottom: 20px; margin-left:-10px">
-                  <label onclick="unCollapse()" class="radio-wrapper fs-subtitle form-check-label">Delete existing image
+                  <label class="radio-wrapper fs-subtitle form-check-label" role="button"
+                  data-toggle="collapse" data-target="#imgCollapse" aria-expanded="true"
+                    aria-controls="imgCollapse">Delete existing image
                     <input type="checkbox" id="delImg" name="delete_img">
                     <span class="custom-radio"></span>
                   </label>
@@ -79,7 +82,7 @@ margin-top:-1px">
             </div>
 
             {% if post.tags|length %}
-            <div id="v-tags" style="margin-top: 6px; margin-bottom: 6px">
+            <div id="v-tags" style="margin-top: 10px; margin-bottom: 6px">
               {% for tag in post.tags: %}
               <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
                 class="btn btn-primary btn-sm tag-pill text-truncate" style="outline: none">

@@ -54,7 +54,7 @@ margin-top:-1px">
             </div>
 
             <!-- DISPLAY CURR IMG -->
-            <div class="collapse show" id="imgCollapse">
+            <div class="collapse show" id="imgCollapse" style="margin-bottom:5px">
             <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
           </div>
             <!-- upload new img -->
@@ -82,7 +82,7 @@ margin-top:-1px">
             </div>
 
             {% if post.tags|length %}
-            <div id="v-tags" style="margin-top: 10px; margin-bottom: 6px">
+            <div id="v-tags" style="margin-top: 6px; margin-bottom: 6px">
               {% for tag in post.tags: %}
               <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
                 class="btn btn-primary btn-sm tag-pill text-truncate" style="outline: none">
@@ -229,6 +229,10 @@ margin-top:-1px">
         // deletePost.style.display = "inline";
       } else {
         save.style.display = "none";
+        
+        if(document.getElementById('delImg').checked) {
+        $("#delImg").click();
+        }
         // deletePost.style.display = "none";
       }
 

@@ -86,9 +86,11 @@ margin-top:-1px">
         </div>
 
         {% endif %}
-        <input name="tags" id="e-tags" data-role="tagsinput" id="form-tags-5" class="form-control"
+        <div id="e-tags" style="display:none">
+        <input name="tags" data-role="tagsinput" id="form-tags-5" class="form-control"
         placeholder="add some tags" value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}"
         style="display:none;">
+      </div>
       </div>
 
       <div id="e-visibility" style="display:none;" class="col-2">

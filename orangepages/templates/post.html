@@ -42,7 +42,7 @@ margin-top:-1px">
         <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data" id="edit" style="width:100%">
 
           <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
-          <div class="col">
+          <div class="col" style="margin-bottom: 10px">
             <div class="post-text mb-1">
               <div id="v-content"> {{post.content|safe}} </div>
 
@@ -70,9 +70,11 @@ margin-top:-1px">
 
             <!-- DELETE IMG -->
             <div class="col" id="e-delImg" style="display:none;">
-              <div class="form-check">
-                <input type="checkbox" id="delImg" class="form-check-input" name="delete_img">
-                <label class="form-check-label" for="delImg">Delete existing image</label>
+              <div class="form-check form-check-inline" style="margin-top: 20px; margin-bottom: 20px; margin-left:-10px">
+                  <label onclick="unCollapse()" class="radio-wrapper fs-subtitle form-check-label">Delete existing image
+                    <input type="checkbox" id="delImg" name="delete_img">
+                    <span class="custom-radio"></span>
+                  </label>
               </div>
             </div>
 
@@ -89,11 +91,11 @@ margin-top:-1px">
             {% endif %}
             <div id="e-tags" style="display:none">
               <input name="tags" data-role="tagsinput" id="form-tags-5" class="form-control" placeholder="add some tags"
-                value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}" style="display:none;">
+                value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}" style="display:none">
             </div>
           </div>
 
-          <div id="e-visibility" style="display:none;" class="col-2">
+          <div id="e-visibility" style="display:none;" class="col">
             <div class="btn-group">
               <select name="visibility" class="form-control" id="visibility">
                 <option>Public</option>

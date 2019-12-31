@@ -130,6 +130,13 @@ margin-top:-1px">
         <button id="save" type="submit" class="btn btn-comment" style="display: none; width: 100px;">
           Save
         </button>
+        <br/>
+        <div class="post-subtitle">
+          <div class="col" style="text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
+            {{post.get_visibility()}}
+          </div>
+        </div>
+        <br/>
 
         <!-- <form action="/post/{{post.pid}}/delete" method="post">
           <button type="submit" class="btn btn-comment" id="delete-post" style="display:none;">Delete post</button>

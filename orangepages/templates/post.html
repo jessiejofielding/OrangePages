@@ -47,38 +47,46 @@ margin-top:-1px">
               <div id="v-content"> {{post.content|safe}} </div>
 
 
-                <textarea name="content" class="make-post form-control border-0" id="e-content" rows="3"
-                placeholder="Write a post..."
-                style="display:none;">{{post.content}}</textarea>
+              <textarea name="content" class="make-post form-control border-0" id="e-content" rows="3"
+                placeholder="Write a post..." style="display:none;">{{post.content}}</textarea>
 
             </div>
 
             <!-- DISPLAY CURR IMG -->
             <div class="collapse show" id="imgCollapse" style="margin-bottom:5px">
-            <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
-          </div>
-            <!-- upload new img -->
-            <div class="col" id="e-uploadImg" style="display:none;">
-              <div class="input-group-append">
-                <label for="upload" class="btn btn-light m-0 rounded-pill px-4 upload-image" id="post-button">
-                  <i class="fa fa-cloud-upload text-muted"></i>
-                  <span><small class="text-muted">Upload Image</small></span>
-                </label>
-              </div>
+              <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
             </div>
-            <!-- This needs to be here in order for upload to work -->
-            <input id="upload" type="file" name="image" onchange="readURL(this);" style="display: none">
 
-            <!-- DELETE IMG -->
-            <div class="col" id="e-delImg" style="display:none;">
-              <div class="form-check form-check-inline" style="margin-top: 20px; margin-bottom: 20px; margin-left:-10px">
-                  <label class="radio-wrapper fs-subtitle form-check-label" role="button"
-                  data-toggle="collapse" data-target="#imgCollapse" aria-expanded="true"
-                    aria-controls="imgCollapse">Delete existing image
+            <div class="row">
+
+              <!-- DELETE IMG -->
+              <div class="col-7" id="e-delImg" style="margin-top: 15px; display:none; text-align: center">
+                <div class="form-check form-check-inline">
+                  <label class="radio-wrapper fs-subtitle form-check-label" role="button" data-toggle="collapse"
+                    data-target="#imgCollapse" aria-expanded="true" aria-controls="imgCollapse">Delete existing image
                     <input type="checkbox" id="delImg" name="delete_img">
                     <span class="custom-radio"></span>
                   </label>
+                </div>
               </div>
+
+            <!-- upload new img -->
+            <div class="col-5" id="e-uploadImg" style="display:none; margin-top: 15px;">
+                <div class="input-group-append">
+                  <label for="upload" class="btn btn-light rounded-pill upload-image" id="post-button"
+                  style="width: 200px">
+                    <i class="fa fa-cloud-upload text-muted"></i>
+                    <span><small class="text-muted">Upload New Image</small></span>
+                  </label>
+                </div>
+              </div>
+              <!-- This needs to be here in order for upload to work -->
+              <input id="upload" type="file" name="image" onchange="readURL(this);" style="display: none">
+            </div>
+
+            <div id="e-preview" style="display:none;">
+                <div class="image-area mt-4" style="margin-bottom: 15px"><img id="imageResult" src="#" alt=""
+                  class="img-fluid rounded shadow-sm mx-auto d-block"></div>
             </div>
 
             {% if post.tags|length %}
@@ -96,6 +104,7 @@ margin-top:-1px">
               <input name="tags" data-role="tagsinput" id="form-tags-5" class="form-control" placeholder="add some tags"
                 value="{% for tag in post.get_tags(): %}{{ tag.tid }} {% endfor %}" style="display:none">
             </div>
+
           </div>
 
           <div id="e-visibility" style="display:none;" class="col">
@@ -212,6 +221,7 @@ margin-top:-1px">
       var eVis = document.getElementById("e-visibility");
       var eDelImg = document.getElementById("e-delImg");
       var eUploadImg = document.getElementById("e-uploadImg");
+      var ePreview = document.getElementById("e-preview");
 
       // var list = [save, eContent, vContent];
       // console.log(list)
@@ -229,9 +239,9 @@ margin-top:-1px">
         // deletePost.style.display = "inline";
       } else {
         save.style.display = "none";
-        
-        if(document.getElementById('delImg').checked) {
-        $("#delImg").click();
+
+        if (document.getElementById('delImg').checked) {
+          $("#delImg").click();
         }
         // deletePost.style.display = "none";
       }
@@ -243,6 +253,7 @@ margin-top:-1px">
         eVis.style.display = "inline";
         eDelImg.style.display = "inline";
         eUploadImg.style.display = "inline";
+        ePreview.style.display = "inline";
 
         vContent.style.display = "none";
         vTags.style.display = "none";
@@ -252,6 +263,7 @@ margin-top:-1px">
         eVis.style.display = "none";
         eDelImg.style.display = "none";
         eUploadImg.style.display = "none";
+        ePreview.style.display = "none";
 
         vContent.style.display = "inline";
         vTags.style.display = "inline";

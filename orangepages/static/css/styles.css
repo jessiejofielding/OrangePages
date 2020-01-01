@@ -545,7 +545,7 @@ a.article:hover {
 }
 
 .btn-sidebar {
-  background-color: var(--new-orange) !important;
+  background-color: transparent !important;
   color: white !important
 }
 
@@ -2879,7 +2879,7 @@ input[type="button"].btn-block {
   color: #212529;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: var(--new-orange);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem; }
@@ -3008,24 +3008,25 @@ input[type="button"].btn-block {
   border-top: 1px solid #e9ecef; }
 
 .dropdown-item {
+  font-family: raleway;
   display: block;
   width: 100%;
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: white;
   text-align: inherit;
   white-space: nowrap;
-  background-color: transparent;
+  background-color: var(--new-orange);
   border: 0; }
   .dropdown-item:hover, .dropdown-item:focus {
-    color: #16181b;
+    color: var(--new-orange);
     text-decoration: none;
-    background-color: #f8f9fa; }
+    background-color: white; }
   .dropdown-item.active, .dropdown-item:active {
-    color: #fff;
+    color: var(--new-orange);
     text-decoration: none;
-    background-color: #d95700; }
+    background-color: white; }
   .dropdown-item.disabled, .dropdown-item:disabled {
     color: #6c757d;
     pointer-events: none;
@@ -7828,7 +7829,8 @@ a:focus {
   left: 0;
   height: 100vh;
   z-index: 999;
-  background: var(--new-orange);
+  background-image: linear-gradient(to bottom right, #f58e31, #f5672c);
+/*  background: var(--new-orange);*/
   color: #fff;
   transition: all 0.3s;
 }

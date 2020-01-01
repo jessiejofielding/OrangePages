@@ -49,6 +49,9 @@
 
         <!-- Post results -->
         <div class="col">
+          <br/>
+          <button class="btn" id="hBack" type="button" style="background-color: transparent; color: var(--new-orange); outline: none;"><i class="fas fa-chevron-left"></i></button>
+          <br/>
           <div id="post">
           {% include 'post.html' %}
           </div>
@@ -101,6 +104,11 @@
         return true;
       });
     });
+
+    $("#hBack").on("click", function(e){
+    e.preventDefault();
+    window.history.back();
+});
   </script>
 
   <script>

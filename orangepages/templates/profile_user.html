@@ -29,6 +29,7 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/feed.js"></script>
     <script type="text/javascript" src="/static/js/profile.js"></script>
+    <script type="text/javascript" src="/static/js/notifs.js"></script>
 
     <!-- JQuery for tabs -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -224,7 +225,6 @@
                                  <option value='WWS' {% if 'WWS' == user.major %} selected {%endif%}>Woodrow Wilson School</option>
                                 </select>
                          </div>
-                    </div>
                             </div>
                         </div>
                         <div {% if not user.rescollege %} id="hidden-field" {%endif%} class="row profile-row">

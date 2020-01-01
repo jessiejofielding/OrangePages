@@ -1,8 +1,24 @@
 <body>
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">DELETE</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body"> Do you want to delete this? </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+          <a href="#delete" id="delete" class="btn btn-primary">YES</a> </div>
+      </div>
+    </div>
+  </div>
+
   <div class="post-card card border-left-20 border-right-10 rounded-0" style="margin-bottom: 15px;
 margin-top:-1px">
     <div class="container-fluid">
-
+      <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data" id="edit" style="width:100%">
       <div class="row">
         <!-- Profile photo -->
         <div class="col" style="padding-top: 10px; -ms-flex: 0 0 40px; flex: 0 0 40px;">
@@ -24,23 +40,36 @@ margin-top:-1px">
         </div>
 
         <!-- Time elapsed -->
-        <div class="col" style="padding-top: 10px; text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
-          <div class="post-subtitle">
-            <i class="fas fa-clock"></i>
-            <span id="tstamp{{post.pid}}"></span>
-            <script type="text/javascript">
-              getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}");
-            </script>
+        <div class="col col-xl-2 col-lg-2" style="padding-top: 10px; text-align: right;">
+          <div class="row w-100">
+            {% if post.creator == user %}
+            <div class="col-6 w-100 post-subtitle" style="text-align:right;">
+              <button class="fas fa-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: var(--new-orange); border:none; outline: none;"></i>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" onclick="toggle_save();" style="font-weight:600;" href="#">Edit</a>
+                <a class="dropdown-item" data-toggle="modal" data-target="#deleteModal" style="font-weight:600;" href="#deleteModal">Delete</a>
+              </div>
+            </div>
+            {% endif %}
+            <div class="col w-100">
+              <div class="post-subtitle">
+                <i class="fas fa-clock"></i>
+                <span id="tstamp{{post.pid}}"></span>
+                <script type="text/javascript">
+                  getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}");
+                </script>
+              </div>
+            </div>
           </div>
-
         </div>
+
+
+
       </div>
 
       <!-- Content -->
 
       <div class="row">
-        <form action="/post/{{post.pid}}/edit" method="post" enctype="multipart/form-data" id="edit" style="width:100%">
-
           <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
           <div class="col" style="margin-bottom: 10px">
             <div class="post-text mb-1">
@@ -120,13 +149,12 @@ margin-top:-1px">
 
       </div>
 
+      <button id="save" type="submit" class="btn btn-comment" style="display: none; width: 100px;">Save</button>
 
 
-      {% if post.creator == user %}
+<!--       {% if post.creator == user %}
       <div class="row">
-        <button type="button" onclick="toggle_save();" style="width: 60px" class="btn btn-comment">
-          Edit
-        </button>
+
         <button id="save" type="submit" class="btn btn-comment" style="display: none; width: 100px;">
           Save
         </button>
@@ -137,14 +165,9 @@ margin-top:-1px">
           </div>
         </div>
         <br/>
-
-        <!-- <form action="/post/{{post.pid}}/delete" method="post">
-          <button type="submit" class="btn btn-comment" id="delete-post" style="display:none;">Delete post</button>
-        </form> -->
-
       </div>
       {% endif %}
-
+ -->
       </form>
 
       <div class="row" style="padding: 6px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
@@ -188,7 +211,7 @@ margin-top:-1px">
           </script>
 
           <br />
-          {{comment.content}}
+          <span class="post-text"> {{comment.content}} </span>
         </div>
       </div>
       {% endfor %}
@@ -208,7 +231,7 @@ margin-top:-1px">
 
     </div>
   </div>
-  
+
   <script>
     focusMethod = function setCommentFocus() {
       document.getElementById("comment-input").focus();

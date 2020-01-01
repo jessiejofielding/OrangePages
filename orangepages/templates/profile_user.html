@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width,
                         initial-scale=1">
     <!-- <meta http-equiv="refresh" content="20" /> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!--CSS-->
     <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
@@ -16,6 +15,7 @@
         type="text/css" />
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         type="text/css" />
+
 
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
@@ -28,6 +28,11 @@
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/feed.js"></script>
+    <script type="text/javascript" src="/static/js/profile.js"></script>
+
+    <!-- JQuery for tabs -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <script>
@@ -53,229 +58,284 @@
 </script>
 
 <body>
-
-
     <!-- Everything goes in a wrapper -->
     <div class="wrapper">
-
         {% include 'sidebar.html' %}
-
         <!-- Main page -->
         <div id="content">
             {% include 'navbar.html' %}
 
-            <div class="col">
-            </div>
-
-
-            <div class="col" style="width: 750px; float: none; margin: 0 auto; margin-bottom: 25px;
-            margin-top: 40px">
-
-                <!-- Profile Details -->
-                <div class="card" style="border-radius: 0px; padding: 20px; padding-top: 100px">
-
+          <!-- for testing - says what screen size is active -->
+          <!--           <div class="alert alert-info">
+            <div class="d-none d-xl-block font-weight-bold">X-LARGE (XL)</div>
+            <div class="d-none d-lg-block d-xl-none font-weight-bold">LARGE (LG)</div>
+            <div class="d-none d-md-block d-lg-none font-weight-bold">MEDIUM (M)</div>
+            <div class="d-none d-sm-block d-md-none font-weight-bold">SMALL (SM)</div>
+            <div class="d-block d-sm-none alert font-weight-bold">X-SMALL (Defaut)</div>
+          </div>  -->
+ <form class="is-readonly" action="/edit-user" method="post"
+                            enctype=multipart/form-data>
+            <!-- Header -->
+            <div class="row m-5">
+                <div class="col col-xl-3 col-lg-3 text-right">
                     <!-- Profile picture -->
-                    <div class="avatar">
-                        <!-- Profile photo -->
-                        {%if user._pic is none:%}
-                        <i class="fa fa-user fa-5x rounded-circle"></i>
-                        {%else:%}
-                        <img class="rounded-circle"
-                            src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
-                            alt="failed to load">
-                        {%endif%}
+                    {%if user._pic is none:%}
+                    <i class="fa fa-user fa-5x rounded-circle"></i>
+                    {%else:%}
+                    <img class="rounded-circle" style="border: 4px solid white;"
+                    src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
+                    alt="failed to load">
+                    {%endif%}     
+                </div>
+                <div class="col mt-4" >
+                    <div class="row">
+                        <div class="col col-xl-4">
+                            <h2 class="profile-title">{{user.firstname}} {{user.lastname}}{% if user.year %} '{{user.year}} {%endif%}</h2>
+                            <p style="margin-top: -15px; margin-bottom:0px">@{{user.uid}}</p>
+                        </div>
+                        <div class="col text-left" id="hidden-posts" style="text-align: left; margin-top: -15px;">
+                            <button type="button" onclick="toggle_save()" class="btn btn-edit js-edit" data-toggle="tooltip" data-placement="top" title="Edit profile"><i class="fas fa-edit" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
+                            <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
+                            <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save"style="display: none; margin-left: 5px; width: 100px">Save</button>
+                        </div>
                     </div>
 
-                    <div style="margin-top: 20px"></div>
-                    <h2 class="fs-title" style="text-align: center">{{user.firstname}} {{user.lastname}}</h2>
-                    <p style="text-align: center; margin-top: -15px; margin-bottom:0px">@{{user.uid}}</p>
-
-                    <hr style="color: #f0f0f0;">
-
-                    <div class="col">
-                        <form id="msform" class="is-readonly" action="/edit-user" method="post"
-                            enctype=multipart/form-data> <fieldset>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">First Name:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="firstname"
-                                        id="exampleInputPassword1" placeholder="First Name" value="{{user.firstname}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Last Name:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="lastname"
-                                        id="exampleInputPassword1" placeholder="Last Name" value="{{user.lastname}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Email:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="email"
-                                        id="exampleInputPassword1" placeholder="Email" value="{{user.email}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Class Year:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="year"
-                                        id="exampleInputPassword1" placeholder="Class Year" value="{{user.year}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Major:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="major"
-                                        id="exampleInputPassword1" placeholder="Major" value="{{user.major}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Res College:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="rescollege"
-                                        id="exampleInputPassword1" placeholder="Residential College"
-                                        value="{{user.rescollege}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">School:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="school"
-                                        id="exampleInputPassword1" placeholder="AB or BSE" value="{{user.school}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Hometown:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="hometown"
-                                        id="exampleInputPassword1" placeholder="Hometown" value="{{user.hometown}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">State:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="state"
-                                        id="exampleInputPassword1" placeholder="State" value="{{user.state}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Country:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="country"
-                                        id="exampleInputPassword1" placeholder="Country" value="{{user.country}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Room:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="room"
-                                        id="exampleInputPassword1" placeholder="Room" value="{{user.room}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Building:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="building"
-                                        id="exampleInputPassword1" placeholder="Building" value="{{user.building}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Food:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="food"
-                                        id="exampleInputPassword1" placeholder="Food" value="{{user.food}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Team:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="team"
-                                        id="exampleInputPassword1" placeholder="Team" value="{{user.team}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Activities:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="activities"
-                                        id="exampleInputPassword1" placeholder="Activities" value="{{user.activities}}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Certificate:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="certificate"
-                                        id="exampleInputPassword1" placeholder="Certificate"
-                                        value="{{user.certificate}}" disabled>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 text-left">Birthday:</div>
-                                <div class="col-lg-9">
-                                    <input type="text" class="form-control is-disabled" name="birthday"
-                                        id="exampleInputPassword1" placeholder="Birthday" value="{{user.birthday}}"
-                                        disabled>
-                                </div>
-                            </div>
-
-                            <!-- @frontend -->
-                            <div id="hide">
-                                <hr>
-                                <!-- Upload image input-->
-                                <input id="upload" type="file" onchange="readURL(this);" name="image"
-                                    class="form-control border-0" style="display:none">
-                                <div class="row" style="padding-top: 10px;">
-                                    <div class="col" style="-ms-flex: 0 0 200px; flex: 0 0 200px;">
-                                        <div class="input-group-append">
-                                            <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i
-                                                    class="fa fa-cloud-upload mr-2 text-muted"></i><small
-                                                    class="text-uppercase font-weight-bold text-muted">Choose
-                                                    file</small></label>
-                                        </div>
-                                    </div>
-                                    <div class="col" style="text-align: left">
-                                        <label id="upload-label" for="upload"
-                                            class="font-weight-light text-muted">Choose file</label>
-                                    </div>
-                                </div>
-
-                                <!-- Uploaded image area-->
-                                <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
-                                        class="img-fluid rounded shadow-sm mx-auto d-block"></div>
-
-
-                                <br>
-                            </div>
-
-                            <div class="row pt-2" style="justify-content: center">
-                                <button type="button" onclick="toggle_save()" style="width: 100px"
-                                    class="btn btn-primary tag-pill btn-edit js-edit">
-                                    Edit
-                                </button>
-                                <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save"
-                                    style="display: none; margin-left: 5px; width: 100px">
-                                    Save
-                                </button>
-                            </div>
-
-                            </fieldset>
-                        </form>
+                    <div class="row mt-3">
+                        <div class="col mt-1"> 
+                            <span style="font-weight: bold;">{{user.friend_list() | length}}</span> {% if user.friend_list()|length == 1 %}friend{%else%}friends{%endif%} <span style="font-weight: bold; margin-left: 10px">{{user.post_list() | length}}</span> {% if user.post_list()|length == 1 %}post{%else%}posts{%endif%}
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-        <div class="col">
+ 
+            <div id="tabs" class="nav-tabs text-center">
+                <ul class="nav nav-tabs">
+                    <li id="details-tab" class="nav-item profile-tab nav-link profile-active" style="margin-left: 15%;"><a onclick='openDetails()' href="#details">Profile Details</a></li>
+                    <li id="posts-tab" class="nav-item profile-tab nav-link"><a onclick='openPosts()' href="#posts">Posts</a></li>
+                </ul>
+            
+            <div id="details" class="ml-5 mb-3 mr-5 mt-3">
+<!--             <form class="is-readonly" action="/edit-user" method="post"
+                            enctype=multipart/form-data> -->
+<!--                 <div class="row ml-1 mb-1 text-left">
+                  <button type="button" onclick="toggle_save()" class="btn btn-edit js-edit" data-toggle="tooltip" data-placement="top" title="Edit profile"><i class="fas fa-edit" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
+                  <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
+                  <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save"style="display: none; margin-left: 5px; width: 100px">
+                    Save</button>
+                </div>
+ -->
+            <div class="card" style="border-radius: 0px; padding: 20px;">
+                
 
+                <!-- @frontend -->
+                <div id="hide" class="mb-5" style="border-bottom:1px solid lightgrey">
+                    <hr>
+                    <!-- Upload image input-->
+                    <input id="upload" type="file" onchange="readURL(this);" name="image"
+                        class="form-control border-0" style="display:none">
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="col" style="-ms-flex: 0 0 200px; flex: 0 0 200px;">
+                            <div class="input-group-append">
+                                <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i
+                                class="fa fa-cloud-upload mr-2 text-muted"></i><small
+                                class="text-uppercase font-weight-bold text-muted">Choose
+                                file</small></label>
+                            </div>
+                        </div>
+                        <div class="col" style="text-align: left">
+                            <label id="upload-label" for="upload"
+                            class="font-weight-light text-muted">Choose file</label>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded image area-->
+                    <div class="image-area mt-4"><img id="imageResult" src="#" alt=""
+                    class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+
+
+                    <br>
+                </div>
+                <div class="col text-center">
+                    <fieldset>
+                        <div id="hidden-name" class="row profile-row d-none">
+                            <div class="col-lg-3 profile-label text-left">Name</div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control is-disabled" name="firstname"
+                                    id="exampleInputPassword1" placeholder="First Name" value="{{user.firstname}}"
+                                    disabled>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control is-disabled" name="lastname"
+                                    id="exampleInputPassword1" placeholder="Last Name" value="{{user.lastname}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div id="hidden-year" class="row profile-row d-none">
+                            <div class="col-lg-3 profile-label text-left">Class Year</div>
+                            <div class="col-lg-9">
+                                <div class="input-group">
+                                    <select name="year" class="select form-control" id="year">
+                                        <option value="" {%if user.year%}{%else%}selected{%endif%}>Add a class year...</option>
+                                        <option value="20" {% if '20' == user.year %} selected {%endif%} >2020</option>
+                                        <option value="21" {% if '21' == user.year %} selected {%endif%} >2021</option>
+                                        <option value="22" {% if '22' == user.year %} selected {%endif%} >2022</option>
+                                        <option value="23" {% if '23' == user.year %} selected {%endif%} >2023</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Major</div>
+                            <div class="col-lg-9">
+                                <div class="input-group">
+                                <select name="major" class="select form-control is-disabled" id="major" disabled>
+                                 <option value='AAS' {% if 'AAS' == user.major %} selected {%endif%}>African American Studies</option>
+                                 <option value='ANT' {% if 'ANT' == user.major %} selected {%endif%}>Anthropology</option>
+                                 <option value='ARC' {% if 'ARC' == user.major %} selected {%endif%}>Architecture</option>
+                                 <option value='ART' {% if 'ART' == user.major %} selected {%endif%}>Art and Archaeology</option>
+                                 <option value='AST' {% if 'AST' == user.major %} selected {%endif%}>Astrophysical Sciences</option>
+                                 <option value='CHM' {% if 'CHM' == user.major %} selected {%endif%}>Chemistry</option>
+                                 <option value='CLA' {% if 'CLA' == user.major %} selected {%endif%}>Classics</option>
+                                 <option value='CMP' {% if 'CMP' == user.major %} selected {%endif%}>Comparative Literature</option>
+                                 <option value='COS' {% if 'COS' == user.major %} selected {%endif%}>Computer Science</option>
+                                 <option value='EAS' {% if 'EAS' == user.major %} selected {%endif%}>East Asian Studies</option>
+                                 <option value='EEB' {% if 'EEB' == user.major %} selected {%endif%}>Ecology and Evolutionary Biology</option>
+                                 <option value='ECO' {% if 'ECO' == user.major %} selected {%endif%}>Economics</option>
+                                 <option value='ENG' {% if 'ENG' == user.major %} selected {%endif%}>English</option>
+                                 <option value='FRE' {% if 'FRE' == user.major %} selected {%endif%}>French and Italian</option>
+                                 <option value='GEO' {% if 'GEO' == user.major %} selected {%endif%}>Geosciences</option>
+                                 <option value='GER' {% if 'GER' == user.major %} selected {%endif%}>German</option>
+                                 <option value='HIS' {% if 'HIS' == user.major %} selected {%endif%}>History</option>
+                                 <option value='MAT' {% if 'MAT' == user.major %} selected {%endif%}>Mathematics</option>
+                                 <option value='MOL' {% if 'MOL' == user.major %} selected {%endif%}>Molecular Biology</option>
+                                 <option value='MUS' {% if 'MUS' == user.major %} selected {%endif%}>Music</option>
+                                 <option value='NES' {% if 'NES' == user.major %} selected {%endif%}>Near Eastern Studies</option>
+                                 <option value='NEU' {% if 'NEU' == user.major %} selected {%endif%}>Neuroscience</option>
+                                 <option value='PHI' {% if 'PHI' == user.major %} selected {%endif%}>Philosophy</option>
+                                 <option value='PHY' {% if 'PHY' == user.major %} selected {%endif%}>Physics</option>
+                                 <option value='POL' {% if 'POL' == user.major %} selected {%endif%}>Politics</option>
+                                 <option value='PSY' {% if 'PSY' == user.major %} selected {%endif%}>Psychology</option>
+                                 <option value='REL' {% if 'REL' == user.major %} selected {%endif%}>Religion</option>
+                                 <option value='SLA' {% if 'SLA' == user.major %} selected {%endif%}>Slavic Languages and Literatures</option>
+                                 <option value='SOC' {% if 'SOC' == user.major %} selected {%endif%}>Sociology</option>
+                                 <option value='SPA' {% if 'SPA' == user.major %} selected {%endif%}>Spanish and Portuguese</option>
+                                 <option value='WWS' {% if 'WWS' == user.major %} selected {%endif%}>Woodrow Wilson School</option>
+                                </select>
+                         </div>
+                    </div>
+                            </div>
+                        </div>
+                        <div {% if not user.rescollege %}id="hidden-field"{%endif%} class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Res College</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="rescollege"
+                                    id="exampleInputPassword1" placeholder="Residential College"
+                                    value="{{user.rescollege}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">School</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="school"
+                                    id="exampleInputPassword1" placeholder="AB or BSE" value="{{user.school}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Hometown</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="hometown"
+                                    id="exampleInputPassword1" placeholder="Hometown" value="{{user.hometown}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">State</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="state"
+                                    id="exampleInputPassword1" placeholder="State" value="{{user.state}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Country</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="country"
+                                    id="exampleInputPassword1" placeholder="Country" value="{{user.country}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Room</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="room"
+                                    id="exampleInputPassword1" placeholder="Room" value="{{user.room}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Building</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="building"
+                                    id="exampleInputPassword1" placeholder="Building" value="{{user.building}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Food</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="food"
+                                    id="exampleInputPassword1" placeholder="Food" value="{{user.food}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Team</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="team"
+                                    id="exampleInputPassword1" placeholder="Team" value="{{user.team}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Activities</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="activities"
+                                    id="exampleInputPassword1" placeholder="Activities" value="{{user.activities}}"
+                                    disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Certificate</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="certificate"
+                                    id="exampleInputPassword1" placeholder="Certificate"
+                                    value="{{user.certificate}}" disabled>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Birthday</div>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control is-disabled" name="birthday"
+                                    id="exampleInputPassword1" placeholder="Birthday" value="{{user.birthday}}"
+                                    disabled>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
+
+                
+            
+            <div id="posts" class="text-left m-5 d-none">
+                {% for post in user.post_list() %}
+                    {% include 'post.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
 
         <!-- jQuery Custom Scroller CDN -->
         <script
@@ -301,6 +361,8 @@
 
         <script>
             function toggle_save() {
+                $("#hidden-year").toggleClass('d-none');
+                $("#hidden-name").toggleClass('d-none');
                 var x = document.getElementById("save");
                 if (x.style.display === "none") {
                     x.style.display = "inline";

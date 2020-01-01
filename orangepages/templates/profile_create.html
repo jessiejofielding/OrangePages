@@ -375,37 +375,37 @@ $(document).ready(function() {
 
                         <div class="input-group">
                             <select name="major" class="selectpicker form-control" id="major">
-                                 <option value='aas' {% if major_code == 'aas' %} selected {%endif%}>African American Studies</option>
-                                 <option value='ant' {% if major_code == 'ant' %} selected {%endif%}>Anthropology</option>
-                                 <option value='arc' {% if major_code == 'arc' %} selected {%endif%}>Architecture</option>
-                                 <option value='art' {% if major_code == 'art' %} selected {%endif%}>Art and Archaeology</option>
-                                 <option value='ast' {% if major_code == 'ast' %} selected {%endif%}>Astrophysical Sciences</option>
-                                 <option value='chm' {% if major_code == 'chm' %} selected {%endif%}>Chemistry</option>
-                                 <option value='cla' {% if major_code == 'cla' %} selected {%endif%}>Classics</option>
-                                 <option value='cmp' {% if major_code == 'cmp' %} selected {%endif%}>Comparative Literature</option>
-                                 <option value='cos' {% if major_code == 'cos' %} selected {%endif%}>Computer Science</option>
-                                 <option value='eas' {% if major_code == 'eas' %} selected {%endif%}>East Asian Studies</option>
-                                 <option value='eeb' {% if major_code == 'eeb' %} selected {%endif%}>Ecology and Evolutionary Biology</option>
-                                 <option value='eco' {% if major_code == 'eco' %} selected {%endif%}>Economics</option>
-                                 <option value='eng' {% if major_code == 'eng' %} selected {%endif%}>English</option>
-                                 <option value='fre' {% if major_code == 'fre' %} selected {%endif%}>French and Italian</option>
-                                 <option value='geo' {% if major_code == 'geo' %} selected {%endif%}>Geosciences</option>
-                                 <option value='ger' {% if major_code == 'ger' %} selected {%endif%}>German</option>
-                                 <option value='his' {% if major_code == 'his' %} selected {%endif%}>History</option>
-                                 <option value='mat' {% if major_code == 'mat' %} selected {%endif%}>Mathematics</option>
-                                 <option value='mol' {% if major_code == 'mol' %} selected {%endif%}>Molecular Biology</option>
-                                 <option value='mus' {% if major_code == 'mus' %} selected {%endif%}>Music</option>
-                                 <option value='nes' {% if major_code == 'nes' %} selected {%endif%}>Near Eastern Studies</option>
-                                 <option value='neu' {% if major_code == 'neu' %} selected {%endif%}>Neuroscience</option>
-                                 <option value='phi' {% if major_code == 'phi' %} selected {%endif%}>Philosophy</option>
-                                 <option value='phy' {% if major_code == 'phy' %} selected {%endif%}>Physics</option>
-                                 <option value='pol' {% if major_code == 'pol' %} selected {%endif%}>Politics</option>
-                                 <option value='psy' {% if major_code == 'psy' %} selected {%endif%}>Psychology</option>
-                                 <option value='rel' {% if major_code == 'rel' %} selected {%endif%}>Religion</option>
-                                 <option value='sla' {% if major_code == 'sla' %} selected {%endif%}>Slavic Languages and Literatures</option>
-                                 <option value='soc' {% if major_code == 'soc' %} selected {%endif%}>Sociology</option>
-                                 <option value='spa' {% if major_code == 'spa' %} selected {%endif%}>Spanish and Portuguese</option>
-                                 <option value='wws' {% if major_code == 'wws' %} selected {%endif%}>Woodrow Wilson School</option>
+                                 <option value='AAS' {% if 'AAS' == user.major %} selected {%endif%}>African American Studies</option>
+                                 <option value='ANT' {% if 'ANT' == user.major %} selected {%endif%}>Anthropology</option>
+                                 <option value='ARC' {% if 'ARC' == user.major %} selected {%endif%}>Architecture</option>
+                                 <option value='ART' {% if 'ART' == user.major %} selected {%endif%}>Art and Archaeology</option>
+                                 <option value='AST' {% if 'AST' == user.major %} selected {%endif%}>Astrophysical Sciences</option>
+                                 <option value='CHM' {% if 'CHM' == user.major %} selected {%endif%}>Chemistry</option>
+                                 <option value='CLA' {% if 'CLA' == user.major %} selected {%endif%}>Classics</option>
+                                 <option value='CMP' {% if 'CMP' == user.major %} selected {%endif%}>Comparative Literature</option>
+                                 <option value='COS' {% if 'COS' == user.major %} selected {%endif%}>Computer Science</option>
+                                 <option value='EAS' {% if 'EAS' == user.major %} selected {%endif%}>East Asian Studies</option>
+                                 <option value='EEB' {% if 'EEB' == user.major %} selected {%endif%}>Ecology and Evolutionary Biology</option>
+                                 <option value='ECO' {% if 'ECO' == user.major %} selected {%endif%}>Economics</option>
+                                 <option value='ENG' {% if 'ENG' == user.major %} selected {%endif%}>English</option>
+                                 <option value='FRE' {% if 'FRE' == user.major %} selected {%endif%}>French and Italian</option>
+                                 <option value='GEO' {% if 'GEO' == user.major %} selected {%endif%}>Geosciences</option>
+                                 <option value='GER' {% if 'GER' == user.major %} selected {%endif%}>German</option>
+                                 <option value='HIS' {% if 'HIS' == user.major %} selected {%endif%}>History</option>
+                                 <option value='MAT' {% if 'MAT' == user.major %} selected {%endif%}>Mathematics</option>
+                                 <option value='MOL' {% if 'MOL' == user.major %} selected {%endif%}>Molecular Biology</option>
+                                 <option value='MUS' {% if 'MUS' == user.major %} selected {%endif%}>Music</option>
+                                 <option value='NES' {% if 'NES' == user.major %} selected {%endif%}>Near Eastern Studies</option>
+                                 <option value='NEU' {% if 'NEU' == user.major %} selected {%endif%}>Neuroscience</option>
+                                 <option value='PHI' {% if 'PHI' == user.major %} selected {%endif%}>Philosophy</option>
+                                 <option value='PHY' {% if 'PHY' == user.major %} selected {%endif%}>Physics</option>
+                                 <option value='POL' {% if 'POL' == user.major %} selected {%endif%}>Politics</option>
+                                 <option value='PSY' {% if 'PSY' == user.major %} selected {%endif%}>Psychology</option>
+                                 <option value='REL' {% if 'REL' == user.major %} selected {%endif%}>Religion</option>
+                                 <option value='SLA' {% if 'SLA' == user.major %} selected {%endif%}>Slavic Languages and Literatures</option>
+                                 <option value='SOC' {% if 'SOC' == user.major %} selected {%endif%}>Sociology</option>
+                                 <option value='SPA' {% if 'SPA' == user.major %} selected {%endif%}>Spanish and Portuguese</option>
+                                 <option value='WWS' {% if 'WWS' == user.major %} selected {%endif%}>Woodrow Wilson School</option>
                             </select>
                          </div>
                     </div>

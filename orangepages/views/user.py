@@ -54,7 +54,7 @@ def create_user():
         last = info['last_name']
         class_year = info['class_year']
         rescollege = info['res_college']
-        major_code = info['major_code'].lower()
+        major_code = info['major_code'].upper()
         major_type = info['major_type']
         return render('profile_create.html', first_name=first, last_name=last, 
                         class_year=class_year, res_college=rescollege, major_type=major_type,

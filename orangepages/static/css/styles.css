@@ -8156,6 +8156,7 @@ color:#ccc;opacity:1
 
 .upload-image {
   content: "Upload Image";
+  text-align: center;
 }
 
 #post-button {

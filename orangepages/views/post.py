@@ -59,7 +59,8 @@ def edit_post_util(post, request):
     # groups = []
     visibility = request.form.get('visibility')
 
-    post.set_visibility(visibility)
+    if visibility is not None:
+        post.set_visibility(visibility)
     # hardcoded, one group only rn
     # if visibility == 'Public':
     #     groups.append(Group.query.get(1))

@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from flask import redirect, request
 from flask import Blueprint
 from flask_cas_fix import login, logout, login_required

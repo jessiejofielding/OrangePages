@@ -28,22 +28,6 @@
 //     }
 // }
 
-$(function() {
-    $("#autocomplete").autocomplete({
-        source:function(request, response) {
-            $.getJSON("{{url_for('autocomplete')}}",{
-                q: request.term, 
-            }, function(data) {
-                response(results); // matching_results from jsonify
-            });
-        },
-        minLength: 2,
-        select: function(event, ui) {
-            console.log(ui.item.value); 
-        }
-    });
-})
-
 $(document).ready(function() {
     $("#load-new-posts").click(showNewPosts); 
 });

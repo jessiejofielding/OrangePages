@@ -11,6 +11,7 @@ html {
     font-family: raleway !important;
     position: relative !important;
     min-height: 100% !important;
+    background-color: #fdfdfd;
     /*background-image: url("https://i.imgur.com/iSUEg3V.jpg");*/
 }
 
@@ -381,15 +382,15 @@ a.article:hover {
 .profile-label {
   margin-top: 8px;
   font-weight: bold;
-  color: black;
+  color: var(--new-orange);
 }
 
 .profile-row {
-  border-bottom: solid 1px lightgrey;
+  /*border-bottom: solid 1px lightgrey;*/
   margin-bottom: 5px;
 }
 .profile-tab {
-   background-color: var(--new-orange);
+   background-image: linear-gradient(to bottom right, #f58e31, #f5672c);
    border-top: 2px solid white !important;
    border-left: 2px solid white !important;
    border-right: 2px solid white !important;
@@ -398,6 +399,7 @@ a.article:hover {
    color:white;
 }
 .profile-tab:hover {
+   background-image: none;
    background-color: white;
    border-top: 2px solid white !important;
    border-left: 2px solid white !important;
@@ -407,6 +409,7 @@ a.article:hover {
    color: var(--new-orange);
 }
 .profile-active {
+   background-image: none;
    background-color: #f0f0f0;
    border:none !important;
    border-top-left-radius: 10px !important;
@@ -2515,7 +2518,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: var(--new-orange);
+  /*background-color: var(--new-orange);*/
+  background-image: linear-gradient(to bottom right, #f58e31, #f5672c);
   border-color: var(--new-orange); }
   .btn-primary:hover {
     color: #fff;
@@ -2956,7 +2960,7 @@ input[type="button"].btn-block {
   color: #212529;
   text-align: left;
   list-style: none;
-  background-color: var(--new-orange);
+  background-image: linear-gradient(to bottom right, #f58e31, #f5672c);
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem; }
@@ -3094,7 +3098,7 @@ input[type="button"].btn-block {
   color: white;
   text-align: inherit;
   white-space: nowrap;
-  background-color: var(--new-orange);
+  background-color: transparent;
   border: 0; }
   .dropdown-item:hover, .dropdown-item:focus {
     color: var(--new-orange);

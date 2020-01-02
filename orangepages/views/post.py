@@ -114,7 +114,7 @@ def edit_post_util(post, request):
     db.session.commit()
     print(post.tags)
 
-@page.route('/post/<int:postid>/delete', methods=['POST'])
+@page.route('/post/<int:postid>/delete', methods=['POST', 'GET'])
 @user_required
 def delete_post(postid):
     print("post", postid, "deleted")

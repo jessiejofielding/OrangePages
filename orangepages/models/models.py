@@ -506,6 +506,10 @@ class Comment(db.Model):
     def __repr__(self):
         return "Comment %s by %s" % (self.content, self.creator)
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
 #-----------------------------------------------------------------------
 class Post(db.Model):

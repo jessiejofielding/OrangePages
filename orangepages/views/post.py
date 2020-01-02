@@ -122,6 +122,15 @@ def delete_post(postid):
     post.delete()
     return redirect("/feed")
 
+@page.route('/comment/<int:commentid>/delete', methods=['POST', 'GET'])
+@user_required
+def delete_comment(commentid):
+    print("comment", commentid, "deleted")
+    comment = Comment.query.get(commentid)
+    postid = comment.postid
+    comment.delete()
+    return redirect('/post/'+ str(postid))
+
 
 @page.route('/post/<int:postid>', methods=['GET', 'POST'])
 @user_required

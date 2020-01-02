@@ -213,6 +213,10 @@ margin-top:-1px">
             getTimeAgo("{{ comment.date }}", "tstamp{{comment.cid}}");
           </script>
 
+          {% if comment.creator == user %}
+          <a href="/comment/{{ comment.cid }}/delete"><i class="fas fa-sm fa-trash ml-2" style="color: var(--new-orange)"></i></a>
+          {% endif %}
+
           <br />
           <span class="post-text"> {{comment.content}} </span>
         </div>

@@ -25,11 +25,13 @@
             <!-- Time elapsed -->
             <div class="col" style="padding-top: 10px; text-align: right; -ms-flex: 0 0 95px; flex: 0 0 95px;">
               <div class="post-subtitle">
+                <a href='post/{{ post.pid }}'>
                 <i class="fas fa-clock"></i>
                 <span id="tstamp{{post.pid}}"></span>
                 <script type="text/javascript">
                   getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}" );
                 </script>
+                </a>
               </div>
 
             </div>
@@ -102,11 +104,13 @@
             <div class="col post-comment">
               <a href='profile/{{ comment.creator.uid }}' class="post-title">{{comment.creator.firstname}}
                 {{comment.creator.lastname}} </a>
+                <a href='post/{{ post.pid }}'>
                 <i class="ml-2 post-subtitle fas fa-clock"></i>
                 <span class="post-subtitle" id="tstamp{{comment.cid}}"></span>
                 <script type="text/javascript">
                   getTimeAgo("{{ comment.date }}", "tstamp{{comment.cid}}" );
                 </script>
+                </a>
 
                 <br/>
                 {{comment.content}}

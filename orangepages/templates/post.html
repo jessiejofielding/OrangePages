@@ -1,18 +1,22 @@
 <body>
-  <!-- Delete Modal -->
-  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+
+  <!-- Delete Confirmation modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modal1-label">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">DELETE</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        <div class="modal-content m-3">
+          <div class="modal-body text-center"> Are you sure you want to delete this post?
+
+          <div class="row mt-4">
+            <div class="col text-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"> Go Back </button>
+            </div>
+            <div class="col text-left">
+              <a href="/post/{{post.pid}}/delete" id="delete" class="btn btn-primary"> Delete </a>
+            </div>
+          </div>
+          </div> 
         </div>
-        <div class="modal-body"> Do you want to delete this? </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-          <a href="#delete" id="delete" class="btn btn-primary">YES</a> </div>
       </div>
-    </div>
   </div>
 
   <div class="post-card card border-left-20 border-right-10 rounded-0" style="margin-bottom: 15px;
@@ -33,23 +37,22 @@ margin-top:-1px">
           </a>
         </div>
 
-        <!-- User and netid -->
+       <!-- User and netid -->
         <div class="col" style="padding-top: 10px">
           <a href='/profile/{{ post.creator.uid }}' class="post-title">{{post.creator.firstname}}
             {{post.creator.lastname}} <h6 class="post-subtitle"> @{{post.creator.uid}} </h6> </a>
         </div>
-
         <!-- Time elapsed -->
         <div class="col col-xl-2 col-lg-2" style="padding-top: 10px; text-align: right;">
           <div class="row w-100">
             {% if post.creator == user %}
-            <div class="col-6 w-100 post-subtitle" style="text-align:right;">
-              <button class="fas fa-cog" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: var(--new-orange); border:none; outline: none;"></i>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" onclick="toggle_save();" style="font-weight:600;" href="#">Edit</a>
-                <a class="dropdown-item" data-toggle="modal" data-target="#deleteModal" style="font-weight:600;" href="#deleteModal">Delete</a>
-              </div>
-            </div>
+            <div class="col-6 w-100 dropdown post-subtitle" style="text-align:right;">
+               <button class="fas fa-cog" type="button" id="dropdownMenu1" data-toggle="dropdown" style="color: var(--new-orange); border:none; outline: none;"aria-haspopup="true" aria-expanded="true"></button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" onclick="toggle_save();" style="font-weight:500;" href="#">Edit</a></li>
+                <li><a class="dropdown-item" data-toggle="modal" onclick="openModal()" data-target="#deleteModal" style="font-weight:500;" href="#deleteModal">Delete</a></li>
+              </ul>
+            </div> 
             {% endif %}
             <div class="col w-100">
               <div class="post-subtitle">

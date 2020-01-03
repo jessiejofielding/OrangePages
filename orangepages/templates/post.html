@@ -46,7 +46,7 @@ margin-top:-1px">
         <div class="col col-xl-2 col-lg-2" style="padding-top: 10px; text-align: right;">
           <div class="row w-100">
             {% if post.creator == user %}
-            <div class="col-6 w-100 dropdown post-subtitle" style="text-align:right;">
+            <div class="col-lg-3 w-100 dropdown post-subtitle" style="text-align:right;  padding: 0px">
                <button class="fas fa-cog" type="button" id="dropdownMenu1" data-toggle="dropdown" style="color: var(--new-orange); border:none; outline: none;"aria-haspopup="true" aria-expanded="true"></button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" onclick="toggle_save()" style="font-weight:500;" href="#">Edit</a></li>
@@ -54,7 +54,7 @@ margin-top:-1px">
               </ul>
             </div> 
             {% endif %}
-            <div class="col w-100">
+            <div class="col-lg-9 w-100" style="text-align:right; padding: 0px">
               <div class="post-subtitle">
                 <i class="fas fa-clock"></i>
                 <span id="tstamp{{post.pid}}"></span>

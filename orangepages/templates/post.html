@@ -49,7 +49,7 @@ margin-top:-1px">
             <div class="col-6 w-100 dropdown post-subtitle" style="text-align:right;">
                <button class="fas fa-cog" type="button" id="dropdownMenu1" data-toggle="dropdown" style="color: var(--new-orange); border:none; outline: none;"aria-haspopup="true" aria-expanded="true"></button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" onclick="toggle_save();" style="font-weight:500;" href="#">Edit</a></li>
+                <li><a class="dropdown-item" onclick="toggle_save()" style="font-weight:500;" href="#">Edit</a></li>
                 <li><a class="dropdown-item" data-toggle="modal" onclick="openModal()" data-target="#deleteModal" style="font-weight:500;" href="#deleteModal">Delete</a></li>
               </ul>
             </div> 
@@ -243,8 +243,17 @@ margin-top:-1px">
     focusMethod = function setCommentFocus() {
       document.getElementById("comment-input").focus();
     }
+
+    function strip_html() {
+      var OriginalString = $('#e-content').text();
+      var strippedString = OriginalString.replace(/(<([^>]+)>)/ig,"");
+
+      $('#e-content').text(strippedString);
+    }
+    
     // i apologise for this -zx
     function toggle_save() {
+      strip_html();
 
       var save = document.getElementById("save");
       // var deletePost = document.getElementById("delete-post");

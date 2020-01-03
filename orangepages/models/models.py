@@ -72,7 +72,7 @@ class User(db.Model):
     _unread_notifs = db.Column(db.Integer, default=0)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    _posts_made = relationship('Post', back_populates='creator')
+    # _posts_made = relationship('Post', back_populates='creator')
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
@@ -346,8 +346,9 @@ class User(db.Model):
     # ???
     def post_list(self):
         # print(self._groups[0].members)
-        return self._posts_made
-        
+        # return self._posts_made
+        return self._posts_made.order_by(desc(Post.date)).all()
+
     # is user a friend of self?
     def is_friend(self, user):
         # is_friend = (user in self.friend_list())
@@ -516,7 +517,8 @@ class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    creator = relationship('User', back_populates='_posts_made')
+    # creator = relationship('User', back_populates='_posts_made')
+    creator = relationship('User', backref=backref('_posts_made', lazy='dynamic'), foreign_keys=[creatorid])
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     has_img = db.Column(db.Boolean(), default=False)
     _pic = db.Column(db.String(50))
@@ -616,7 +618,7 @@ class Post(db.Model):
 
     def get_comments(self):
         c = self.comments
-        comments = c.order_by(desc(Comment.date)).all()
+        comments = c.order_by(asc(Comment.date)).all()
         return comments
 
     def prev_comments(self):

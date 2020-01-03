@@ -27,10 +27,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/feed.js"></script>
     <script type="text/javascript" src="/static/js/profile.js"></script>
-    <script type="text/javascript" src="/static/js/notifs.js"></script>
-    <script type="text/javascript" src="/static/js/post.js"></script>
+    <script type="text/javascript" src="/static/js/post-preview.js"></script>
+    <script type="text/javascript" src="/static/js/timestamp.js"></script>
 
     <!-- JQuery for tabs -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -678,7 +677,9 @@
             
             <div id="posts" class="text-left m-5 d-none">
                 {% for post in user.post_list() %}
+                    <div id="post{{post.pid}}">
                     {% include 'post_preview.html' %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -721,10 +722,7 @@
             }
         </script>
 
-<script>
-    var t_first = '{{t_first}}';
-    var t_last = '{{t_last}}';
-  </script>
+
 
 </body>
 

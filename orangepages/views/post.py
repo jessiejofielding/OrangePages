@@ -162,6 +162,22 @@ def post_refresh():
 
     return render('post.html', post=post)
 
+@page.route('/post-preview-refresh', methods=['POST'])
+@user_required
+def post_prev_refresh():
+    postid = request.form.get('postid')
+    post = Post.query.get(postid)
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
+
+
+    return render('post_preview.html', post=post)
+
+
+
+
 @page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
 @user_required
 def comment(postid):

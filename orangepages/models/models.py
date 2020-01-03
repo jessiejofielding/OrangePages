@@ -347,7 +347,7 @@ class User(db.Model):
     def post_list(self):
         # print(self._groups[0].members)
         return self._posts_made
-
+        
     # is user a friend of self?
     def is_friend(self, user):
         # is_friend = (user in self.friend_list())

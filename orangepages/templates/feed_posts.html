@@ -1,5 +1,7 @@
 {% for post in posts: %}
-{% include "post_preview.html" %}
+    <div id="post{{post.pid}}">
+        {% include 'post_preview.html' %}
+    </div>
 {% endfor %}
 
 

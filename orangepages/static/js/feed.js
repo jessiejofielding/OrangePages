@@ -33,41 +33,6 @@ $(document).ready(function() {
 });
 
 
-// liking
-var likingPost = false;
-function toggleLike(post_id) {
-    let url = '/post/'+post_id+'/like';
-    
-    if(!likingPost) {
-        likingPost = true;
-        var res = $.get( url );
-        res.done(function( data ) {
-            refreshFeed();
-            likingPost = false;
-        });
-    }
-
-}
-
-// commenting
-var postingComment = false;
-function postComment(post_id) {
-    
-    let url = '/post/'+post_id+'/comment';
-    let form = '#comment'+post_id;
-    let content = $(form).serialize();
-    
-    if(!postingComment) {
-        postingComment = true;
-        var res = $.post( url , content);
-        res.done(function( data ) {
-            refreshFeed();
-            postingComment = false;
-        });
-    }
-
-}
-
 // auto refresh
 window.onload = setupRefresh;
 function setupRefresh()

@@ -30,6 +30,7 @@
     <script type="text/javascript" src="/static/js/feed.js"></script>
     <script type="text/javascript" src="/static/js/profile.js"></script>
     <script type="text/javascript" src="/static/js/notifs.js"></script>
+    <script type="text/javascript" src="/static/js/post.js"></script>
 
     <!-- JQuery for tabs -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -677,7 +678,7 @@
             
             <div id="posts" class="text-left m-5 d-none">
                 {% for post in user.post_list() %}
-                    {% include 'post.html' %}
+                    {% include 'post_preview.html' %}
                 {% endfor %}
             </div>
         </div>
@@ -719,6 +720,11 @@
                 }
             }
         </script>
+
+<script>
+    var t_first = '{{t_first}}';
+    var t_last = '{{t_last}}';
+  </script>
 
 </body>
 

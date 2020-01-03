@@ -41,11 +41,13 @@
           <div class="row">
 
             <div class="col" style="padding-top: 10px; -ms-flex: 0 0 78px; flex: 0 0 78px;"></div>
-            <div class="col">
+            <div class="col" style="padding-bottom: 5px">
               <div class="post-text mb-1">
                 {{post.content|safe}}
               </div>
+              {% if post.has_img %}
               <a href='post/{{ post.pid }}'><img src="{{post.get_img()}}" width="100%"></a>
+              {% endif %}
               {% if post.tags|length %}
               <div style="margin-top: 6px; margin-bottom: 6px">
               {% for tag in post.tags: %}

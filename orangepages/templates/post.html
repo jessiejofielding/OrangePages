@@ -85,10 +85,11 @@ margin-top:-1px">
             </div>
 
             <!-- DISPLAY CURR IMG -->
+            {% if post.has_img %}
             <div class="collapse show" id="imgCollapse" style="margin-bottom:5px">
               <a href={{post.get_img()}}><img src="{{post.get_img()}}" width="100%"></a>
             </div>
-
+            {% endif %}
             <div class="row">
 
               <!-- DELETE IMG -->

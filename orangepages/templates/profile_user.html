@@ -116,9 +116,7 @@
                         <div class="col text-left" id="hidden-posts" style="text-align: left; margin-top: -15px;">
                             <button type="button" onclick="toggle_save()" class="btn btn-edit js-edit" data-toggle="tooltip" data-placement="top" title="Edit profile"><i class="fas fa-edit" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
                             <!-- <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button> -->
-                            <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save" style="display: none; margin-left: 5px; width: 100px">Save</button>
-                            <!-- @frontend -->
-                            <a data-toggle="modal" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none" data-target="#deleteModal" style="display: none" href="#deleteModal">Delete</a>
+                            
 
                             <!-- <a href="/profile/{{user.uid}}/delete" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none"> Delete </a> -->
                         </div>
@@ -834,6 +832,14 @@
                         </div>
                     </fieldset>
                     </form>
+                    <hr>
+                    <div class="row profile-row mt-5">
+                      <div class="col text-right" id="hidden-posts" style="text-align: left; margin-top: -15px;">
+                            <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save" style="display: none;">Save Changes</button>
+                            <!-- @frontend -->
+                            <a data-toggle="modal" id="delete-acc" class="btn btn-danger tag-pill btn-save js-save p-2" style="display: none" data-target="#deleteModal" style="display: none" href="#deleteModal">Delete Account</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -60,13 +60,14 @@ def create_user():
         from tigerbook import get_info
         netid = cur_uid()
         info = get_info(netid)
-        first = info['first_name']
-        last = info['last_name']
-        class_year = info['class_year']
-        rescollege = info['res_college']
-        major_code = info['major_code'].upper()
-        major_type = info['major_type']
-        return render('profile_create.html', first_name=first, last_name=last, 
+
+        first = info['first_name'] if info else None
+        last = info['last_name'] if info else None
+        class_year = info['class_year'] if info else None
+        rescollege = info['res_college'] if info else None
+        major_code = info['major_code'].upper() if info else None
+        major_type = info['major_type'] if info else None
+        return render('profile_create.html', first_name=first, last_name=last,
                         class_year=class_year, res_college=rescollege, major_type=major_type,
                         major_code=major_code)
 
@@ -180,7 +181,7 @@ def edit_user():
             print("IMAGE", image)
             user.add_img(image)
 
-    
+
     # Get privacy fields
     hometown_priv = request.form.get('hometown_priv')
     state_priv = request.form.get('state_priv')
@@ -196,10 +197,10 @@ def edit_user():
     certificate_priv = request.form.get('certificate_priv')
     birthday_priv = request.form.get('birthday_priv')
 
-    # Update privacy 
-    user.update_privacy(hometown_priv, state_priv, country_priv, 
-        major_priv, rescollege_priv, school_priv, room_priv, 
-        building_priv, food_priv, team_priv, activities_priv, 
+    # Update privacy
+    user.update_privacy(hometown_priv, state_priv, country_priv,
+        major_priv, rescollege_priv, school_priv, room_priv,
+        building_priv, food_priv, team_priv, activities_priv,
         certificate_priv, birthday_priv)
 
     return redirect('/profile/'+cur_uid())
@@ -254,4 +255,3 @@ def clear_single_notif(id):
         notif.delete()
 
     return redirect(request.referrer)
-

@@ -28,6 +28,11 @@ def create_post():
 def edit_post(postid):
     post = Post.query.get(postid)
 
+    if post is None:
+        return render('message.html',
+            title='Error',
+            message="This post doesn't exist.")
+
     if request.method=='GET':
         if cur_user() != post.creator:
             return redirect("/feed")

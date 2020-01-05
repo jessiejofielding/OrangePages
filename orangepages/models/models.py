@@ -143,14 +143,6 @@ class User(db.Model):
             pass
         db.session.commit()
 
-    # ###### TEMPORARY
-    # defining this to match our current profile page's fields just to get it functioning
-    ##### FIX fic xxi fix
-    def update_profile_info(self, firstname,lastname,email,year,major,hometown,state,country,room,building):
-        self.firstname, self.lastname, self.email,self.year,self.major,self.hometown,\
-        self.state,self.country,self.room,self.building = \
-            (firstname,lastname,email,year,major,hometown,state,country,room,building)
-        db.session.commit()
 
     # helpers ---------------------------------------------------------
     # all attribute privacies as a list of gids
@@ -187,34 +179,29 @@ class User(db.Model):
 
     # -----------------------------------------------------------------
 
-    def update_privacy(self, uid, first, last, email, hometown, state,
-        country, year, major, rescollege, school, room, building, food,
+    def update_privacy(self, hometown, state,
+        country, major, rescollege, school, room, building, food,
         team, activities, certificate, birthday):
 
         # print('\n\n update priv raw params:\n')
-        # for i in (uid, first, last, email, hometown,
-        #             state, country, year, major, rescollege, school, room,
+        # for i in (hometown,
+        #             state, country, major, rescollege, school, room,
         #             building, food, team, activities, certificate, birthday):
         #     print(i+ ' ')
         # print('\n\n')
-
-        self._uid, self._firstname, self._lastname, self._email, \
-        self._hometown, self._state, self._country, self._year, \
+        
+        self._hometown, self._state, self._country, \
         self._major, self._rescollege, self._school, self._room, \
         self._building, self._food, self._team, self._activities, \
         self._certificate, self._birthday = \
-        self.priv_to_group((uid, first, last, email, hometown,
-            state, country, year, major, rescollege, school, room,
+        self.priv_to_group((hometown,
+            state, country, major, rescollege, school, room,
             building, food, team, activities, certificate, birthday))
 
-
-
-
         # print('\n\n update priv after params:\n')
-        # for i in self.get_attr_priv():
+        # for i in self.group_to_priv(self.get_attr_priv()):
         #     print(i)
         # print('\n\n')
-
 
         db.session.commit()
 

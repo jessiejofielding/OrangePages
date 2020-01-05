@@ -19,7 +19,17 @@ page = Blueprint('user_page', __name__)
 def view_profile(lookup_id):
 
     if cur_uid() == lookup_id:
-        return render('profile_user.html')
+        user = cur_user()
+        names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
+            'state', 'country', 'year', 'major', 'rescollege', 'school',
+            'room', 'building', 'food', 'team', 'activities',
+            'certificate', 'birthday']
+        privs = user.group_to_priv(user.get_attr_priv())
+        cur_privacy = {}
+        for name, priv in zip(names, privs):
+            cur_privacy[name] = priv
+            # print(name + " " + priv)
+        return render('profile_user.html', cur_privacy = cur_privacy)
 
     lookup = User.query.get(lookup_id)
     if lookup is None:
@@ -129,57 +139,125 @@ def create_user():
 
 
 
-@page.route('/edit-user', methods=['GET', 'POST'])
+
+
+@page.route('/edit-user', methods=['POST'])
 @user_required
 def edit_user():
+    user = cur_user()
 
-    if request.method=='POST':
-        # Get form fields
-        firstname = request.form.get('firstname')
-        lastname = request.form.get('lastname')
-        email = request.form.get('email')
-        hometown = request.form.get('hometown')
-        state = request.form.get('state')
-        country = request.form.get('country')
-        year = request.form.get('year')
-        major = request.form.get('major')
-        room = request.form.get('room')
-        building = request.form.get('building')
+    # Get attribute fields
+    firstname = request.form.get('firstname')
+    lastname = request.form.get('lastname')
+    email = request.form.get('email')
+    hometown = request.form.get('hometown')
+    state = request.form.get('state')
+    country = request.form.get('country')
+    year = request.form.get('year')
+    major = request.form.get('major')
+    room = request.form.get('room')
+    building = request.form.get('building')
+    rescollege = request.form.get('rescollege')
+    school = request.form.get('school')
+    food = request.form.get('food')
+    team = request.form.get('team')
+    activities = request.form.get('activities')
+    certificate = request.form.get('certificate')
+    birthday = request.form.get('birthday')
+    affiliations = []
 
-        rescollege = request.form.get('rescollege')
-        school = request.form.get('school')
+    # Update attributes
+    user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
+    user.update_optional_info(hometown, state, country, room, building, food,
+    team, activities, certificate, birthday, affiliations)
 
-        food = request.form.get('food')
-        team = request.form.get('team')
-        activities = request.form.get('activities')
-        certificate = request.form.get('certificate')
-        birthday = request.form.get('birthday')
-        affiliations = []
+    if "image" in request.files:
+        image = request.files["image"]
+        if image.filename is not '':
+            print("IMAGE", image)
+            user.add_img(image)
 
-        # Update user
-        # cur_user().update_optional_info(firstname,lastname,email,
-        #     hometown,state,country,year,major,room,building, affiliations)
+    
+    # Get privacy fields
+    hometown_priv = request.form.get('hometown_priv')
+    state_priv = request.form.get('state_priv')
+    country_priv = request.form.get('country_priv')
+    major_priv = request.form.get('major_priv')
+    room_priv = request.form.get('room_priv')
+    building_priv = request.form.get('building_priv')
+    rescollege_priv = request.form.get('rescollege_priv')
+    school_priv = request.form.get('school_priv')
+    food_priv = request.form.get('food_priv')
+    team_priv = request.form.get('team_priv')
+    activities_priv = request.form.get('activities_priv')
+    certificate_priv = request.form.get('certificate_priv')
+    birthday_priv = request.form.get('birthday_priv')
 
-        # cur_user().update_profile_info(firstname,lastname,email,
-        #     hometown,state,country,year,major,room,building)
-
-        cur_user().update_public_info(firstname,lastname, email, rescollege, school, major, year)
-        cur_user().update_optional_info(hometown, state, country, room, building, food,
-        team, activities, certificate, birthday, affiliations)
-
-        if "image" in request.files:
-            image = request.files["image"]
-            if image.filename is not '':
-                print("IMAGE", image)
-                cur_user().add_img(image)
-
-        db.session.commit()
+    # Update privacy 
+    user.update_privacy(hometown_priv, state_priv, country_priv, 
+        major_priv, rescollege_priv, school_priv, room_priv, 
+        building_priv, food_priv, team_priv, activities_priv, 
+        certificate_priv, birthday_priv)
 
     return redirect('/profile/'+cur_uid())
 
-    return render('message.html',
-        title='Success',
-        message='You have successfully edited your profile!')
+
+
+
+
+
+
+# @page.route('/edit-user', methods=['GET', 'POST'])
+# @user_required
+# def edit_user():
+
+#     if request.method=='POST':
+#         # Get form fields
+#         firstname = request.form.get('firstname')
+#         lastname = request.form.get('lastname')
+#         email = request.form.get('email')
+#         hometown = request.form.get('hometown')
+#         state = request.form.get('state')
+#         country = request.form.get('country')
+#         year = request.form.get('year')
+#         major = request.form.get('major')
+#         room = request.form.get('room')
+#         building = request.form.get('building')
+
+#         rescollege = request.form.get('rescollege')
+#         school = request.form.get('school')
+
+#         food = request.form.get('food')
+#         team = request.form.get('team')
+#         activities = request.form.get('activities')
+#         certificate = request.form.get('certificate')
+#         birthday = request.form.get('birthday')
+#         affiliations = []
+
+#         # Update user
+#         # cur_user().update_optional_info(firstname,lastname,email,
+#         #     hometown,state,country,year,major,room,building, affiliations)
+
+#         # cur_user().update_profile_info(firstname,lastname,email,
+#         #     hometown,state,country,year,major,room,building)
+
+#         cur_user().update_public_info(firstname,lastname, email, rescollege, school, major, year)
+#         cur_user().update_optional_info(hometown, state, country, room, building, food,
+#         team, activities, certificate, birthday, affiliations)
+
+#         if "image" in request.files:
+#             image = request.files["image"]
+#             if image.filename is not '':
+#                 print("IMAGE", image)
+#                 cur_user().add_img(image)
+
+#         db.session.commit()
+
+#     return redirect('/profile/'+cur_uid())
+
+#     return render('message.html',
+#         title='Success',
+#         message='You have successfully edited your profile!')
 
 
 

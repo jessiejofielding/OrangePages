@@ -53,13 +53,18 @@ def view_profile(lookup_id):
 #@login_required
 def create_user():
 
+    netid = cur_uid()
+
     if cur_user() is not None:
-        return redirect('/edit-user')
+        return redirect('/profile/'+netid)
 
     if request.method=='GET':
         from tigerbook import get_info
-        netid = cur_uid()
-        info = get_info(netid)
+        
+        try:
+            info = get_info(netid)
+        except:
+            info = None
 
         first = info['first_name'] if info else None
         last = info['last_name'] if info else None
@@ -70,14 +75,6 @@ def create_user():
         return render('profile_create.html', first_name=first, last_name=last,
                         class_year=class_year, res_college=rescollege, major_type=major_type,
                         major_code=major_code)
-
-    # Get form fields
-    # from tigerbook import get_info
-    netid = cur_uid()
-    # info = get_info(netid)
-    # return render('message.html',
-    #     title='Success',
-    #     message=info)
 
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')

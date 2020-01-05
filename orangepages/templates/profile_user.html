@@ -59,6 +59,25 @@
 </script>
 
 <body>
+  <!-- Delete Confirmation modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modal1-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content m-3">
+          <div class="modal-body text-center"> Are you sure you want to delete your account?
+
+          <div class="row mt-4">
+            <div class="col text-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal"> Go Back </button>
+            </div>
+            <div class="col text-left">
+              <a href="/profile/{{user.uid}}/delete" id="delete" class="btn btn-primary"> Delete </a>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
     <!-- Everything goes in a wrapper -->
     <div class="wrapper">
         {% include 'sidebar.html' %}
@@ -99,7 +118,9 @@
                             <!-- <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button> -->
                             <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save" style="display: none; margin-left: 5px; width: 100px">Save</button>
                             <!-- @frontend -->
-                            <a href="/profile/{{user.uid}}/delete" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none"> Delete </a>
+                            <a data-toggle="modal" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none" data-target="#deleteModal" style="display: none" href="#deleteModal">Delete</a>
+
+                            <!-- <a href="/profile/{{user.uid}}/delete" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none"> Delete </a> -->
                         </div>
                     </div>
 

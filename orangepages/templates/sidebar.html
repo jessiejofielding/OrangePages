@@ -11,15 +11,11 @@
             {% if user._unread_notifs > 0 %}<span class="badge badge-pill badge-danger">{{user._unread_notifs}}</span>{% endif %}</a>
         </li>
         <li id="Profile">
-          <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>Profile</a>
+          <a href="/profile/{{user.uid}}" class="btn-sidebar"><i class="fas fa-user mr-1"></i>My Profile</a>
         </li>
         <li id="Friends">
           <a href="/profile/{{user.uid}}/friends-list" class="btn-sidebar"><i
               class="fas fa-user-friends mr-1"></i>Friends</a>
-        </li>
-        <li id="Settings and Privacy">
-          <a href="/settings" class="btn-sidebar"><i class="fas fa-user-cog mr-1"></i>Settings and
-            Privacy</a>
         </li>
         <li id="About">
           <a href="/" class="btn-sidebar"><i class="fas fa-info-circle mr-1"></i>About</a>

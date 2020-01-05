@@ -139,8 +139,6 @@ def create_user():
 
 
 
-
-
 @page.route('/edit-user', methods=['POST'])
 @user_required
 def edit_user():
@@ -203,64 +201,6 @@ def edit_user():
 
 
 
-
-
-
-
-# @page.route('/edit-user', methods=['GET', 'POST'])
-# @user_required
-# def edit_user():
-
-#     if request.method=='POST':
-#         # Get form fields
-#         firstname = request.form.get('firstname')
-#         lastname = request.form.get('lastname')
-#         email = request.form.get('email')
-#         hometown = request.form.get('hometown')
-#         state = request.form.get('state')
-#         country = request.form.get('country')
-#         year = request.form.get('year')
-#         major = request.form.get('major')
-#         room = request.form.get('room')
-#         building = request.form.get('building')
-
-#         rescollege = request.form.get('rescollege')
-#         school = request.form.get('school')
-
-#         food = request.form.get('food')
-#         team = request.form.get('team')
-#         activities = request.form.get('activities')
-#         certificate = request.form.get('certificate')
-#         birthday = request.form.get('birthday')
-#         affiliations = []
-
-#         # Update user
-#         # cur_user().update_optional_info(firstname,lastname,email,
-#         #     hometown,state,country,year,major,room,building, affiliations)
-
-#         # cur_user().update_profile_info(firstname,lastname,email,
-#         #     hometown,state,country,year,major,room,building)
-
-#         cur_user().update_public_info(firstname,lastname, email, rescollege, school, major, year)
-#         cur_user().update_optional_info(hometown, state, country, room, building, food,
-#         team, activities, certificate, birthday, affiliations)
-
-#         if "image" in request.files:
-#             image = request.files["image"]
-#             if image.filename is not '':
-#                 print("IMAGE", image)
-#                 cur_user().add_img(image)
-
-#         db.session.commit()
-
-#     return redirect('/profile/'+cur_uid())
-
-#     return render('message.html',
-#         title='Success',
-#         message='You have successfully edited your profile!')
-
-
-
 @page.route('/notifications', methods=['GET', 'POST'])
 @user_required
 def view_notifs():
@@ -310,45 +250,3 @@ def clear_single_notif(id):
 
     return redirect(request.referrer)
 
-
-@page.route('/settings', methods=['GET', 'POST'])
-@user_required
-def edit_settings():
-    user = cur_user()
-    if request.method=='GET':
-        names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
-            'state', 'country', 'year', 'major', 'rescollege', 'school',
-            'room', 'building', 'food', 'team', 'activities',
-            'certificate', 'birthday']
-        privs = user.group_to_priv(user.get_attr_priv())
-        cur_privacy = {}
-        for name, priv in zip(names, privs):
-            cur_privacy[name] = priv
-            print(name + " " + priv)
-        return render('settings.html', cur_privacy = cur_privacy)
-
-    # Get form fields
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    email = request.form.get('email')
-    hometown = request.form.get('hometown')
-    state = request.form.get('state')
-    country = request.form.get('country')
-    year = request.form.get('year')
-    major = request.form.get('major')
-    room = request.form.get('room')
-    building = request.form.get('building')
-
-    # The fields that arent out there yet
-    uid = rescollege = school = food = team = \
-        activities = certificate = birthday = 'Public'
-
-
-    user.update_privacy(uid, firstname, lastname, email, hometown, state,
-        country, year, major, rescollege, school, room, building, food,
-        team, activities, certificate, birthday)
-
-
-    return render('message.html',
-        title='Success!',
-        message='Your settings have been saved.')

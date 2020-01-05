@@ -50,6 +50,8 @@ function toggleLikePost(post_id) {
 
 // commenting from post page
 function postCommentPost(post_id) {
+    let txt = $('#comment-input').val().trim();
+    if(txt == '') return false;
     
     let url = '/post/'+post_id+'/comment';
     let form = '#comment'+post_id;

@@ -255,3 +255,10 @@ def clear_single_notif(id):
         notif.delete()
 
     return redirect(request.referrer)
+
+
+@page.route('/profile/<string:lookup_id>/delete', methods=['POST', 'GET'])
+@user_required
+def delete_user(lookup_id):
+    cur_user().delete()
+    return redirect("/")

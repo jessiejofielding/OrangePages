@@ -72,7 +72,7 @@ class User(db.Model):
     _unread_notifs = db.Column(db.Integer, default=0)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    # _posts_made = relationship('Post', back_populates='creator')
+    # _posts_made = relationship('Post', back_populates='creator', cascade="all, delete-orphan")
     _groups = relationship('Group', back_populates='owner')
     _pic = db.Column(db.String(50), default='r3luksdmal8hwkvzfc25')
 
@@ -194,7 +194,7 @@ class User(db.Model):
         #             building, food, team, activities, certificate, birthday):
         #     print(i+ ' ')
         # print('\n\n')
-        
+
         self._hometown, self._state, self._country, \
         self._major, self._rescollege, self._school, self._room, \
         self._building, self._food, self._team, self._activities, \
@@ -363,7 +363,13 @@ class User(db.Model):
 
         return False
 
-
+    def delete(self):
+        for g in self._groups:
+            db.session.delete(g)
+        # self._groups[0].delete()
+        # self._groups[1].delete()
+        db.session.delete(self)
+        db.session.commit()
 
 
 #-----------------------------------------------------------------------
@@ -394,6 +400,8 @@ class Group(db.Model):
     title = db.Column(db.String(50))
     ownerid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     owner = relationship('User', back_populates='_groups')
+    # owner = relationship('User', back_populates='_groups', single_parent=True,
+    # cascade="all, delete-orphan")
     members = relationship('User', secondary=group_member,
                             backref=backref('groups_in', lazy='dynamic'))
 
@@ -418,10 +426,10 @@ class Relationship(db.Model):
     """ Relationship table """
     user1id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user1 = relationship('User',
-                        foreign_keys=[user1id])
+                        foreign_keys=[user1id], cascade="all, delete")
     user2id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user2 = relationship('User',
-                        foreign_keys=[user2id])
+                        foreign_keys=[user2id], cascade="all, delete")
     status = db.Column(db.String(50))
     __table_args__ = (
         PrimaryKeyConstraint('user1id', 'user2id'),
@@ -482,7 +490,7 @@ class Comment(db.Model):
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     # creator = db.Column(db.String(20), db.ForeignKey('user.uid'))
-    creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic'),
+    creator = relationship('User', backref=backref('_comments_posted', lazy='dynamic', cascade="all, delete-orphan"),
         foreign_keys=[creatorid])
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
@@ -510,7 +518,7 @@ class Post(db.Model):
     content = db.Column(db.String(1000))
     creatorid = db.Column(db.String(20), db.ForeignKey('user.uid'))
     # creator = relationship('User', back_populates='_posts_made')
-    creator = relationship('User', backref=backref('_posts_made', lazy='dynamic'), foreign_keys=[creatorid])
+    creator = relationship('User', backref=backref('_posts_made', lazy='dynamic', cascade="all, delete-orphan"), foreign_keys=[creatorid])
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     has_img = db.Column(db.Boolean(), default=False)
     _pic = db.Column(db.String(50))
@@ -725,9 +733,9 @@ class Notification(db.Model):
     senderid = db.Column(db.String(20), db.ForeignKey('user.uid'))
 
     target = relationship('User', backref=backref('notifs',
-        order_by='desc(Notification.date)', lazy='dynamic'),
+        order_by='desc(Notification.date)', lazy='dynamic', cascade="all, delete"),
         foreign_keys=[targetid])
-    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic'),
+    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic', cascade="all, delete"),
         foreign_keys=[senderid])
 
     # Optional

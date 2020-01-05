@@ -86,7 +86,7 @@
                     <img class="rounded-circle" style="border: 4px solid white;"
                     src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
                     alt="failed to load">
-                    {%endif%}     
+                    {%endif%}
                 </div>
                 <div class="col mt-4" >
                     <div class="row">
@@ -97,12 +97,14 @@
                         <div class="col text-left" id="hidden-posts" style="text-align: left; margin-top: -15px;">
                             <button type="button" onclick="toggle_save()" class="btn btn-edit js-edit" data-toggle="tooltip" data-placement="top" title="Edit profile"><i class="fas fa-edit" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
                             <!-- <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button> -->
-                            <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save"style="display: none; margin-left: 5px; width: 100px">Save</button>
+                            <button id="save" type="submit" class="btn btn-primary tag-pill btn-save js-save" style="display: none; margin-left: 5px; width: 100px">Save</button>
+                            <!-- @frontend -->
+                            <a href="/profile/{{user.uid}}/delete" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none"> Delete </a>
                         </div>
                     </div>
 
                     <div class="row mt-3">
-                        <div class="col mt-1"> 
+                        <div class="col mt-1">
                             <span style="font-weight: bold;">{{user.friend_list() | length}}</span> {% if user.friend_list()|length == 1 %}friend{%else%}friends{%endif%} <span style="font-weight: bold; margin-left: 10px">{{user.post_list() | length}}</span> {% if user.post_list()|length == 1 %}post{%else%}posts{%endif%}
                         </div>
                     </div>
@@ -110,13 +112,13 @@
 
             </div>
 
- 
+
             <div id="tabs" class="nav-tabs text-center">
                 <ul class="nav nav-tabs">
                     <li id="details-tab" class="nav-item profile-tab nav-link profile-active" style="margin-left: 15%;"><a onclick='openDetails()' href="#details">Profile Details</a></li>
                     <li id="posts-tab" class="nav-item profile-tab nav-link"><a onclick='openPosts()' href="#posts">Posts</a></li>
                 </ul>
-            
+
             <div id="details" class="ml-5 mb-3 mr-5 mt-3">
 <!--             <form class="is-readonly" action="/edit-user" method="post"
                             enctype=multipart/form-data> -->
@@ -161,7 +163,7 @@
                                 alt=''
                                     class="img-fluid rounded shadow-sm mx-auto d-block">
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -815,8 +817,8 @@
             </div>
         </div>
 
-                
-            
+
+
             <div id="posts" class="text-left m-5 d-none">
                 {% for post in user.post_list() %}
                     <div id="post{{post.pid}}">
@@ -859,6 +861,13 @@
                 $("#hidden-name").toggleClass('d-none');
                 $("#hidden-line").toggleClass('d-none');
                 var x = document.getElementById("save");
+                if (x.style.display === "none") {
+                    x.style.display = "inline";
+                } else {
+                    x.style.display = "none";
+                }
+                var x = document.getElementById("delete-acc");
+
                 if (x.style.display === "none") {
                     x.style.display = "inline";
                 } else {

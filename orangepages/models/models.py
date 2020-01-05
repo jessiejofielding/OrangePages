@@ -104,6 +104,11 @@ class User(db.Model):
             self._pic = tig['public_id']
             db.session.commit()
 
+    def del_img(self):
+        self._img = False
+        self._pic = 'r3luksdmal8hwkvzfc25'
+        db.session.commit()
+
 
     def get_img(self):
         if self._img:

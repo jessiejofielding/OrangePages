@@ -138,19 +138,32 @@
                                 <div class="input-group-append">
                                     <label for="upload" class="btn btn-light m-0 rounded-pill upload-image"> <i
                                     class="fa fa-cloud-upload mr-2 text-muted"></i><small
-                                    class="text-uppercase font-weight-bold text-muted">Choose
-                                    file</small></label>
+                                    class="text-uppercase font-weight-bold text-muted">Upload image</small></label>
                                 </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" id="del-img-btn" class="btn btn-light rounded-pill"><i class="fas fa-times mr-2 text-muted"></i><small
+                                    class="text-uppercase font-weight-bold text-muted">Delete image</small></button>
                             </div>
                             <!-- Upload image input-->
                             <input id="upload" type="file" accept="image/*" onchange="readURL(this);" name="image"
-                            style="display:none">
+                            hidden>
+                            <input type="radio" name="delete-img" id="delete-img" value="delete" hidden>
+                            <input type="radio" name="delete-img" id="keep-img" value="keep" checked hidden>
 
-                            <div class="col-lg-4">
-                                <div class="image-area"><img id="imageResult" src='https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png'
-                                alt="failed to load"
-                                    class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                        </div>
+
+
+                        <div id="hidden-preview" class="row profile-row d-none">
+                            <div class="col-lg-3 profile-label text-left"></div>
+                            <div class="col-lg-6">
+                                <div class="image-area"><img id="imageResult" src='{% if user._img %}https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png{% endif %}'
+                                alt=''
+                                    class="img-fluid rounded shadow-sm mx-auto d-block">
+                                </div>
+                                
                             </div>
+
                         </div>
 
 
@@ -841,6 +854,7 @@
         <script>
             function toggle_save() {
                 $("#hidden-photo").toggleClass('d-none');
+                $("#hidden-preview").toggleClass('d-none');
                 $("#hidden-year").toggleClass('d-none');
                 $("#hidden-name").toggleClass('d-none');
                 $("#hidden-line").toggleClass('d-none');
@@ -851,6 +865,19 @@
                     x.style.display = "none";
                 }
             }
+
+
+
+            $(document).ready(function() {
+                $('#del-img-btn').on({
+                    'click': function(){
+                        $('#imageResult').attr('src','');
+                        $("#upload").val(null);
+                        $("#delete-img").prop("checked", true);
+                    }
+                });
+            })
+
         </script>
 
 

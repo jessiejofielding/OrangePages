@@ -169,6 +169,11 @@ def edit_user():
     user.update_optional_info(hometown, state, country, room, building, food,
     team, activities, certificate, birthday, affiliations)
 
+    delete_img = request.form.get('delete-img')
+    if delete_img == 'delete':
+        user.del_img()
+
+
     if "image" in request.files:
         image = request.files["image"]
         if image.filename is not '':

@@ -366,8 +366,15 @@ class User(db.Model):
     def delete(self):
         for g in self._groups:
             db.session.delete(g)
-        # self._groups[0].delete()
-        # self._groups[1].delete()
+
+        rels = Relationship.query.filter(or_(Relationship.user1.has(uid=self.uid), Relationship.user2.has(uid=self.uid))).all()
+        for r in rels:
+            db.session.delete(r)
+
+        notifs_sent = Notification.query.filter(Notification.sender.has(uid=self.uid)).all()
+        for n in notifs_sent:
+            n.delete()
+
         db.session.delete(self)
         db.session.commit()
 
@@ -426,10 +433,10 @@ class Relationship(db.Model):
     """ Relationship table """
     user1id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user1 = relationship('User',
-                        foreign_keys=[user1id], cascade="all, delete")
+                        foreign_keys=[user1id])
     user2id = db.Column(db.String(20), db.ForeignKey('user.uid'))
     user2 = relationship('User',
-                        foreign_keys=[user2id], cascade="all, delete")
+                        foreign_keys=[user2id])
     status = db.Column(db.String(50))
     __table_args__ = (
         PrimaryKeyConstraint('user1id', 'user2id'),
@@ -735,7 +742,7 @@ class Notification(db.Model):
     target = relationship('User', backref=backref('notifs',
         order_by='desc(Notification.date)', lazy='dynamic', cascade="all, delete"),
         foreign_keys=[targetid])
-    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic', cascade="all, delete"),
+    sender = relationship('User', backref=backref('_notifs_sent', lazy='dynamic'),
         foreign_keys=[senderid])
 
     # Optional

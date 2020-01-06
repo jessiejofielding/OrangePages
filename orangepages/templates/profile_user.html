@@ -830,6 +830,51 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Affiliations</div>
+                            {% if user.rca %}
+                                <!-- <div type="text" class="form-control is-disabled"value="RCA" disabled> -->
+                                RCA
+                                <div class="col-lg-2">
+                                    <select name="rca_priv" class="form-control is-disabled" disabled>
+                                        <option {% if cur_privacy['rca'] == 'Public' %} selected {% endif %}>Public
+                                        </option>
+                                        <option {% if cur_privacy['rca'] == 'Friends' %} selected {% endif %}>Friends
+                                        </option>
+                                        <option {% if cur_privacy['rca'] == 'Just me' %} selected {% endif %}>Just me
+                                        </option>
+                                    </select>
+                                </div>
+                            {% endif %}
+                            {% if user.paa %}
+                                PAA
+                                <div class="col-lg-2">
+                                    <select name="paa_priv" class="form-control is-disabled" disabled>
+                                        <option {% if cur_privacy['paa'] == 'Public' %} selected {% endif %}>Public
+                                        </option>
+                                        <option {% if cur_privacy['paa'] == 'Friends' %} selected {% endif %}>Friends
+                                        </option>
+                                        <option {% if cur_privacy['paa'] == 'Just me' %} selected {% endif %}>Just me
+                                        </option>
+                                    </select>
+                                </div>
+                            {% endif %}
+                            {% if user.sharepeer %}
+                                Share Peer
+                                <div class="col-lg-2">
+                                    <select name="sharepeer_priv" class="form-control is-disabled" disabled>
+                                        <option {% if cur_privacy['sharepeer'] == 'Public' %} selected {% endif %}>Public
+                                        </option>
+                                        <option {% if cur_privacy['sharepeer'] == 'Friends' %} selected {% endif %}>Friends
+                                        </option>
+                                        <option {% if cur_privacy['sharepeer'] == 'Just me' %} selected {% endif %}>Just me
+                                        </option>
+                                    </select>
+                                </div>
+                            {% endif %}
+
+
+                      </div>
                     </fieldset>
                     </form>
                     <hr>

@@ -69,6 +69,16 @@ class User(db.Model):
     birthday = db.Column(db.String(50))
     _birthday = db.Column(db.Integer, default=1)
 
+    rca = db.Column(db.String(50))
+    _rca = db.Column(db.Integer, default=1)
+    paa = db.Column(db.String(50))
+    _paa = db.Column(db.Integer, default=1)
+    sharepeer = db.Column(db.String(50))
+    _sharepeer = db.Column(db.Integer, default=1)
+
+    # affils = db.Column(db.String(70), default="")
+    # _affils = db.Column(db.Integer, default=1)
+
     _unread_notifs = db.Column(db.Integer, default=0)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -144,8 +154,17 @@ class User(db.Model):
         self.activities = activities
         self.certificate = certificate
         self.birthday = birthday
-        for affil in affiliations:
-            pass
+
+        # for affil in affiliations:
+        #     self.affils += (affil + ", ")
+
+        if "PAA" in affiliations:
+            self.paa = "PAA"
+        if "RCA" in affiliations:
+            self.rca = "RCA"
+        if "Share Peer" in affiliations:
+            self.sharepeer = "Share Peer"
+
         db.session.commit()
 
 
@@ -156,7 +175,8 @@ class User(db.Model):
             self._hometown, self._state, self._country, self._year,
             self._major, self._rescollege, self._school, self._room,
             self._building, self._food, self._team, self._activities,
-            self._certificate, self._birthday)
+            self._certificate, self._birthday, self._rca, self._paa,
+            self._sharepeer)
 
     # return list of privacy strings as list of corr. group ids
     def priv_to_group(self, privs):
@@ -186,7 +206,17 @@ class User(db.Model):
 
     def update_privacy(self, hometown, state,
         country, major, rescollege, school, room, building, food,
-        team, activities, certificate, birthday):
+        team, activities, certificate, birthday, rca, paa, sharepeer):
+
+        mapping = {
+            1: 'Public',
+            self._groups[0].gid: 'Friends',
+            self._groups[1].gid: 'Just me'
+        }
+
+        rca = rca if rca else mapping[self._rca]
+        paa = paa if paa else mapping[self._paa]
+        sharepeer = sharepeer if sharepeer else mapping[self._sharepeer]
 
         # print('\n\n update priv raw params:\n')
         # for i in (hometown,
@@ -198,10 +228,11 @@ class User(db.Model):
         self._hometown, self._state, self._country, \
         self._major, self._rescollege, self._school, self._room, \
         self._building, self._food, self._team, self._activities, \
-        self._certificate, self._birthday = \
+        self._certificate, self._birthday, self._rca, self._paa, self._sharepeer = \
         self.priv_to_group((hometown,
             state, country, major, rescollege, school, room,
-            building, food, team, activities, certificate, birthday))
+            building, food, team, activities, certificate, birthday, rca,
+            paa, sharepeer))
 
         # print('\n\n update priv after params:\n')
         # for i in self.group_to_priv(self.get_attr_priv()):
@@ -233,13 +264,14 @@ class User(db.Model):
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
             'state', 'country', 'year', 'major', 'rescollege', 'school',
             'room', 'building', 'food', 'team', 'activities', 'certificate',
-            'birthday']
+            'birthday', 'rca', 'paa', 'sharepeer']
 
         vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname, lookup_user.email,
             lookup_user.hometown, lookup_user.state, lookup_user.country, lookup_user.year,
             lookup_user.major, lookup_user.rescollege, lookup_user.school, lookup_user.room,
             lookup_user.building, lookup_user.food, lookup_user.team, lookup_user.activities,
-            lookup_user.certificate, lookup_user.birthday]
+            lookup_user.certificate, lookup_user.birthday, lookup_user.rca,
+            lookup_user.paa, lookup_user.sharepeer]
 
         privs = lookup_user.get_attr_priv() # gid allowed to view each attr
 

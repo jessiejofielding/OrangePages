@@ -250,13 +250,13 @@
                                 <div class="col-lg-3 text-left">Affiliations:</div>
                                 <div class="col-lg-9">
                                     {% if lookup.rca %}
-                                        RCA
+                                        {{lookup_priv["rca"]}}
                                     {% endif %}
                                     {% if lookup.paa %}
-                                        PAA
+                                        {{lookup_priv["paa"]}}
                                     {% endif %}
                                     {% if lookup.sharepeer %}
-                                        Share Peer
+                                        {{lookup_priv["sharepeer"]}}
                                     {% endif %}
 
                                 </div>

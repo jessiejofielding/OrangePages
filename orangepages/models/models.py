@@ -264,13 +264,14 @@ class User(db.Model):
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
             'state', 'country', 'year', 'major', 'rescollege', 'school',
             'room', 'building', 'food', 'team', 'activities', 'certificate',
-            'birthday']
+            'birthday', 'rca', 'paa', 'sharepeer']
 
         vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname, lookup_user.email,
             lookup_user.hometown, lookup_user.state, lookup_user.country, lookup_user.year,
             lookup_user.major, lookup_user.rescollege, lookup_user.school, lookup_user.room,
             lookup_user.building, lookup_user.food, lookup_user.team, lookup_user.activities,
-            lookup_user.certificate, lookup_user.birthday]
+            lookup_user.certificate, lookup_user.birthday, lookup_user.rca,
+            lookup_user.paa, lookup_user.sharepeer]
 
         privs = lookup_user.get_attr_priv() # gid allowed to view each attr
 

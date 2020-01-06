@@ -246,6 +246,21 @@
                                         value="{{lookup_priv["birthday"]}}" disabled>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-3 text-left">Affiliations:</div>
+                                <div class="col-lg-9">
+                                    {% if lookup.rca %}
+                                        RCA
+                                    {% endif %}
+                                    {% if lookup.paa %}
+                                        PAA
+                                    {% endif %}
+                                    {% if lookup.sharepeer %}
+                                        Share Peer
+                                    {% endif %}
+
+                                </div>
+                            </div>
                         </fieldset>
                     </form>
 

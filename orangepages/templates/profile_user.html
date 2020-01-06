@@ -832,6 +832,29 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Affiliations</div>
+                            {% if user.rca %}
+                                RCA
+                            {% endif %}
+                            {% if user.paa %}
+                                PAA
+                            {% endif %}
+                            {% if user.sharepeer %}
+                                Share Peer
+                            {% endif %}
+
+                            <!-- <div class="col-lg-2">
+                                <select name="birthday_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['birthday'] == 'Public' %} selected {% endif %}>Public
+                                    </option>
+                                    <option {% if cur_privacy['birthday'] == 'Friends' %} selected {% endif %}>Friends
+                                    </option>
+                                    <option {% if cur_privacy['birthday'] == 'Just me' %} selected {% endif %}>Just me
+                                    </option>
+                                </select>
+                            </div> -->
+                      </div>
                     </fieldset>
                     </form>
                 </div>

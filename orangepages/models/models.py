@@ -69,6 +69,16 @@ class User(db.Model):
     birthday = db.Column(db.String(50))
     _birthday = db.Column(db.Integer, default=1)
 
+    rca = db.Column(db.String(50))
+    _rca = db.Column(db.Integer, default=1)
+    paa = db.Column(db.String(50))
+    _paa = db.Column(db.Integer, default=1)
+    sharepeer = db.Column(db.String(50))
+    _sharepeer = db.Column(db.Integer, default=1)
+
+    # affils = db.Column(db.String(70), default="")
+    # _affils = db.Column(db.Integer, default=1)
+
     _unread_notifs = db.Column(db.Integer, default=0)
 
     _dateofreg = db.Column(db.DateTime, default=datetime.datetime.utcnow)
@@ -144,8 +154,17 @@ class User(db.Model):
         self.activities = activities
         self.certificate = certificate
         self.birthday = birthday
-        for affil in affiliations:
-            pass
+
+        # for affil in affiliations:
+        #     self.affils += (affil + ", ")
+
+        if "PAA" in affiliations:
+            self.paa = "PAA"
+        if "RCA" in affiliations:
+            self.rca = "RCA"
+        if "Share Peer" in affiliations:
+            self.sharepeer = "Share Peer"
+
         db.session.commit()
 
 

@@ -165,6 +165,13 @@ def edit_user():
     birthday = request.form.get('birthday')
     affiliations = []
 
+    if request.form.get('rca'):
+        affiliations.append('RCA')
+    if request.form.get('paa'):
+        affiliations.append('PAA')
+    if request.form.get('share_peer'):
+        affiliations.append('Share Peer')
+
     # Update attributes
     user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
     user.update_optional_info(hometown, state, country, room, building, food,

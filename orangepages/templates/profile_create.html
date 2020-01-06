@@ -280,45 +280,45 @@ $(document).ready(function() {
     $("#school").change(function() {
         var val = $(this).val();
         if (val == "AB") {
-            $("#major").html("<option value='aas'>African American Studies</option>\
-                             <option value='ant'>Anthropology</option>\
-                             <option value='arc'>Architecture</option>\
-                             <option value='art'>Art and Archaeology</option>\
-                             <option value='ast'>Astrophysical Sciences</option>\
-                             <option value='chm'>Chemistry</option>\
-                             <option value='cla'>Classics</option>\
-                             <option value='cmp'>Comparative Literature</option>\
-                             <option value='cos'>Computer Science</option>\
-                             <option value='eas'>East Asian Studies</option>\
-                             <option value='eeb'>Ecology and Evolutionary Biology</option>\
-                             <option value='eco'>Economics</option>\
-                             <option value='eng'>English</option>\
-                             <option value='fre'>French and Italian</option>\
-                             <option value='geo'>Geosciences</option>\
-                             <option value='ger'>German</option>\
-                             <option value='his'>History</option>\
-                             <option value='mat'>Mathematics</option>\
-                             <option value='mol'>Molecular Biology</option>\
-                             <option value='mus'>Music</option>\
-                             <option value='nes'>Near Eastern Studies</option>\
-                             <option value='neu'>Neuroscience</option>\
-                             <option value='phi'>Philosophy</option>\
-                             <option value='phy'>Physics</option>\
-                             <option value='pol'>Politics</option>\
-                             <option value='psy'>Psychology</option>\
-                             <option value='rel'>Religion</option>\
-                             <option value='sla'>Slavic Languages and Literatures</option>\
-                             <option value='soc'>Sociology</option>\
-                             <option value='spa'>Spanish and Portuguese</option>\
-                             <option value='wws'>Woodrow Wilson School</option>\
+            $("#major").html("<option value='AAS'>African American Studies</option>\
+                             <option value='ANT'>Anthropology</option>\
+                             <option value='ARC'>Architecture</option>\
+                             <option value='ART'>Art and Archaeology</option>\
+                             <option value='AST'>Astrophysical Sciences</option>\
+                             <option value='CHM'>Chemistry</option>\
+                             <option value='CLA'>Classics</option>\
+                             <option value='CMP'>Comparative Literature</option>\
+                             <option value='COS'>Computer Science</option>\
+                             <option value='EAS'>East Asian Studies</option>\
+                             <option value='EEB'>Ecology and Evolutionary Biology</option>\
+                             <option value='ECO'>Economics</option>\
+                             <option value='ENG'>English</option>\
+                             <option value='FRE'>French and Italian</option>\
+                             <option value='GEO'>Geosciences</option>\
+                             <option value='GER'>German</option>\
+                             <option value='HIS'>History</option>\
+                             <option value='MAT'>Mathematics</option>\
+                             <option value='MOL'>Molecular Biology</option>\
+                             <option value='MUS'>Music</option>\
+                             <option value='NES'>Near Eastern Studies</option>\
+                             <option value='NEU'>Neuroscience</option>\
+                             <option value='PHI'>Philosophy</option>\
+                             <option value='PHY'>Physics</option>\
+                             <option value='POL'>Politics</option>\
+                             <option value='PSY'>Psychology</option>\
+                             <option value='REL'>Religion</option>\
+                             <option value='SLA'>Slavic Languages and Literatures</option>\
+                             <option value='SOC'>Sociology</option>\
+                             <option value='SPA'>Spanish and Portuguese</option>\
+                             <option value='WWS'>Woodrow Wilson School</option>\
                              ");
         } else if (val == "BSE") {
             $("#major").html("<option value='cbe'>Chemical and Biological Engineering</option>\
-                            <option value='cee'>Civil and Environmental Engineering</option>\
-                            <option value='cos'>Computer Science</option>\
-                            <option value='ele'>Electrical Engineering</option>\
-                            <option value='mae'>Mechanical and Aerospace Engineering</option>\
-                            <option value='orf'>Operations Research and Financial Engineering</option>\
+                            <option value='CEE' {% if 'CEE' == major_code %} selected {%endif%} >Civil and Environmental Engineering</option>\
+                            <option value='COS' {% if 'COS' == major_code %} selected {%endif%}>Computer Science</option>\
+                            <option value='ELE' {% if 'ELE' == major_code %} selected {%endif%}>Electrical Engineering</option>\
+                            <option value='MAE' {% if 'MAE' == major_code %} selected {%endif%}>Mechanical and Aerospace Engineering</option>\
+                            <option value='ORF' {% if 'ORF' == major_code %} selected {%endif%}>Operations Research and Financial Engineering</option>\
                             ");
         }
     });
@@ -369,8 +369,8 @@ $(document).ready(function() {
                         <h2 class="fs-subtitle">What's your (prospective) major?</h2>
                         <div class="input-group">
                             <select name="school" class="selectpicker form-control" id="school">
-                                <option value="AB" {% if major_type == "AB" %} selected {%endif%} >AB</option>
-                                <option value="BSE" {% if major_type == "BSE" %} selected {%endif%} >BSE</option>
+                                <option value="AB" {% if "AB" == major_type %} selected {%endif%} >AB</option>
+                                <option value="BSE" {% if "BSE" == major_type %} selected {%endif%} >BSE</option>
                             </select>
                         </div>
 

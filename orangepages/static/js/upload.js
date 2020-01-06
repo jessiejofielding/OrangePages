@@ -17,6 +17,14 @@ $(function () {
     $('#upload').on('change', function () {
         readURL(input);
     });
+
+    $('#del-img-btn').on({
+        'click': function(){
+            $('#imageResult').attr('src','');
+            $("#upload").val(null);
+            $("#delete-img").prop("checked", true);
+        }
+    });
 });
 
 /*  ==========================================

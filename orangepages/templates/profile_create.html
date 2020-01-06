@@ -11,6 +11,11 @@
 <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
 <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
 <link rel="stylesheet" href="/static/css/create-user.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
+        type="text/css" />
+ <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" />
 
 <script>
 function collapse() {
@@ -450,7 +455,7 @@ $(document).ready(function() {
                     </div>
                 </div> -->
 
-                <div id="image-input">
+                <!-- <div id="image-input">
                     <div class="form-group row justify-content-center mt-4">
                         <div class="col-sm-9">
                             <div class="file-path-wrapper">
@@ -458,7 +463,27 @@ $(document).ready(function() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+                <div class="form-group row justify-content-center mb-0">
+                     <div class="col-sm-8">
+                            <h2 class="fs-subtitle">Upload a profile picture below:</h2>
+                     </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                     <div class="input-group-append">
+                          <label for="upload" class="btn btn-light m-0 rounded-pill upload-image"> <i
+                          class="fa fa-cloud-upload mr-2 text-muted"></i><small
+                          class="text-uppercase font-weight-bold text-muted">Upload image</small></label>
+                          <button type="button" id="del-img-btn" class="btn btn-light rounded-pill"><i class="fas fa-times mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Delete image</small></button>
+                     </div>
+              </div>
+              <div class="form-group row justify-content-center">
+                  <div class="col-sm-8">
+                     <input id="upload" type="file" accept="image/*" onchange="readURL(this);" name="image" hidden>
+                     <div class="image-area" style="width:100%"><img id="imageResult" src='{% if user._img %}https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png{% endif %}' alt='' class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                  </div>
+              </div>
 
                 <input type="button" name="next" class="next action-button" value="Next"/>
             </fieldset>
@@ -898,3 +923,4 @@ $(document).ready(function() {
 
 
 <script src="/static/js/create-profile.js"></script>
+<script src="/static/js/upload.js"></script>

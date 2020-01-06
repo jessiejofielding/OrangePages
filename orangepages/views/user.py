@@ -23,12 +23,11 @@ def view_profile(lookup_id):
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
             'state', 'country', 'year', 'major', 'rescollege', 'school',
             'room', 'building', 'food', 'team', 'activities',
-            'certificate', 'birthday']
+            'certificate', 'birthday', 'rca', 'paa', 'sharepeer']
         privs = user.group_to_priv(user.get_attr_priv())
         cur_privacy = {}
         for name, priv in zip(names, privs):
             cur_privacy[name] = priv
-            # print(name + " " + priv)
         return render('profile_user.html', cur_privacy = cur_privacy)
 
     lookup = User.query.get(lookup_id)
@@ -203,12 +202,16 @@ def edit_user():
     activities_priv = request.form.get('activities_priv')
     certificate_priv = request.form.get('certificate_priv')
     birthday_priv = request.form.get('birthday_priv')
+    rca_priv = request.form.get('rca_priv')
+    paa_priv = request.form.get('paa_priv')
+    sharepeer_priv = request.form.get('sharepeer_priv')
 
     # Update privacy
     user.update_privacy(hometown_priv, state_priv, country_priv,
         major_priv, rescollege_priv, school_priv, room_priv,
         building_priv, food_priv, team_priv, activities_priv,
-        certificate_priv, birthday_priv)
+        certificate_priv, birthday_priv, rca_priv, paa_priv,
+        sharepeer_priv)
 
     return redirect('/profile/'+cur_uid())
 

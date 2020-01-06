@@ -175,7 +175,8 @@ class User(db.Model):
             self._hometown, self._state, self._country, self._year,
             self._major, self._rescollege, self._school, self._room,
             self._building, self._food, self._team, self._activities,
-            self._certificate, self._birthday)
+            self._certificate, self._birthday, self._rca, self._paa,
+            self._sharepeer)
 
     # return list of privacy strings as list of corr. group ids
     def priv_to_group(self, privs):
@@ -205,7 +206,17 @@ class User(db.Model):
 
     def update_privacy(self, hometown, state,
         country, major, rescollege, school, room, building, food,
-        team, activities, certificate, birthday):
+        team, activities, certificate, birthday, rca, paa, sharepeer):
+
+        mapping = {
+            1: 'Public',
+            self._groups[0].gid: 'Friends',
+            self._groups[1].gid: 'Just me'
+        }
+
+        rca = rca if rca else mapping[self._rca]
+        paa = paa if paa else mapping[self._paa]
+        sharepeer = sharepeer if sharepeer else mapping[self._sharepeer]
 
         # print('\n\n update priv raw params:\n')
         # for i in (hometown,
@@ -217,10 +228,11 @@ class User(db.Model):
         self._hometown, self._state, self._country, \
         self._major, self._rescollege, self._school, self._room, \
         self._building, self._food, self._team, self._activities, \
-        self._certificate, self._birthday = \
+        self._certificate, self._birthday, self._rca, self._paa, self._sharepeer = \
         self.priv_to_group((hometown,
             state, country, major, rescollege, school, room,
-            building, food, team, activities, certificate, birthday))
+            building, food, team, activities, certificate, birthday, rca,
+            paa, sharepeer))
 
         # print('\n\n update priv after params:\n')
         # for i in self.group_to_priv(self.get_attr_priv()):

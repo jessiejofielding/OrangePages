@@ -302,7 +302,7 @@
                                     value="{{user.rescollege}}" disabled> -->
                                     <div class="input-group">
                                         <select name="rescollege" class="select form-control is-disabled" id="rescollege" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%}>Add your res college...</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%}></option>
                                             <option value="mathey" {% if "mathey"  == user.rescollege %} selected {%endif%} >Mathey</option>
                                             <option value="rocky"  {% if "rocky"   == user.rescollege %} selected {%endif%}>Rocky</option>
                                             <option value="wilson" {% if "wilson"  == user.rescollege %} selected {%endif%}>Wilson</option>
@@ -366,7 +366,7 @@
                                      placeholder="State" value="{{user.state}}" disabled> -->
                                     <div class="input-group">
                                         <select name="state" class="select form-control is-disabled" id="state" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} >State</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} ></option>
                                             <option value="none" {% if "none" == user.state %} selected {%endif%} >N/A</option>
                                             <option value="AL"   {% if "AL"   == user.state %} selected {%endif%} >Alabama</option>
                                             <option value="AK"   {% if "AK"   == user.state %} selected {%endif%} >Alaska</option>
@@ -441,7 +441,7 @@
                                     disabled> -->
                                     <div class="input-group">
                                         <select name="country" class="select form-control is-disabled" id="country" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} >Country</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} ></option>
                                             <option value="Afghanistan"                                  {% if "Afghanistan"                                    == user.country %} selected {%endif%}>Afghanistan</option>
                                             <option value="Åland Islands"                                {% if "Åland Islands"                                  == user.country %} selected {%endif%}>Åland Islands</option>
                                             <option value="Albania"                                      {% if "Albania"                                        == user.country %} selected {%endif%}>Albania</option>
@@ -742,7 +742,7 @@
                                      placeholder="Food" value="{{user.food}}" disabled> -->
                                     <div class="input-group">
                                         <select name="food" id="food" class="select form-control is-disabled" disabled>
-                                            <option value="" {%if user.year%}{%else%}selected{%endif%}>Food</option>
+                                            <option value="" {%if user.year%}{%else%}selected{%endif%}></option>
                                             <option value="none"               {% if "none"               == user.food %} selected {%endif%}>N/A</option>
                                             <option value="Dining Halls"       {% if "Dining Halls"       == user.food %} selected {%endif%}>Dining Halls</option>
                                             <option value="Colonial"           {% if "Colonial"           == user.food %} selected {%endif%}>Colonial</option>

@@ -33,8 +33,8 @@ def cur_uid():
     netid = cas.username
 
     # LOCAL TESTING: use netid stored in cookie instead of cas
-    # if netid is None:
-    #     return request.cookies.get('uid')
+    if netid is None:
+        return None
 
     return netid[0]
 

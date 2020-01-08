@@ -162,12 +162,16 @@ class User(db.Model):
         # for affil in affiliations:
         #     self.affils += (affil + ", ")
 
-        if "PAA" in affiliations:
-            self.paa = "PAA"
-        if "RCA" in affiliations:
-            self.rca = "RCA"
-        if "Share Peer" in affiliations:
-            self.sharepeer = "Share Peer"
+        self.paa = "PAA" if "PAA" in affiliations else None
+        self.rca = "RCA" if "RCA" in affiliations else None
+        self.sharepeer = "Share Peer" if "Share Peer" in affiliations else None
+
+        # if "PAA" in affiliations:
+        #     self.paa = "PAA"
+        # if "RCA" in affiliations:
+        #     self.rca = "RCA"
+        # if "Share Peer" in affiliations:
+        #     self.sharepeer = "Share Peer"
 
         db.session.commit()
 

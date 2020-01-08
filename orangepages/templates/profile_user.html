@@ -15,6 +15,7 @@
         type="text/css" />
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         type="text/css" />
+    <link rel="stylesheet" href="/static/css/profile-user.css" type="text/css" />
 
 
     <!-- Scrollbar Custom CSS -->
@@ -120,7 +121,7 @@
                         <div class="col text-left" id="hidden-posts" style="text-align: left; margin-top: -15px;">
                             <button type="button" onclick="toggle_save()" class="btn btn-edit js-edit" data-toggle="tooltip" data-placement="top" title="Edit profile"><i class="fas fa-edit" style="background-color: white; color: var(--new-orange); outline: none;"></i></button>
                             <!-- <button type="button" class="btn " data-toggle="tooltip" data-placement="top" title="Update Privacy Settings"><i class="fas fa-cog" style="background-color: white; color: var(--new-orange); outline: none;"></i></button> -->
-                            
+
 
                             <!-- <a href="/profile/{{user.uid}}/delete" id="delete-acc" class="btn btn-primary tag-pill btn-save js-save" style="display: none"> Delete </a> -->
                         </div>
@@ -852,49 +853,67 @@
                                 </select>
                             </div>
                         </div>
+                        <!-- affiliations -->
+                        <!-- RCA -->
+                        <div class="row profile-row" style="margin-top:10px;">
+                            <div class="col-lg-3 profile-label text-left">Affliations</div>
+                            <div class="col-lg-5">
+                            <div {% if user.rca: %} class="affils" {% else: %} class="no-affils" {% endif %}>RCA</div>
+                            </div>
+                            <div class="col-lg-2">
+                              <input type="checkbox" name="rca" class="form-control is-disabled" {% if user.rca %} checked {% endif %} disabled>
+                            </div>
+                            <div class="col-lg-2">
+                              <select name="rca_priv" class="form-control is-disabled" disabled>
+                                  <option {% if cur_privacy['rca'] == 'Public' %} selected {% endif %}>Public
+                                  </option>
+                                  <option {% if cur_privacy['rca'] == 'Friends' %} selected {% endif %}>Friends
+                                  </option>
+                                  <option {% if cur_privacy['rca'] == 'Just me' %} selected {% endif %}>Just me
+                                  </option>
+                              </select>
+                            </div>
+                        </div>
+                        <!-- PAA -->
                         <div class="row profile-row">
-                            <div class="col-lg-3 profile-label text-left">Affiliations</div>
-                            {% if user.rca %}
-                                <!-- <div type="text" class="form-control is-disabled"value="RCA" disabled> -->
-                                RCA
-                                <div class="col-lg-2">
-                                    <select name="rca_priv" class="form-control is-disabled" disabled>
-                                        <option {% if cur_privacy['rca'] == 'Public' %} selected {% endif %}>Public
-                                        </option>
-                                        <option {% if cur_privacy['rca'] == 'Friends' %} selected {% endif %}>Friends
-                                        </option>
-                                        <option {% if cur_privacy['rca'] == 'Just me' %} selected {% endif %}>Just me
-                                        </option>
-                                    </select>
-                                </div>
-                            {% endif %}
-                            {% if user.paa %}
-                                PAA
-                                <div class="col-lg-2">
-                                    <select name="paa_priv" class="form-control is-disabled" disabled>
-                                        <option {% if cur_privacy['paa'] == 'Public' %} selected {% endif %}>Public
-                                        </option>
-                                        <option {% if cur_privacy['paa'] == 'Friends' %} selected {% endif %}>Friends
-                                        </option>
-                                        <option {% if cur_privacy['paa'] == 'Just me' %} selected {% endif %}>Just me
-                                        </option>
-                                    </select>
-                                </div>
-                            {% endif %}
-                            {% if user.sharepeer %}
-                                Share Peer
-                                <div class="col-lg-2">
-                                    <select name="sharepeer_priv" class="form-control is-disabled" disabled>
-                                        <option {% if cur_privacy['sharepeer'] == 'Public' %} selected {% endif %}>Public
-                                        </option>
-                                        <option {% if cur_privacy['sharepeer'] == 'Friends' %} selected {% endif %}>Friends
-                                        </option>
-                                        <option {% if cur_privacy['sharepeer'] == 'Just me' %} selected {% endif %}>Just me
-                                        </option>
-                                    </select>
-                                </div>
-                            {% endif %}
-
+                            <div class="col-lg-3 profile-label text-left"></div>
+                            <div class="col-lg-5">
+                            <div {% if user.paa: %} class="affils" {% else: %} class="no-affils" {% endif %}>PAA</div>
+                            </div>
+                            <div class="col-lg-2">
+                              <input type="checkbox" name="paa" class="form-control is-disabled" {% if user.paa %} checked {% endif %} disabled>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="paa_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['paa'] == 'Public' %} selected {% endif %}>Public
+                                    </option>
+                                    <option {% if cur_privacy['paa'] == 'Friends' %} selected {% endif %}>Friends
+                                    </option>
+                                    <option {% if cur_privacy['paa'] == 'Just me' %} selected {% endif %}>Just me
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Share Peer -->
+                        <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left"></div>
+                            <div class="col-lg-5">
+                            <div {% if user.sharepeer: %} class="affils" {% else: %} class="no-affils" {% endif %}>Share Peer</div>
+                            </div>
+                            <div class="col-lg-2">
+                              <input type="checkbox" name="share_peer" class="form-control is-disabled" {% if user.sharepeer %} checked {% endif %} disabled>
+                            </div>
+                            <div class="col-lg-2">
+                              <select name="sharepeer_priv" class="form-control is-disabled" disabled>
+                                  <option {% if cur_privacy['sharepeer'] == 'Public' %} selected {% endif %}>Public
+                                  </option>
+                                  <option {% if cur_privacy['sharepeer'] == 'Friends' %} selected {% endif %}>Friends
+                                  </option>
+                                  <option {% if cur_privacy['sharepeer'] == 'Just me' %} selected {% endif %}>Just me
+                                  </option>
+                              </select>
+                            </div>
+                        </div>
 
                       </div>
                     </fieldset>

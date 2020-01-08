@@ -1,0 +1,23 @@
+.affils {
+  color: white;
+  padding-top, padding-bottom: 10px;
+  /* height: 30px; */
+  width: max-content;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: var(--new-orange);
+  border-radius: 5px;
+}
+
+.no-affils {
+  font-style: italic;
+  color: #808080;
+  /* color: var(--gray); */
+  padding-top, padding-bottom: 10px;
+  /* height: 30px; */
+  width: max-content;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: white;
+  border-radius: 5px;
+}

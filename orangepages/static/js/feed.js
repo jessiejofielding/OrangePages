@@ -32,14 +32,17 @@ $(document).ready(function() {
     $("#load-new-posts").click(showNewPosts); 
 });
 
-
 // auto refresh
 window.onload = setupRefresh;
 function setupRefresh()
 {
-    setInterval(refreshFeed,20000); // 20s
+    feedInterval = setInterval(refreshFeed,20000); // 20s
 }
 
+function stopRefresh()
+{
+    clearInterval(feedInterval);
+}
 
 // Refresh: update posts currently displayed on feed
 // Check: check if there are new posts available to be displayed

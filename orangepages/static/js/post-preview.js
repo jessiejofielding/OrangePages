@@ -47,6 +47,7 @@ function toggleLike(post_id) {
 // commenting
 var postingComment = false;
 function postComment(post_id) {
+    setupRefresh()
 
     // Prevent empty comment
     let txt = '#comment-txt'+post_id;

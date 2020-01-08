@@ -122,7 +122,7 @@
           <form id="comment{{post.pid}}">
             <div class="row" style="border-top: 1px solid #f0f0f0; margin-top: -1px">
               <div class="col mt-2" style="margin-bottom: 12px;">
-                <textarea id="comment-txt{{post.pid}}" name="content" class="form-control comment-textarea post-subtitle" rows="1" placeholder="Write a comment..."></textarea>
+                <textarea id="comment-txt{{post.pid}}" onclick="stopRefresh()" name="content" class="form-control comment-textarea post-subtitle" rows="1" placeholder="Write a comment..."></textarea>
               </div>
               <div class="col mt-2" style="-ms-flex: 0 0 40px; flex: 0 0 40px; padding-left: 0px">
                 <button type="submit" class="btn btn-comment" onclick="postComment('{{post.pid}}'); return false;">Post</button>

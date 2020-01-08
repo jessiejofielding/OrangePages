@@ -299,6 +299,24 @@
                             </div>
                         </div>
                         <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">Pronouns</div>
+                            <div class="col-lg-7">
+                                <input type="text" class="form-control is-disabled" name="pronoun"
+                                     placeholder="Pronoun" value="{{user.pronoun}}"
+                                    disabled>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="pronoun_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['pronoun'] == 'Public' %} selected {% endif %}>Public
+                                    </option>
+                                    <option {% if cur_privacy['pronoun'] == 'Friends' %} selected {% endif %}>Friends
+                                    </option>
+                                    <option {% if cur_privacy['pronoun'] == 'Just me' %} selected {% endif %}>Just me
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row profile-row">
                             <div class="col-lg-3 profile-label text-left">School</div>
                             <div class="col-lg-7">
                                 <!-- <input type="text" class="form-control is-disabled" name="school"

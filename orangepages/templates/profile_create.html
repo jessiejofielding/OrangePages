@@ -333,7 +333,7 @@
                              <option value='WWS'>Woodrow Wilson School</option>\
                              ");
                     } else if (val == "BSE") {
-                        $("#major").html("<option value='cbe'>Chemical and Biological Engineering</option>\
+                        $("#major").html("<option value='CBE' {% if 'CBE' == major_code %} selected {%endif%} >Chemical and Biological Engineering</option>\
                             <option value='CEE' {% if 'CEE' == major_code %} selected {%endif%} >Civil and Environmental Engineering</option>\
                             <option value='COS' {% if 'COS' == major_code %} selected {%endif%}>Computer Science</option>\
                             <option value='ELE' {% if 'ELE' == major_code %} selected {%endif%}>Electrical Engineering</option>\
@@ -361,8 +361,8 @@
                 <!-- TODO: implement validation between fieldsets: currently no fields are required -->
                 <fieldset style="padding: 10px; padding-top: 30px">
                     <h2 class="fs-title">Create a Profile</h2>
-                    <h2 class="fs-subtitle">This information will be displayed to everyone. It can be changed at any
-                        time.</h2>
+                    <h2 class="fs-subtitle">This information can be changed at any
+                        time in your profile.</h2>
                     <div class="form-group row justify-content-center" style="padding:10px">
                         <input required class="col-sm-4" style="margin:10px" class="input-field" type="text"
                             name="firstname" maxlength="30" placeholder="First Name *" {% if first_name is not none %}
@@ -370,6 +370,10 @@
                         <input required class="col-sm-4" style="margin:10px" class="input-field" type="text"
                             name="lastname" maxlength="30" placeholder="Last Name *" {% if last_name is not none %}
                             value={{last_name}} {%endif%} />
+                    </div>
+                    <div class="form-group row justify-content-center" style="padding:20px">
+                        <input class="col-sm-8" class="input-field" type="text" name="pronoun" maxlength="30"
+                            placeholder="Pronouns, example: she/her/hers" />
                     </div>
 
                     <div class="form-group row justify-content-center">
@@ -464,6 +468,11 @@
                                         Portuguese</option>
                                     <option value='WWS' {% if 'WWS' == major_code %} selected {%endif%}>Woodrow Wilson
                                         School</option>
+                                    <option value='CBE' {% if 'CBE' == major_code %} selected {%endif%}>Chemical and Biological Engineering</option>
+                                    <option value='CEE' {% if 'CEE' == major_code %} selected {%endif%}>Civil and Environmental Engineering</option>
+                                    <option value='ELE' {% if 'ELE' == major_code %} selected {%endif%}>Electrical Engineering</option>
+                                    <option value='MAE' {% if 'MAE' == major_code %} selected {%endif%}>Mechanical and Aerospace Engineering</option>
+                                    <option value='ORF' {% if 'ORF' == major_code %} selected {%endif%}>Operations Research and Financial Engineering</option>
                                 </select>
                             </div>
                         </div>

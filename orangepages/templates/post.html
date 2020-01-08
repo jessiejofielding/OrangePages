@@ -57,9 +57,9 @@ margin-top:-1px">
             <div class="col-lg-9 w-100" style="text-align:right; padding: 0px">
               <div class="post-subtitle">
                 <i class="fas fa-clock"></i>
-                <span id="tstamp{{post.pid}}"></span>
+                <span id="p_tstamp{{post.pid}}"></span>
                 <script type="text/javascript">
-                  getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}");
+                  getTimeAgo("{{ post.date }}", "p_tstamp{{post.pid}}");
                 </script>
               </div>
             </div>
@@ -209,9 +209,9 @@ margin-top:-1px">
           <a href='/profile/{{ comment.creator.uid }}' class="post-title">{{comment.creator.firstname}}
             {{comment.creator.lastname}} </a>
           <i class="ml-2 post-subtitle fas fa-clock"></i>
-          <span class="post-subtitle" id="tstamp{{comment.cid}}"></span>
+          <span class="post-subtitle" id="c_tstamp{{comment.cid}}"></span>
           <script type="text/javascript">
-            getTimeAgo("{{ comment.date }}", "tstamp{{comment.cid}}");
+            getTimeAgo("{{ comment.date }}", "c_tstamp{{comment.cid}}");
           </script>
 
           {% if comment.creator == user %}

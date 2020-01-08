@@ -26,9 +26,9 @@
               <div class="post-subtitle">
                 <a href='/post/{{ post.pid }}'>
                 <i class="fas fa-clock"></i>
-                <span id="tstamp{{post.pid}}"></span>
+                <span id="p_tstamp{{post.pid}}"></span>
                 <script type="text/javascript">
-                  getTimeAgo("{{ post.date }}", "tstamp{{post.pid}}" );
+                  getTimeAgo("{{ post.date }}", "p_tstamp{{post.pid}}" );
                 </script>
                 </a>
               </div>
@@ -107,9 +107,9 @@
                 {{comment.creator.lastname}} </a>
                 <a href='/post/{{ post.pid }}'>
                 <i class="ml-2 post-subtitle fas fa-clock"></i>
-                <span class="post-subtitle" id="tstamp{{comment.cid}}"></span>
+                <span class="post-subtitle" id="c_tstamp{{comment.cid}}"></span>
                 <script type="text/javascript">
-                  getTimeAgo("{{ comment.date }}", "tstamp{{comment.cid}}" );
+                  getTimeAgo("{{ comment.date }}", "c_tstamp{{comment.cid}}" );
                 </script>
                 </a>
 

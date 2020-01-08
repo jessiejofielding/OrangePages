@@ -24,6 +24,6 @@ function getTimeAgo(timeString, spanId) {
         year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
         stamp = (day + " " + month + year);
     }
-
+    
     document.getElementById(spanId).innerHTML = stamp;
 }

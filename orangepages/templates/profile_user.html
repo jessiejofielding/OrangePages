@@ -217,6 +217,31 @@
                         </div>
                         <hr id="hidden-line" class="d-none">
                         <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">School</div>
+                            <div class="col-lg-7">
+                                <!-- <input type="text" class="form-control is-disabled" name="school"
+                                     placeholder="AB or BSE" value="{{user.school}}"
+                                    disabled> -->
+                                    <div class="input-group">
+                                        <select name="school" class="select form-control is-disabled" id="school" disabled>
+                                            <option value="AB" {% if 'AB'  == user.school %} selected {%endif%} >AB</option>
+                                            <option value="BSE"{% if 'BSE' == user.school %} selected {%endif%}>BSE</option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="school_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['school'] == 'Public' %} selected {% endif %}>Public
+                                    </option>
+                                    <option {% if cur_privacy['school'] == 'Friends' %} selected {% endif %}>Friends
+                                    </option>
+                                    <option {% if cur_privacy['school'] == 'Just me' %} selected {% endif %}>Just me
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row profile-row">
                             <div class="col-lg-3 profile-label text-left">Major</div>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -315,31 +340,6 @@
                                     </option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row profile-row">
-                            <div class="col-lg-3 profile-label text-left">School</div>
-                            <div class="col-lg-7">
-                                <!-- <input type="text" class="form-control is-disabled" name="school"
-                                     placeholder="AB or BSE" value="{{user.school}}"
-                                    disabled> -->
-                                    <div class="input-group">
-                                        <select name="school" class="select form-control is-disabled" id="school" disabled>
-                                            <option value="AB" {% if 'AB'  == user.school %} selected {%endif%} >AB</option>
-                                            <option value="BSE"{% if 'BSE' == user.school %} selected {%endif%}>BSE</option>
-                                        </select>
-                                    </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <select name="school_priv" class="form-control is-disabled" disabled>
-                                    <option {% if cur_privacy['school'] == 'Public' %} selected {% endif %}>Public
-                                    </option>
-                                    <option {% if cur_privacy['school'] == 'Friends' %} selected {% endif %}>Friends
-                                    </option>
-                                    <option {% if cur_privacy['school'] == 'Just me' %} selected {% endif %}>Just me
-                                    </option>
-                                </select>
-                            </div>
-
                         </div>
                         <div class="row profile-row">
                             <div class="col-lg-3 profile-label text-left">Hometown</div>

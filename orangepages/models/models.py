@@ -76,6 +76,9 @@ class User(db.Model):
     sharepeer = db.Column(db.String(50))
     _sharepeer = db.Column(db.Integer, default=1)
 
+    pronoun = db.Column(db.String(50))
+    _pronoun = db.Column(db.Integer, default=1)
+
     # affils = db.Column(db.String(70), default="")
     # _affils = db.Column(db.Integer, default=1)
 
@@ -143,7 +146,7 @@ class User(db.Model):
 
 
     def update_optional_info(self, hometown, state, country, room, building, food,
-    team, activities, certificate, birthday, affiliations):
+    team, activities, certificate, birthday, affiliations, pronoun):
         self.hometown = hometown
         self.state = state
         self.country = country
@@ -153,6 +156,7 @@ class User(db.Model):
         self.team = team
         self.activities = activities
         self.certificate = certificate
+        self.pronoun = pronoun
         self.birthday = birthday
 
         # for affil in affiliations:
@@ -176,7 +180,7 @@ class User(db.Model):
             self._major, self._rescollege, self._school, self._room,
             self._building, self._food, self._team, self._activities,
             self._certificate, self._birthday, self._rca, self._paa,
-            self._sharepeer)
+            self._sharepeer, self._pronoun)
 
     # return list of privacy strings as list of corr. group ids
     def priv_to_group(self, privs):
@@ -206,7 +210,7 @@ class User(db.Model):
 
     def update_privacy(self, hometown, state,
         country, major, rescollege, school, room, building, food,
-        team, activities, certificate, birthday, rca, paa, sharepeer):
+        team, activities, certificate, birthday, rca, paa, sharepeer, pronoun):
 
         mapping = {
             1: 'Public',
@@ -228,11 +232,12 @@ class User(db.Model):
         self._hometown, self._state, self._country, \
         self._major, self._rescollege, self._school, self._room, \
         self._building, self._food, self._team, self._activities, \
-        self._certificate, self._birthday, self._rca, self._paa, self._sharepeer = \
+        self._certificate, self._birthday, self._rca, self._paa, self._sharepeer, \
+        self._pronoun = \
         self.priv_to_group((hometown,
             state, country, major, rescollege, school, room,
             building, food, team, activities, certificate, birthday, rca,
-            paa, sharepeer))
+            paa, sharepeer, pronoun))
 
         # print('\n\n update priv after params:\n')
         # for i in self.group_to_priv(self.get_attr_priv()):
@@ -264,14 +269,14 @@ class User(db.Model):
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
             'state', 'country', 'year', 'major', 'rescollege', 'school',
             'room', 'building', 'food', 'team', 'activities', 'certificate',
-            'birthday', 'rca', 'paa', 'sharepeer']
+            'birthday', 'rca', 'paa', 'sharepeer', 'pronoun']
 
         vals = [lookup_user.uid, lookup_user.firstname, lookup_user.lastname, lookup_user.email,
             lookup_user.hometown, lookup_user.state, lookup_user.country, lookup_user.year,
             lookup_user.major, lookup_user.rescollege, lookup_user.school, lookup_user.room,
             lookup_user.building, lookup_user.food, lookup_user.team, lookup_user.activities,
             lookup_user.certificate, lookup_user.birthday, lookup_user.rca,
-            lookup_user.paa, lookup_user.sharepeer]
+            lookup_user.paa, lookup_user.sharepeer, lookup_user.pronoun]
 
         privs = lookup_user.get_attr_priv() # gid allowed to view each attr
 

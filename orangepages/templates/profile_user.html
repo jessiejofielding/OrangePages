@@ -217,6 +217,31 @@
                         </div>
                         <hr id="hidden-line" class="d-none">
                         <div class="row profile-row">
+                            <div class="col-lg-3 profile-label text-left">School</div>
+                            <div class="col-lg-7">
+                                <!-- <input type="text" class="form-control is-disabled" name="school"
+                                     placeholder="AB or BSE" value="{{user.school}}"
+                                    disabled> -->
+                                    <div class="input-group">
+                                        <select name="school" class="select form-control is-disabled" id="school" disabled>
+                                            <option value="AB" {% if 'AB'  == user.school %} selected {%endif%} >AB</option>
+                                            <option value="BSE"{% if 'BSE' == user.school %} selected {%endif%}>BSE</option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <select name="school_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['school'] == 'Public' %} selected {% endif %}>Public
+                                    </option>
+                                    <option {% if cur_privacy['school'] == 'Friends' %} selected {% endif %}>Friends
+                                    </option>
+                                    <option {% if cur_privacy['school'] == 'Just me' %} selected {% endif %}>Just me
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row profile-row">
                             <div class="col-lg-3 profile-label text-left">Major</div>
                             <div class="col-lg-7">
                                 <div class="input-group">
@@ -277,7 +302,7 @@
                                     value="{{user.rescollege}}" disabled> -->
                                     <div class="input-group">
                                         <select name="rescollege" class="select form-control is-disabled" id="rescollege" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%}>Add your res college...</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%}></option>
                                             <option value="mathey" {% if "mathey"  == user.rescollege %} selected {%endif%} >Mathey</option>
                                             <option value="rocky"  {% if "rocky"   == user.rescollege %} selected {%endif%}>Rocky</option>
                                             <option value="wilson" {% if "wilson"  == user.rescollege %} selected {%endif%}>Wilson</option>
@@ -299,29 +324,22 @@
                             </div>
                         </div>
                         <div class="row profile-row">
-                            <div class="col-lg-3 profile-label text-left">School</div>
+                            <div class="col-lg-3 profile-label text-left">Pronouns</div>
                             <div class="col-lg-7">
-                                <!-- <input type="text" class="form-control is-disabled" name="school"
-                                     placeholder="AB or BSE" value="{{user.school}}"
-                                    disabled> -->
-                                    <div class="input-group">
-                                        <select name="school" class="select form-control is-disabled" id="school" disabled>
-                                            <option value="AB" {% if 'AB'  == user.school %} selected {%endif%} >AB</option>
-                                            <option value="BSE"{% if 'BSE' == user.school %} selected {%endif%}>BSE</option>
-                                        </select>
-                                    </div>
+                                <input type="text" class="form-control is-disabled" name="pronoun"
+                                     placeholder="Pronoun" value="{{user.pronoun}}"
+                                    disabled>
                             </div>
                             <div class="col-lg-2">
-                                <select name="school_priv" class="form-control is-disabled" disabled>
-                                    <option {% if cur_privacy['school'] == 'Public' %} selected {% endif %}>Public
+                                <select name="pronoun_priv" class="form-control is-disabled" disabled>
+                                    <option {% if cur_privacy['pronoun'] == 'Public' %} selected {% endif %}>Public
                                     </option>
-                                    <option {% if cur_privacy['school'] == 'Friends' %} selected {% endif %}>Friends
+                                    <option {% if cur_privacy['pronoun'] == 'Friends' %} selected {% endif %}>Friends
                                     </option>
-                                    <option {% if cur_privacy['school'] == 'Just me' %} selected {% endif %}>Just me
+                                    <option {% if cur_privacy['pronoun'] == 'Just me' %} selected {% endif %}>Just me
                                     </option>
                                 </select>
                             </div>
-
                         </div>
                         <div class="row profile-row">
                             <div class="col-lg-3 profile-label text-left">Hometown</div>
@@ -348,7 +366,7 @@
                                      placeholder="State" value="{{user.state}}" disabled> -->
                                     <div class="input-group">
                                         <select name="state" class="select form-control is-disabled" id="state" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} >State</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} ></option>
                                             <option value="none" {% if "none" == user.state %} selected {%endif%} >N/A</option>
                                             <option value="AL"   {% if "AL"   == user.state %} selected {%endif%} >Alabama</option>
                                             <option value="AK"   {% if "AK"   == user.state %} selected {%endif%} >Alaska</option>
@@ -423,7 +441,7 @@
                                     disabled> -->
                                     <div class="input-group">
                                         <select name="country" class="select form-control is-disabled" id="country" disabled>
-                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} >Country</option>
+                                            <option value="" {%if user.rescollege%}{%else%}selected{%endif%} ></option>
                                             <option value="Afghanistan"                                  {% if "Afghanistan"                                    == user.country %} selected {%endif%}>Afghanistan</option>
                                             <option value="Åland Islands"                                {% if "Åland Islands"                                  == user.country %} selected {%endif%}>Åland Islands</option>
                                             <option value="Albania"                                      {% if "Albania"                                        == user.country %} selected {%endif%}>Albania</option>
@@ -724,7 +742,7 @@
                                      placeholder="Food" value="{{user.food}}" disabled> -->
                                     <div class="input-group">
                                         <select name="food" id="food" class="select form-control is-disabled" disabled>
-                                            <option value="" {%if user.year%}{%else%}selected{%endif%}>Food</option>
+                                            <option value="" {%if user.year%}{%else%}selected{%endif%}></option>
                                             <option value="none"               {% if "none"               == user.food %} selected {%endif%}>N/A</option>
                                             <option value="Dining Halls"       {% if "Dining Halls"       == user.food %} selected {%endif%}>Dining Halls</option>
                                             <option value="Colonial"           {% if "Colonial"           == user.food %} selected {%endif%}>Colonial</option>

@@ -77,6 +77,7 @@ def create_user():
 
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
+    pronoun = request.form.get('pronoun')
     rescollege = request.form.get('rescollege')
     school = request.form.get('school') # this is AB or BSE lol
     major = request.form.get('major')
@@ -111,7 +112,7 @@ def create_user():
     user = User(netid)
     user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
     user.update_optional_info(hometown, state, country, room, building, food,
-    team, activities, certificate, birthday, affiliations)
+    team, activities, certificate, birthday, affiliations, pronoun)
 
     if use_photo:
         # TODO: tigerbook API
@@ -144,6 +145,7 @@ def edit_user():
     # Get attribute fields
     firstname = request.form.get('firstname')
     lastname = request.form.get('lastname')
+    pronoun = request.form.get('pronoun')
     email = request.form.get('email')
     hometown = request.form.get('hometown')
     state = request.form.get('state')
@@ -171,7 +173,7 @@ def edit_user():
     # Update attributes
     user.update_public_info(firstname,lastname, email, rescollege, school, major, year)
     user.update_optional_info(hometown, state, country, room, building, food,
-    team, activities, certificate, birthday, affiliations)
+    team, activities, certificate, birthday, affiliations, pronoun)
 
     delete_img = request.form.get('delete-img')
     if delete_img == 'delete':
@@ -187,6 +189,7 @@ def edit_user():
 
     # Get privacy fields
     hometown_priv = request.form.get('hometown_priv')
+    pronoun_priv = request.form.get('pronoun_priv')
     state_priv = request.form.get('state_priv')
     country_priv = request.form.get('country_priv')
     major_priv = request.form.get('major_priv')
@@ -208,7 +211,7 @@ def edit_user():
         major_priv, rescollege_priv, school_priv, room_priv,
         building_priv, food_priv, team_priv, activities_priv,
         certificate_priv, birthday_priv, rca_priv, paa_priv,
-        sharepeer_priv)
+        sharepeer_priv, pronoun_priv)
 
     return redirect('/profile/'+cur_uid())
 

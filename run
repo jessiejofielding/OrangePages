@@ -1,2 +1,2 @@
 source dev.env
-python test.py
+python run.py

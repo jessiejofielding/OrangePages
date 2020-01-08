@@ -63,14 +63,18 @@
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modal1-label">
     <div class="modal-dialog" role="document">
         <div class="modal-content m-3">
-          <div class="modal-body text-center"> Are you sure you want to delete your account?
+            <div class="modal-title text-danger text-center" style="padding-top: 10px; margin-bottom:-5px">
+            <h2>You are about to delete your account!</h2>
+                </div>
+          <div class="modal-body text-center">
+              This action cannot be undone. Are you sure that you would like to proceed?
 
           <div class="row mt-4">
             <div class="col text-right">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal"> Go Back </button>
+              <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal"> Go Back </button>
             </div>
             <div class="col text-left">
-              <a href="/profile/{{user.uid}}/delete" id="delete" class="btn btn-primary"> Delete </a>
+              <a href="/profile/{{user.uid}}/delete" id="delete" class="btn btn-primary rounded-pill"> Delete </a>
             </div>
           </div>
           </div>

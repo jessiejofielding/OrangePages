@@ -34,7 +34,7 @@ def cur_uid():
 
     # LOCAL TESTING: use netid stored in cookie instead of cas
     if netid is None:
-        return None
+        return request.cookies.get('uid')
 
     return netid[0]
 

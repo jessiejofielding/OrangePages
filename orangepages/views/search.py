@@ -24,11 +24,12 @@ def search_tag(query_list):
     for query in query_list:
         print("hash", query)
 
-        tag = Tag.query.get(query)
-        if tag == None:
+        tags = Tag.query.filter_by(tid=query).all()
+        if len(tags) == 0:
             posts = []
         else:
-            posts = tag.get_posts(cur_user())
+            for tag in tags:
+                posts = tag.get_posts(cur_user())
 
         tagged_posts.extend(posts)
 

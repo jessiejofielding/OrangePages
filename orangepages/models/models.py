@@ -624,9 +624,10 @@ class Post(db.Model):
         if tag not in self.tags: self.tags.append(tag)
 
     def add_tag_str(self, tag_str):
-        tag = Tag.query.get(tag_str)
-        if tag is None:
+        tag = Tag.query.filter_by(tid=tag_str).all()
+        if len(tag) is 0:
             tag = Tag(tag_str)
+        else: tag = tag[0]
 
         if tag not in self.tags: self.tags.append(tag)
 

@@ -361,8 +361,15 @@
                 <!-- TODO: implement validation between fieldsets: currently no fields are required -->
                 <fieldset style="padding: 10px; padding-top: 30px">
                     <h2 class="fs-title">Create a Profile</h2>
-                    <h2 class="fs-subtitle">This information can be changed at any
-                        time in your profile.</h2>
+                    <h2 class="fs-subtitle">Welcome! We're happy to have you join the OrangePages community!
+                        Let's get started by learning a little bit about you.
+                        <br>
+                        <br> The only fields you are required to fill are your <strong class="text-danger">first name</strong>
+                        and <strong class="text-danger">last name</strong>. All other entries are optional.
+                        <br>
+                        <br>
+                        The information you enter here can be changed at any
+                        time on your profile page.</h2>
                     <div class="form-group row justify-content-center" style="padding:10px">
                         <input required class="col-sm-4" style="margin:10px" class="input-field" type="text"
                             name="firstname" maxlength="30" placeholder="First Name *" {% if first_name is not none %}

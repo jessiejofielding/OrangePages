@@ -21,6 +21,7 @@
     <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         type="text/css" />
     <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/profile-user.css" type="text/css" />
 
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
@@ -249,16 +250,28 @@
                             <div class="row">
                                 <div class="col-lg-3 text-left">Affiliations:</div>
                                 <div class="col-lg-9">
-                                    {% if lookup.rca %}
-                                        {{lookup_priv["rca"]}}
+                                    {% if lookup_priv["rca"] %}
+                                        <div class="row profile-row">
+                                        <div class="affils">{{lookup_priv["rca"]}}</div>
+                                        </div>
                                     {% endif %}
-                                    {% if lookup.paa %}
-                                        {{lookup_priv["paa"]}}
+                                    {% if lookup_priv["paa"] %}
+                                        <div class="row profile-row">
+                                        <div class="affils">{{lookup_priv["paa"]}}</div>
+                                        </div>
                                     {% endif %}
-                                    {% if lookup.sharepeer %}
-                                        {{lookup_priv["sharepeer"]}}
+                                    {% if lookup_priv["sharepeer"] %}
+                                        <div class="row profile-row">
+                                        <div class="affils">{{lookup_priv["sharepeer"]}}</div>
+                                        </div>
                                     {% endif %}
-
+                                    {% if not lookup_priv["rca"] and not lookup_priv["paa"] and not lookup_priv["sharepeer"] %}
+                                        <div class="row profile-row">
+                                        <div class="col-lg-2" style="color:#6c757d;">
+                                          None
+                                        </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </fieldset>

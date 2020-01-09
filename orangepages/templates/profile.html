@@ -125,7 +125,7 @@
 
                             <div style="margin: 10px"> </div>
 
-
+                            {% if lookup_priv["year"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Class Year:</div>
                                 <div class="col-lg-9">
@@ -134,6 +134,8 @@
                                         value="{{lookup_priv["year"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["school"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">School:</div>
                                 <div class="col-lg-9">
@@ -142,6 +144,7 @@
                                         value="{{lookup_priv["school"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Major:</div>
                                 <div class="col-lg-9">
@@ -150,6 +153,7 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% if lookup_priv["rescollege"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Residential College:</div>
                                 <div class="col-lg-9">
@@ -158,6 +162,8 @@
                                         value="{{lookup_priv["rescollege"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["pronoun"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Pronouns:</div>
                                 <div class="col-lg-9">
@@ -166,7 +172,8 @@
                                         disabled>
                                 </div>
                             </div>
-
+                            {% endif %}
+                            {% if lookup_priv["hometown"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Hometown:</div>
                                 <div class="col-lg-9">
@@ -175,6 +182,8 @@
                                         value="{{lookup_priv["hometown"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["state"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">State:</div>
                                 <div class="col-lg-9">
@@ -183,6 +192,8 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["country"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Country:</div>
                                 <div class="col-lg-9">
@@ -191,6 +202,8 @@
                                         value="{{lookup_priv["country"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["room"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Room:</div>
                                 <div class="col-lg-9">
@@ -199,6 +212,8 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["building"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Building:</div>
                                 <div class="col-lg-9">
@@ -207,6 +222,8 @@
                                         value="{{lookup_priv["building"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["food"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Food:</div>
                                 <div class="col-lg-9">
@@ -215,6 +232,8 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["team"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Team:</div>
                                 <div class="col-lg-9">
@@ -223,6 +242,8 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["activities"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Activities:</div>
                                 <div class="col-lg-9">
@@ -231,6 +252,8 @@
                                         value="{{lookup_priv["activities"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["certificate"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Certificate:</div>
                                 <div class="col-lg-9">
@@ -239,6 +262,8 @@
                                         value="{{lookup_priv["certificate"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["birthday"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Birthday:</div>
                                 <div class="col-lg-9">
@@ -247,6 +272,9 @@
                                         value="{{lookup_priv["birthday"]}}" disabled>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if lookup_priv["building"] or lookup_priv["paa"] or
+                            lookup_priv["sharepeer"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Affiliations:</div>
                                 <div class="col-lg-9">
@@ -274,6 +302,7 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            {% endif %}
                         </fieldset>
                     </form>
 

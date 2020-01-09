@@ -164,19 +164,19 @@ def testpage():
 
 
 
-# @page.route('/login')
-# def login():
-#     netid = request.args.get('netid')
+@page.route('/login')
+def login():
+    netid = request.args.get('netid')
 
-#     if (netid is None) or (netid.strip() == ''):
-#         return render('login.html')
+    if (netid is None) or (netid.strip() == ''):
+        return render('login.html')
 
-#     user = User.query.get(netid)
-#     if user is None:
-#         response = make_response(redirect('/create-user'))
-#     else:
-#         response = make_response(redirect('/feed'))
-#     return set_uid(response, netid)
+    user = User.query.get(netid)
+    if user is None:
+        response = make_response(redirect('/create-user'))
+    else:
+        response = make_response(redirect('/feed'))
+    return set_uid(response, netid)
 
 
 @page.route('/logout')

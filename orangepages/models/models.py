@@ -739,7 +739,7 @@ class Tag(db.Model):
         # db.session.add(self) REVIEW do we need this
 
     def __repr__(self):
-        return "<Tag: %s>" % (self.tid)
+        return "<Tag: %s>" % (self.tag_real_id)
 
     def get_posts(self, user):
         p = self.posts

@@ -8,6 +8,9 @@ function getTimeAgo(timeString, spanId) {
     let stamp = '';
 
     var secondsPast = (now.getTime() - (timeStamp.getTime() - offset)) / 1000;
+    if (secondsPast < 0) {
+        secondsPast = 0;
+    }
     if (secondsPast < 60) {
         stamp = (parseInt(secondsPast) + 's');
     }

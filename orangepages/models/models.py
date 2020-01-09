@@ -439,7 +439,7 @@ group_member = db.Table('group_member', User.metadata,
 
 post_tag = db.Table('post_tag',
     db.Column('post_id', db.Integer, db.ForeignKey('post.pid')),
-    db.Column('tag_id', db.String(20), db.ForeignKey('tag.tid'))
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_real_id'))
 )
 
 #-----------------------------------------------------------------------
@@ -728,7 +728,8 @@ class Post(db.Model):
 
 #-----------------------------------------------------------------------
 class Tag(db.Model):
-    tid = db.Column(db.String(1000), primary_key=True)
+    tag_real_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tid = db.Column(db.String(1000))
     # db.Column(db.Integer, primary_key=True, autoincrement=True)
     # tag = db.Column(db.String(1000))
     # use tag.posts to get all the posts with this tag

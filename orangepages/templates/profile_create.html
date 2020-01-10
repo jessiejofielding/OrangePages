@@ -368,7 +368,7 @@
                         and <strong class="text-danger">last name</strong>. All other entries are optional.
                         <br>
                         <br>
-                        The information you enter here can be changed at any
+                        The information you enter here can be changed or made visible to <strong class="text-danger">friends only</strong> at any
                         time on your profile page.</h2>
                     <div class="form-group row justify-content-center" style="padding:10px">
                         <input required class="col-sm-4" style="margin:10px" class="input-field" type="text"
@@ -418,6 +418,8 @@
 
                             <div class="input-group">
                                 <select name="major" class="selectpicker" id="major">
+                                    <option value="Undecided">Undecided</option>
+                                    <option value="Independent">Independent Concentration</option>
                                     <option value='AAS' {% if 'AAS' == major_code %} selected {%endif%}>African American
                                         Studies</option>
                                     <option value='ANT' {% if 'ANT' == major_code %} selected {%endif%}>Anthropology
@@ -428,6 +430,8 @@
                                         Archaeology</option>
                                     <option value='AST' {% if 'AST' == major_code %} selected {%endif%}>Astrophysical
                                         Sciences</option>
+                                    <option value='CBE' {% if 'CBE' == major_code %} selected {%endif%} >Chemical and Biological Engineering</option>
+                                    <option value='CEE' {% if 'CEE' == major_code %} selected {%endif%} >Civil and Environmental Engineering</option>
                                     <option value='CHM' {% if 'CHM' == major_code %} selected {%endif%}>Chemistry
                                     </option>
                                     <option value='CLA' {% if 'CLA' == major_code %} selected {%endif%}>Classics
@@ -442,6 +446,7 @@
                                         Evolutionary Biology</option>
                                     <option value='ECO' {% if 'ECO' == major_code %} selected {%endif%}>Economics
                                     </option>
+                                    <option value='ELE' {% if 'ELE' == major_code %} selected {%endif%}>Electrical Engineering</option>
                                     <option value='ENG' {% if 'ENG' == major_code %} selected {%endif%}>English</option>
                                     <option value='FRE' {% if 'FRE' == major_code %} selected {%endif%}>French and
                                         Italian</option>
@@ -449,6 +454,7 @@
                                     </option>
                                     <option value='GER' {% if 'GER' == major_code %} selected {%endif%}>German</option>
                                     <option value='HIS' {% if 'HIS' == major_code %} selected {%endif%}>History</option>
+                                    <option value='MAE' {% if 'MAE' == major_code %} selected {%endif%}>Mechanical and Aerospace Engineering</option>
                                     <option value='MAT' {% if 'MAT' == major_code %} selected {%endif%}>Mathematics
                                     </option>
                                     <option value='MOL' {% if 'MOL' == major_code %} selected {%endif%}>Molecular
@@ -458,6 +464,7 @@
                                         Studies</option>
                                     <option value='NEU' {% if 'NEU' == major_code %} selected {%endif%}>Neuroscience
                                     </option>
+                                    <option value='ORF' {% if 'ORF' == major_code %} selected {%endif%}>Operations Research and Financial Engineering</option>
                                     <option value='PHI' {% if 'PHI' == major_code %} selected {%endif%}>Philosophy
                                     </option>
                                     <option value='PHY' {% if 'PHY' == major_code %} selected {%endif%}>Physics</option>
@@ -475,11 +482,6 @@
                                         Portuguese</option>
                                     <option value='WWS' {% if 'WWS' == major_code %} selected {%endif%}>Woodrow Wilson
                                         School</option>
-                                    <option value='CBE' {% if 'CBE' == major_code %} selected {%endif%}>Chemical and Biological Engineering</option>
-                                    <option value='CEE' {% if 'CEE' == major_code %} selected {%endif%}>Civil and Environmental Engineering</option>
-                                    <option value='ELE' {% if 'ELE' == major_code %} selected {%endif%}>Electrical Engineering</option>
-                                    <option value='MAE' {% if 'MAE' == major_code %} selected {%endif%}>Mechanical and Aerospace Engineering</option>
-                                    <option value='ORF' {% if 'ORF' == major_code %} selected {%endif%}>Operations Research and Financial Engineering</option>
                                 </select>
                             </div>
                         </div>
@@ -567,10 +569,12 @@
                                     <option value="Colonial">Colonial</option>
                                     <option value="Charter">Charter</option>
                                     <option value="Cannon">Cannon</option>
+                                    <option value="Cap">Cap</option>
                                     <option value="Cloister">Cloister</option>
                                     <option value="Cottage">Cottage</option>
                                     <option value="TI">TI</option>
                                     <option value="Ivy">Ivy</option>
+                                    <option value="Terrace">Terrace</option>
                                     <option value="Tower">Tower</option>
                                     <option value="Quad">Quad</option>
                                     <option value="Independent">Independent</option>

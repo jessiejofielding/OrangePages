@@ -254,6 +254,8 @@
                             <div class="col-lg-7">
                                 <div class="input-group">
                                 <select name="major" class="select form-control is-disabled" id="major" disabled>
+                                 <option value="Undecided" {% if 'Undecided' == user.major %} selected {%endif%}>Undecided</option>
+                                 <option value="Independent" {% if 'Independent' == user.major %} selected {%endif%}>Independent Concentration</option>
                                  <option value='AAS' {% if 'AAS' == user.major %} selected {%endif%}>African American Studies</option>
                                  <option value='ANT' {% if 'ANT' == user.major %} selected {%endif%}>Anthropology</option>
                                  <option value='ARC' {% if 'ARC' == user.major %} selected {%endif%}>Architecture</option>
@@ -755,11 +757,13 @@
                                             <option value="Dining Halls"       {% if "Dining Halls"       == user.food %} selected {%endif%}>Dining Halls</option>
                                             <option value="Colonial"           {% if "Colonial"           == user.food %} selected {%endif%}>Colonial</option>
                                             <option value="Charter"            {% if "Charter"            == user.food %} selected {%endif%}>Charter</option>
+                                            <option value="Cap"            {% if "Cap"            == user.food %} selected {%endif%}>Cap</option>
                                             <option value="Cannon"             {% if "Cannon"             == user.food %} selected {%endif%}>Cannon</option>
                                             <option value="Cloister"           {% if "Cloister"           == user.food %} selected {%endif%}>Cloister</option>
                                             <option value="Cottage"            {% if "Cottage"            == user.food %} selected {%endif%}>Cottage</option>
                                             <option value="TI"                 {% if "TI"                 == user.food %} selected {%endif%}>TI</option>
                                             <option value="Ivy"                {% if "Ivy"                == user.food %} selected {%endif%}>Ivy</option>
+                                            <option value="Terrace"              {% if "Terrace"              == user.food %} selected {%endif%}>Terrace</option>
                                             <option value="Tower"              {% if "Tower"              == user.food %} selected {%endif%}>Tower</option>
                                             <option value="Quad"               {% if "Quad"               == user.food %} selected {%endif%}>Quad</option>
                                             <option value="Independent"        {% if "Independent"        == user.food %} selected {%endif%}>Independent</option>

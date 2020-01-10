@@ -162,14 +162,17 @@
                             <div class="col-lg-3 profile-label text-left">Photo</div>
                             <div class="col-lg-3">
                                 <div class="input-group-append">
+                                    <div id="up-img-btn" {% if user._img %}style="display:none;"{%endif%}>
                                     <label for="upload" class="btn btn-light m-0 rounded-pill upload-image"> <i
                                     class="fa fa-cloud-upload mr-2 text-muted"></i><small
                                     class="text-uppercase font-weight-bold text-muted">Upload image</small></label>
+                                    </div>
+                                    <button type="button" id="del-img-btn" class="btn btn-light rounded-pill" {% if not user._img %}style="display:none;"{%endif%}><i class="fas fa-times mr-2 text-muted"></i><small
+                                    class="text-uppercase font-weight-bold text-muted">Delete image</small></button>
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <button type="button" id="del-img-btn" class="btn btn-light rounded-pill"><i class="fas fa-times mr-2 text-muted"></i><small
-                                    class="text-uppercase font-weight-bold text-muted">Delete image</small></button>
+                                
                             </div>
                             <!-- Upload image input-->
                             <input id="upload" type="file" accept="image/*" onchange="readURL(this);" name="image"

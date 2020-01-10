@@ -8302,3 +8302,17 @@ color:#ccc;opacity:1
 .btn-comment:hover {
   color: var(--sec-orange);
 }
+
+.index-body {
+  margin-bottom:0;
+  font-family: raleway;
+  overflow: hidden;
+  position:relative;
+}
+
+@media only screen and (max-width: 768px) {
+  .index-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

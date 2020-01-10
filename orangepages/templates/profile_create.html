@@ -14,10 +14,10 @@
         <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
         <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" />
+        <!-- <link rel="stylesheet" href="/static/css/sticky-footer-navbar.css" rel="stylesheet" /> -->
         <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" />
-        <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css">
+        <!-- <link rel="stylesheet" href="/static/css/create-profile.css" type="text/css" /> -->
+        <!-- <link rel="stylesheet" href="/static/css/bootstrap-tagsinput.css"> -->
         <link rel="stylesheet" href="/static/css/create-user.css" type="text/css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
             integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
@@ -387,7 +387,7 @@
                         <div class="col-sm-8">
                             <h2 class="fs-subtitle">What's your res college?</h2>
                             <div class="input-group">
-                                <select name="rescollege" class="selectpicker form-control">
+                                <select name="rescollege" class="selectpicker">
                                     <option value="">Choose an option...</option>
                                     <option value="mathey" {% if res_college == "Mathey" %} selected {%endif%}>Mathey
                                     </option>
@@ -410,14 +410,14 @@
                         <div class="col-sm-8">
                             <h2 class="fs-subtitle">What's your (prospective) major?</h2>
                             <div class="input-group">
-                                <select name="school" class="selectpicker form-control" id="school">
+                                <select name="school" class="selectpicker" id="school">
                                     <option value="AB" {% if "AB" == major_type %} selected {%endif%}>AB</option>
                                     <option value="BSE" {% if "BSE" == major_type %} selected {%endif%}>BSE</option>
                                 </select>
                             </div>
 
                             <div class="input-group">
-                                <select name="major" class="selectpicker form-control" id="major">
+                                <select name="major" class="selectpicker" id="major">
                                     <option value='AAS' {% if 'AAS' == major_code %} selected {%endif%}>African American
                                         Studies</option>
                                     <option value='ANT' {% if 'ANT' == major_code %} selected {%endif%}>Anthropology
@@ -489,7 +489,7 @@
                         <div class="col-sm-8">
                             <h2 class="fs-subtitle">What's your class year?</h2>
                             <div class="input-group">
-                                <select name="year" class="selectpicker form-control" id="year">
+                                <select name="year" class="selectpicker" id="year">
                                     <option value="">Choose an option...</option>
                                     <option value="20" {% if class_year == 2020 %} selected {%endif%}>2020</option>
                                     <option value="21" {% if class_year == 2021 %} selected {%endif%}>2021</option>
@@ -560,7 +560,7 @@
                         <div class="col-sm-8">
                             <h2 class="fs-subtitle">What's your meal plan?</h2>
                             <div class="input-group">
-                                <select name="food" id="food" class="selectpicker form-control">
+                                <select name="food" id="food" class="selectpicker">
                                     <option value="">Choose an option...</option>
                                     <option value="none">N/A</option>
                                     <option value="Dining Halls">Dining Halls</option>
@@ -608,7 +608,7 @@
                         <div class="col-sm-5">
                             <h2 class="fs-subtitle">What state?</h2>
                             <div class="input-group">
-                                <select name="state" class="selectpicker form-control" id="state">
+                                <select name="state" class="selectpicker" id="state">
                                     <option value="">Choose an option...</option>
                                     <option value="none">N/A</option>
                                     <option value="AL">Alabama</option>
@@ -671,7 +671,7 @@
                         <div class="col-sm-5">
                             <h2 class="fs-subtitle">What country?</h2>
                             <div class="input-group">
-                                <select name="country" class="selectpicker form-control" id="country">
+                                <select name="country" class="selectpicker" id="country">
                                     <option value="">Choose an option...</option>
                                     <option value="Afghanistan">Afghanistan</option>
                                     <option value="Åland Islands">Åland Islands</option>

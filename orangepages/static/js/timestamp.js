@@ -1,4 +1,5 @@
 function getTimeAgo(timeString, spanId) {
+    timeString=timeString.replace(/\s/, 'T'); // safari
     var timeStamp = new Date(timeString);
     var now = new Date();
     var offset = now.getTimezoneOffset() * 60000;
@@ -27,6 +28,7 @@ function getTimeAgo(timeString, spanId) {
         year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
         stamp = (day + " " + month + year);
     }
-    
-    document.getElementById(spanId).innerHTML = stamp;
+
+    spanId = '#'+spanId;
+    $(spanId).text(stamp);
 }

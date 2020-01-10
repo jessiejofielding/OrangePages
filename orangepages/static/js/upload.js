@@ -13,9 +13,15 @@ function readURL(input) {
     }
 }
 
+function toggleButtons() {
+    $('#up-img-btn').toggle();
+    $('#del-img-btn').toggle();
+}
+
 $(function () {
     $('#upload').on('change', function () {
         readURL(input);
+        toggleButtons();
     });
 
     $('#del-img-btn').on({
@@ -23,6 +29,7 @@ $(function () {
             $('#imageResult').attr('src','');
             $("#upload").val(null);
             $("#delete-img").prop("checked", true);
+            toggleButtons();
         }
     });
 });

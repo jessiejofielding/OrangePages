@@ -35,9 +35,6 @@ $(function () {
         }
     });
 
-    $('#imageResult').on('error', function () { 
-        console.log('img err');
-    })
 });
 
 /*  ==========================================

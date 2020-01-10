@@ -145,6 +145,7 @@
                                 </div>
                             </div>
                             {% endif %}
+                            {% if lookup_priv["major"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Major:</div>
                                 <div class="col-lg-9">
@@ -153,6 +154,7 @@
                                         disabled>
                                 </div>
                             </div>
+                            {% endif %}
                             {% if lookup_priv["rescollege"] %}
                             <div class="row">
                                 <div class="col-lg-3 text-left">Residential College:</div>

@@ -23,7 +23,7 @@ def view_profile(lookup_id):
         names = ['netid', 'firstname', 'lastname', 'email', 'hometown',
             'state', 'country', 'year', 'major', 'rescollege', 'school',
             'room', 'building', 'food', 'team', 'activities',
-            'certificate', 'birthday', 'rca', 'paa', 'sharepeer']
+            'certificate', 'birthday', 'rca', 'paa', 'sharepeer', 'pronoun']
         privs = user.group_to_priv(user.get_attr_priv())
         cur_privacy = {}
         for name, priv in zip(names, privs):

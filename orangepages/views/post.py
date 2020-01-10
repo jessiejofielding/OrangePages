@@ -104,9 +104,13 @@ def edit_post_util(post, request):
                     notif = Notification(user, tagged_user, NType.TAGGED, post)
 
     # overwrite image or delete img
-    del_img = request.form.get('delete_img')
+    # del_img = request.form.get('delete_img')
 
-    if (del_img is not None) and (del_img == "on"):
+    # if (del_img is not None) and (del_img == "on"):
+    #     post.del_img()
+
+    delete_img = request.form.get('delete-img')
+    if delete_img == 'delete':
         post.del_img()
 
     if "image" in request.files:

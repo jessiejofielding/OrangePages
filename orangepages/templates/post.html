@@ -93,7 +93,7 @@ margin-top:-1px">
             <div class="row">
 
               <!-- DELETE IMG -->
-              <div class="col-7" id="e-delImg" style="margin-top: 15px; display:none; text-align: center">
+              <!-- <div class="col-7" id="e-delImg" style="margin-top: 15px; display:none; text-align: center">
                 <div class="form-check form-check-inline">
                   <label class="radio-wrapper fs-subtitle form-check-label" role="button" data-toggle="collapse"
                     data-target="#imgCollapse" aria-expanded="true" aria-controls="imgCollapse">Delete existing image
@@ -101,25 +101,26 @@ margin-top:-1px">
                     <span class="custom-radio"></span>
                   </label>
                 </div>
-              </div>
+              </div> -->
 
             <!-- upload new img -->
-            <div class="col-5" id="e-uploadImg" style="display:none; margin-top: 15px;">
+            <div class="col" id="e-uploadImg" style="display:none; margin-top: 15px;">
                 <div class="input-group-append">
-                  <label for="upload" class="btn btn-light rounded-pill upload-image" id="post-button"
-                  style="width: 200px">
-                    <i class="fa fa-cloud-upload text-muted"></i>
-                    <span><small class="text-muted">Upload New Image</small></span>
-                  </label>
+                    <div id="up-img-btn" {% if post.has_img %}style="display:none;"{%endif%}>
+                      <label for="upload" class="btn btn-light m-0 rounded-pill upload-image"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Upload image</small></label>
+                    </div>
+                    <button type="button" id="del-img-btn" class="btn btn-light rounded-pill" {% if not post.has_img %}style="display:none;"{%endif%}><i class="fas fa-times mr-2 text-muted"></i><small
+                    class="text-uppercase font-weight-bold text-muted">Delete image</small></button>
                 </div>
               </div>
               <!-- This needs to be here in order for upload to work -->
               <input id="upload" type="file" name="image" onchange="readURL(this);" style="display: none">
+              <input type="radio" name="delete-img" id="delete-img" value="delete" hidden>
+              <input type="radio" name="delete-img" id="keep-img" value="keep" checked hidden>
             </div>
 
             <div id="e-preview" style="display:none;">
-                <div class="image-area mt-4" style="margin-bottom: 15px"><img id="imageResult" src="#" alt=""
-                  class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                <div class="image-area mt-4" style="margin-bottom: 15px"><img id="imageResult" src='{% if post.has_img %}{{post.get_img()}}{% endif %}' alt="" class="img-fluid rounded shadow-sm mx-auto {%if post.has_img%}d-block{% else %}d-none{%endif%}"></div>
             </div>
 
             {% if post.tags|length %}
@@ -253,6 +254,7 @@ margin-top:-1px">
     }
     
     // i apologise for this -zx
+    // oof this horts
     function toggle_save() {
       strip_html();
 
@@ -264,9 +266,10 @@ margin-top:-1px">
       var eTags = document.getElementById("e-tags");
       var vTags = document.getElementById("v-tags");
       var eVis = document.getElementById("e-visibility");
-      var eDelImg = document.getElementById("e-delImg");
+      // var eDelImg = document.getElementById("e-delImg");
       var eUploadImg = document.getElementById("e-uploadImg");
       var ePreview = document.getElementById("e-preview");
+      var vImg = document.getElementById("imgCollapse");
 
       // var list = [save, eContent, vContent];
       // console.log(list)
@@ -296,22 +299,24 @@ margin-top:-1px">
         eContent.focus();
         eTags.style.display = "inline";
         eVis.style.display = "inline";
-        eDelImg.style.display = "inline";
+        // eDelImg.style.display = "inline";
         eUploadImg.style.display = "inline";
         ePreview.style.display = "inline";
 
         vContent.style.display = "none";
-        vTags.style.display = "none";
+        if(vTags) vTags.style.display = "none";
+        vImg.style.display = "none";
       } else {
         eContent.style.display = "none";
         eTags.style.display = "none";
         eVis.style.display = "none";
-        eDelImg.style.display = "none";
+        // eDelImg.style.display = "none";
         eUploadImg.style.display = "none";
         ePreview.style.display = "none";
 
         vContent.style.display = "inline";
         vTags.style.display = "inline";
+        vImg.style.display = "none";
 
       }
 

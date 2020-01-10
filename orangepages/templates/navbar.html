@@ -61,7 +61,7 @@
             $.getJSON("{{url_for('testsearch.autocomplete')}}",{
                 query: request.term, 
             }, function(data) {
-                response(data.results); // matching_results from jsonify
+                response(data.results.slice(0, 8)); // matching_results from jsonify
             });
         },  
   select : function(event, ui){

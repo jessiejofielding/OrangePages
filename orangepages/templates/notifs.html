@@ -15,14 +15,14 @@
 {%endif%}
 
 {% for notif in notifs: %}
-
+<!-- <a href='/notif/{{notif.nid}}' style="display:block;"> -->
 <div class="card-body">
 
-    <div class="row">
+    <div class="row" onclick="window.location.href = '/notif/{{notif.nid}}';">
 
         <div class="col" style="margin-top: -5px">
 
-            <a href='/notif/{{notif.nid}}' style="width:100%; height:100%;">
+            
 
                 <span class="text-muted post-subtitle"><i class="fa fa-clock-o"></i>
                     <span id="tstamp{{notif.nid}}"></span>
@@ -46,14 +46,17 @@
                 <button class="btn btn-sm btn-primary tag-pill"
                     type="submit">clear</button><br>
             </form>
-            </a>
+            
 
         </div>
+
     </div>
 
 </div>
+<!-- </a> -->
 
 <hr style="margin: 0px; border: 0.5px solid lightgray">
 {% endfor %}
 
-
+<script>
+</script>

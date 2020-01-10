@@ -25,6 +25,7 @@ def create_post():
     return redirect("/feed")
 
 @page.route('/post/<int:postid>/edit', methods=['POST', 'GET'])
+@user_required
 def edit_post(postid):
     post = Post.query.get(postid)
 
@@ -33,11 +34,8 @@ def edit_post(postid):
             title='Error',
             message="This post doesn't exist.")
 
-    if request.method=='GET':
-        if cur_user() != post.creator:
-            return redirect("/feed")
-        else:
-            return render('post_edit.html', post=post)
+    if request.method=='GET' or cur_user() is not post.creator:
+        return redirect("/post/"+str(postid))
 
     post.update_last_edit()
     edit_post_util(post, request)

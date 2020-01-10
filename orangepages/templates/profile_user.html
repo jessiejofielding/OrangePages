@@ -188,7 +188,7 @@
                             <div class="col-lg-6">
                                 <div class="image-area"><img id="imageResult" src='{% if user._img %}https://res.cloudinary.com/hcfgcbhqf/image/upload/c_fill,h_120,w_120,g_face,r_10/{{user._pic}}.png{% endif %}'
                                 alt=''
-                                    class="img-fluid rounded shadow-sm mx-auto d-block">
+                                    class="img-fluid rounded shadow-sm mx-auto {%if user._img%}d-block{% else %}d-none{%endif%}">
                                 </div>
 
                             </div>

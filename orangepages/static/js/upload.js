@@ -16,6 +16,8 @@ function readURL(input) {
 function toggleButtons() {
     $('#up-img-btn').toggle();
     $('#del-img-btn').toggle();
+    $('#imageResult').toggleClass('d-none');
+    $('#imageResult').toggleClass('d-block');
 }
 
 $(function () {
@@ -32,17 +34,21 @@ $(function () {
             toggleButtons();
         }
     });
+
+    $('#imageResult').on('error', function () { 
+        console.log('img err');
+    })
 });
 
 /*  ==========================================
     SHOW UPLOADED IMAGE NAME
 * ========================================== */
 var input = document.getElementById( 'upload' );
-var infoArea = document.getElementById( 'upload-label' );
+// var infoArea = document.getElementById( 'upload-label' );
 
-input.addEventListener( 'change', showFileName );
-function showFileName( event ) {
-  var input = event.srcElement;
-  var fileName = input.files[0].name;
-  infoArea.textContent = 'File name: ' + fileName;
-}
+// input.addEventListener( 'change', showFileName );
+// function showFileName( event ) {
+//   var input = event.srcElement;
+//   var fileName = input.files[0].name;
+//   infoArea.textContent = 'File name: ' + fileName;
+// }

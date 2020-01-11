@@ -155,6 +155,7 @@ margin-top:-1px">
       </div>
 
       <button id="save" type="submit" class="btn btn-comment" style="display: none; width: 100px;">Save</button>
+      <button id="cancel" onClick="window.location.reload();" class="btn btn-comment" style="display: none; width: 100px;">Cancel</button>
 
 
 <!--       {% if post.creator == user %}
@@ -259,6 +260,7 @@ margin-top:-1px">
       strip_html();
 
       var save = document.getElementById("save");
+      var cancel = document.getElementById("cancel");
       // var deletePost = document.getElementById("delete-post");
       var eContent = document.getElementById("e-content");
       var vContent = document.getElementById("v-content");
@@ -284,14 +286,16 @@ margin-top:-1px">
 
       if (save.style.display === "none") {
         save.style.display = "inline";
+        cancel.style.display = "inline";
         // deletePost.style.display = "inline";
       } else {
-        save.style.display = "none";
+        return;
+        // save.style.display = "none";
 
-        if (document.getElementById('delImg').checked) {
-          $("#delImg").click();
-        }
-        // deletePost.style.display = "none";
+        // if (document.getElementById('delImg').checked) {
+        //   $("#delImg").click();
+        // }
+        // // deletePost.style.display = "none";
       }
 
       if (eContent.style.display === "none") {

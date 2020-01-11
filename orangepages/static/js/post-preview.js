@@ -76,7 +76,8 @@ function refreshPostId(post_id) {
        let div = '#post'+post_id;
        let p = $.post( '/post-preview-refresh', { postid: post_id } );
         p.done(function( data ) {
-            $(div).html(data)
+            if(!data.startsWith("<!DOCTYPE"))
+                $(div).html(data);
             refreshingPost = false;
         });
     }

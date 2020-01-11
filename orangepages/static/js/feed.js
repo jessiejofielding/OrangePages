@@ -54,7 +54,8 @@ function refreshFeed()
         refreshingFeed = true;
         var posts = $.post( '/feed-refresh', { t_first: t_first, t_last: t_last } );
         posts.done(function( data ) {
-            $('#posts').html(data)
+            if(!data.startsWith("<!DOCTYPE"))
+                $('#posts').html(data)
             refreshingFeed = false;
         });
     }
@@ -63,19 +64,22 @@ function refreshFeed()
         var newPosts = $.post( '/feed-check', { t_first: t_first, t_last: t_last } );
         newPosts.done(function( data ) {
 
-            let numPosts = parseInt(data);
+            if(!data.startsWith("<!DOCTYPE")) {
 
-            if(numPosts > 0) {
-                let txt = 'View ' + numPosts + ' new post'
-                if(numPosts > 1) {
-                    txt = txt + 's'
+                let numPosts = parseInt(data);
+
+                if(numPosts > 0) {
+                    let txt = 'View ' + numPosts + ' new post'
+                    if(numPosts > 1) {
+                        txt = txt + 's'
+                    }
+
+                    $('#load-new-posts').html(txt)
                 }
 
-                $('#load-new-posts').html(txt)
+                $('#load-new-posts').toggle(numPosts > 0)
             }
-
             
-            $('#load-new-posts').toggle(numPosts > 0)
             checkingFeed = false;
         });
     }
@@ -89,8 +93,11 @@ function updateFeed()
         updatingFeed = true;
         var newPosts = $.post( '/feed-new', { t_first: t_first, t_last: t_last } );
         newPosts.done(function( data ) {
-            $('#load-new-posts').hide();
-            $( "#posts" ).prepend( data );
+            if(!data.startsWith("<!DOCTYPE")) {
+                $('#load-new-posts').hide();
+                $( "#posts" ).prepend( data );
+            }
+            
             updatingFeed = false;
         });
     }
@@ -117,7 +124,8 @@ function getMoreFeed()
         gettingMoreFeed = true;
         var getMorePosts = $.post( '/feed-next', { t_first: t_first, t_last: t_last } );
         getMorePosts.done(function( data ) {
-            $( "#posts" ).append( data );
+            if(!data.startsWith("<!DOCTYPE"))
+                $( "#posts" ).append( data );
             gettingMoreFeed = false;
         });
     }

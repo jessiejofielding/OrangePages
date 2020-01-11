@@ -53,7 +53,8 @@ function refreshNotifs()
         refreshingNotifs = true;
         var notifs = $.post( '/notifications');
         notifs.done(function( data ) {
-            $('#notifs').html(data)
+            if(!data.startsWith("<!DOCTYPE")) 
+                $('#notifs').html(data)
             refreshingNotifs = false;
         });
     }

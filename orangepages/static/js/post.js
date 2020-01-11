@@ -4,7 +4,8 @@ function refreshPost()
 {
     var post = $.post( '/post-refresh', { postid: postid } );
         post.done(function( data ) {
-            $('#post').html(data)
+            if(!data.startsWith("<!DOCTYPE"))
+                $('#post').html(data)
         });
 }
 

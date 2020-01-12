@@ -7894,6 +7894,11 @@ a:focus {
 
 /*  MORE CUSTOM STYLES  */
 
+/* notification style */
+.notif:hover {
+  background-color: #f8f9fa;
+}
+
 /* ---------------------------------------------------
   SIDEBAR STYLE
 ----------------------------------------------------- */

@@ -50,7 +50,7 @@
               {% if post.tags|length %}
               <div style="margin-top: 6px; margin-bottom: 6px">
               {% for tag in post.tags: %}
-              <button type="button" onclick="location.href='/search?query={{ tag.tid }}'"
+              <button type="button" onclick="location.href='/search?query={{ tag.tid }}';event.stopPropagation();"
                 class="btn btn-primary btn-sm tag-pill text-truncate" style="outline: none">
                 #{{ tag.tid }}
               </button>

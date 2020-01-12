@@ -25,11 +25,18 @@ def not_found(e):
 def server_error(e):
     return render('message.html',
             title='A server error occurred.',
-            message="Please try again later?"), 500
+            message="Please try again later."), 500
 
 @page.app_errorhandler(405)
+@user_required
+def bad_method(e):
+    return render('message.html',
+            title='Bad method',
+            message="This request method has been disabled."), 405
+
+@page.app_errorhandler(403)
 @user_required
 def not_allowed(e):
     return render('message.html',
             title='Not allowed',
-            message="leave"), 405
+            message="You are unauthorized to access this content."), 403

@@ -11,11 +11,9 @@ import os
 page = Blueprint('post_page', __name__)
 
 
-@page.route('/create-post', methods=['POST', 'GET'])
+@page.route('/create-post', methods=['POST'])
 @user_required
 def create_post():
-    if request.method=='GET':
-        return render('post_create.html')
 
     user = cur_user()
     post = Post(user)
@@ -124,18 +122,20 @@ def edit_post_util(post, request):
 @page.route('/post/<int:postid>/delete', methods=['POST', 'GET'])
 @user_required
 def delete_post(postid):
-    print("post", postid, "deleted")
+    user = cur_user()
     post = Post.query.get(postid)
-    post.delete()
+    if post.creator is user:
+        post.delete()
     return redirect("/feed")
 
 @page.route('/comment/<int:commentid>/delete', methods=['POST', 'GET'])
 @user_required
 def delete_comment(commentid):
-    print("comment", commentid, "deleted")
+    user = cur_user()
     comment = Comment.query.get(commentid)
     postid = comment.postid
-    comment.delete()
+    if comment.creator is user:
+        comment.delete()
     return redirect('/post/'+ str(postid))
 
 
@@ -185,7 +185,7 @@ def post_prev_refresh():
 
 
 
-@page.route('/post/<int:postid>/comment', methods=['GET', 'POST'])
+@page.route('/post/<int:postid>/comment', methods=['POST'])
 @user_required
 def comment(postid):
     post = Post.query.get(postid)
@@ -194,21 +194,17 @@ def comment(postid):
             title='Error',
             message="This post doesn't exist.")
 
+    user = cur_user()
+    content = request.form.get('content')
 
-    if request.method=='GET':
-        return render("post_comment.html", post=post)
-    else:
-        user = cur_user()
-        content = request.form.get('content')
+    comment = Comment(postid, content, user)
 
-        comment = Comment(postid, content, user)
+    if(post.creator is not user):
+        notif = Notification(user, post.creator, NType.COMMENTED, post)
 
-        if(post.creator is not user):
-            notif = Notification(user, post.creator, NType.COMMENTED, post)
+    db.session.commit()
 
-        db.session.commit()
-
-        return redirect('/post/' + str(postid))
+    return redirect('/post/' + str(postid))
 
 # @page.route('/post/<int:post_id>', methods=['GET'])
 # def feed_post(post_id):
@@ -239,7 +235,7 @@ def like(post_id):
     # return redirect(request.referrer)
 
 # Might need FIXME
-@page.route('/post/<int:post_id>/tag')
+@page.route('/post/<int:post_id>/tag', methods=['POST'])
 @user_required
 def add_tag(post_id):
     post = Post.query.get(post_id)

@@ -257,8 +257,6 @@ def clear_notifs():
 @user_required
 def clear_single_notif(id):
     user = cur_user()
-    print('clearing notif id', id)
-
     notif = Notification.query.get(id)
 
     if notif.target is user:
@@ -267,6 +265,7 @@ def clear_single_notif(id):
     return redirect(request.referrer)
 
 
+# this url is kinda dangerous?
 @page.route('/profile/<string:lookup_id>/delete', methods=['POST', 'GET'])
 @user_required
 def delete_user(lookup_id):

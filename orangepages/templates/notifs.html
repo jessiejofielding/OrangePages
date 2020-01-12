@@ -16,9 +16,9 @@
 
 {% for notif in notifs: %}
 <!-- <a href='/notif/{{notif.nid}}' style="display:block;"> -->
-<div class="card-body notif">
+<div class="card-body notif" onclick="window.location.href = '/notif/{{notif.nid}}';">
 
-    <div class="row" onclick="window.location.href = '/notif/{{notif.nid}}';">
+    <div class="row">
 
         <div class="col" style="margin-top: -5px">
 

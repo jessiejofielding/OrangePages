@@ -199,16 +199,17 @@
 
 
                         <div id="hidden-name" class="row profile-row d-none">
-                            <div class="col-lg-3 profile-label text-left">Name</div>
+                            <div class="col-lg-3 profile-label text-left">Name <text 
+                                class="text-danger">(Required)</text></div>
                             <div class="col-lg-3">
                                 <input type="text" class="form-control is-disabled" name="firstname"
                                      placeholder="First Name" value="{{user.firstname}}"
-                                    disabled>
+                                    disabled required>
                             </div>
                             <div class="col-lg-4">
                                 <input type="text" class="form-control is-disabled" name="lastname"
                                      placeholder="Last Name" value="{{user.lastname}}"
-                                    disabled>
+                                    disabled required>
                             </div>
                         </div>
                         <div id="hidden-year" class="row profile-row d-none">

@@ -624,16 +624,6 @@ a.article:hover {
   font-family: 'Poppins', sans-serif;
 }
 
-.btn-sidebar {
-  background-color: transparent !important;
-  color: white !important
-}
-
-.btn-sidebar:hover {
-  color: var(--new-orange)!important;
-  background-color: white !important;
-}
-
 /*form styles*/
 #msform {
     text-align: center;
@@ -7953,8 +7943,9 @@ a:focus {
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-  color: #fff;
-  background: var(--sec-orange);
+  color: var(--new-orange);
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
 }
 
 #dismiss {

@@ -1,7 +1,7 @@
 import os
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///../test.sqlite'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 

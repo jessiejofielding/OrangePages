@@ -4049,6 +4049,7 @@ input[type="button"].btn-block {
 
 .card-link, .tag-link {
   color: var(--new-orange);
+  background: none;
 }
 .card-link:hover, .tag-link:hover {
   text-decoration: none; }

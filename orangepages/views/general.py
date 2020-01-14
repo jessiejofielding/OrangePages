@@ -50,6 +50,13 @@ def contact():
         return redirect('/create-user')
     return render('contact.html')
 
+@page.route('/help', methods=['GET'])
+@user_required
+def help():
+    if cur_user() is None:
+        return redirect('/create-user')
+    return render('help.html')
+
 # get initial feed
 @page.route('/feed', methods=['GET'])
 @user_required

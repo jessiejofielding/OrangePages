@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <title>OrangePages | Help</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1">
+    <!-- <meta http-equiv="refresh" content="20" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"
+        type="text/css" />
+    <link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" />
+    <link rel="stylesheet" href="/static/css/feed.css" type="text/css" />
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800">
+
+    <!--JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/feed.js"></script>
+
+</head>
+
+<body>
+    {% include 'sidebar.html' %}
+
+    <div id="content">
+        {% include 'navbar.html' %}
+
+        <!-- Main page -->
+
+        <div class="col">
+        </div>
+        <div class="col" style="width: 600px; float: none; margin: 0 auto; padding-bottom:20px">
+            <br/>
+            <br/>
+<h1 id="help">Help</h1>
+
+<br>
+<ul style="list-style: none;">
+<li><a class="tag-link" href="#posts"><strong>Posts</strong></a><ul style="list-style: none;">
+<li><a class="tag-link" href="#your-feed">Your feed</a></li>
+<li><a class="tag-link" href="#creating-a-post">Creating a post</a></li>
+<li><a class="tag-link" href="#visiting-a-post-s-page">Visiting a post&#39;s page</a></li>
+<li><a class="tag-link" href="#interacting-with-a-post">Interacting with a post</a></li>
+</ul>
+</li>
+<li><a class="tag-link" href="#search"><strong>Search</strong></a><ul style="list-style: none;">
+<li><a class="tag-link" href="#search-for-users">Search for users</a></li>
+<li><a class="tag-link" href="#search-for-posts">Search for posts</a></li>
+</ul>
+</li>
+<li><a class="tag-link" href="#profiles"><strong>Profiles</strong></a><ul style="list-style: none;">
+<li><a class="tag-link" href="#your-profile">Your profile</a></li>
+<li><a class="tag-link" href="#other-users-profiles">Other users&#39; profiles</a></li>
+</ul>
+</li>
+<li><a class="tag-link" href="#friends"><strong>Friends</strong></a></li>
+<li><a class="tag-link" href="#notifications"><strong>Notifications</strong></a></li>
+</ul>
+<br>
+
+<hr>
+<h2 id="posts"><strong>Posts</strong></h2><br>
+<h3 id="your-feed">Your feed</h3>
+<p>You can visit your home feed by clicking the &#39;Home&#39; link in the sidebar. Your home feed displays all public posts and friends-only posts from users on your friends list in reverse chronological order.</p>
+<h3 id="creating-a-post">Creating a post</h3>
+<p>Use the widget at the top of your home feed to create a post. </p>
+<p>A post is required to have some text. If you would like to tag someone, use the syntax &#39;@netid&#39; in the body of your post. Optionally, you can use the &#39;Upload Image&#39; and &#39;Add Tags&#39; buttons to attach an image to your post or add searchable hashtags to your post. Use the dropdown to control who will be able to see your post. If it is set to &#39;Public&#39;, your post will appear on everybody&#39;s feeds; if it is set to &#39;Friends&#39;, only your friends will see your post; if it is set to &#39;Just Me&#39;, your post will be visible only to you.</p>
+<h3 id="visiting-a-post-s-page">Visiting a post&#39;s page</h3>
+<p>For any post you see on your feed, you can click its timestamp, its image, its text area, the comment icon, or the &#39;more comments&#39; link to go to the post&#39;s page. From here, you can delete any comments you&#39;ve made if you&#39;ve commented on the post. If you created the post, you will see a gear icon in the upper right corner. Click on it to edit or delete your post.</p>
+<h3 id="interacting-with-a-post">Interacting with a post</h3>
+<p>You can either like or comment on any post from the feed or from the post&#39;s page. Like a post by clicking the heart icon. Comment on a post by entering text into the &#39;Write a comment...&#39; field and pressing &#39;Post&#39;. Both of these actions will send a notification to the post&#39;s creator.</p>
+<br>
+<hr>
+<h2 id="search"><strong>Search</strong></h2><br>
+<h3 id="search-for-users">Search for users</h3>
+<p>The search bar allows you to search for users by any profile field. When you enter text to search for, the results will include any users with that text in any of their visible profile fields. If you put &quot;double quotes&quot; around your search term, the results will return exact matches only. </p>
+<h3 id="search-for-posts">Search for posts</h3>
+<p>The search bar also allows you to search for posts by their #tags. From any post on your feed with a #tag, you can also click on the tag to search for posts with that tag.</p>
+<br>
+<hr>
+<h2 id="profiles"><strong>Profiles</strong></h2>
+<h3 id="your-profile">Your profile</h3>
+<p>You can view your own profile by clicking on the &#39;My Profile&#39; link in the sidebar. </p>
+<p>Clicking the edit icon next to your name while on your &#39;Profile Details&#39; tab will allow you to edit any of your profile fields. When you edit your profile fields, you can also control who sees each piece of information about you. Just like posts, you can set their privacy to &#39;Public&#39;, &#39;Friends&#39;, or &#39;Just Me&#39;. Other users who do not have permission to view a field on your profile will not be able to search for you by that field or see the field when they visit your profile.</p>
+<p>Clicking the &#39;Posts&#39; tab on your profile will display all of the posts that you have made in reverse chronological order.</p>
+<h3 id="other-users-profiles">Other users&#39; profiles</h3>
+<p>You can visit another user&#39;s profile by clicking on their profile picture or name/netid. Find other users by viewing public posts on your feed or using the search bar to search for specific people!</p>
+<br>
+<hr>
+<h2 id="friends"><strong>Friends</strong></h2>
+<p>You can view your friends list by clicking on the &#39;Friends&#39; link in the sidebar. You can send another user a friend request by visiting their profile and clicking &#39;Add friend&#39;. When they&#39;ve accepted, you will receive a notification. If another user sends you a friend request, you will also receive a notification. Click on the notification to go to their profile and accept their friend request. Friends can allow each other to view more personal information than they share with the public, as well as make friends-only posts for each other to see.</p>
+<br>
+<hr>
+<h2 id="notifications"><strong>Notifications</strong></h2>
+<p>You can view all of your notifications by clicking on the &#39;Notifications&#39; link in the sidebar. You will receive a notification whenver another user likes your posts, comments on your posts, @mentions you in a post, sends you a friend request, or accepts your friend request. Click on a notification to go to the profile or post it is referencing and mark it as &#39;read&#39;.</p>
+            <br/>
+        </div>
+        <div class="col">
+        </div>
+
+    </div>
+
+    </div>
+</body>
+
+
+<!-- jQuery Custom Scroller CDN -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="/static/js/sidebar.js"></script>
+
+<script>
+    document.getElementById('Help').className = 'active';
+</script>
+
+</html>

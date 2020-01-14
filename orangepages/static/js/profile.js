@@ -309,12 +309,12 @@ $(document).ready(function() {
                              <option value='wws'>Woodrow Wilson School</option>\
                              ");
         } else if (val == "BSE") {
-            $("#major").html("<option value='cbe'>Chemical and Biological Engineering</option>\
-                            <option value='cee'>Civil and Environmental Engineering</option>\
-                            <option value='cos'>Computer Science</option>\
-                            <option value='ele'>Electrical Engineering</option>\
-                            <option value='mae'>Mechanical and Aerospace Engineering</option>\
-                            <option value='orf'>Operations Research and Financial Engineering</option>\
+            $("#major").html("<option value='CBE'>Chemical and Biological Engineering</option>\
+                            <option value='CEE'>Civil and Environmental Engineering</option>\
+                            <option value='COS'>Computer Science</option>\
+                            <option value='ELE'>Electrical Engineering</option>\
+                            <option value='MAE'>Mechanical and Aerospace Engineering</option>\
+                            <option value='ORF'>Operations Research and Financial Engineering</option>\
                             ");
         }
     });

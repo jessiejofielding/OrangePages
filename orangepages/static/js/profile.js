@@ -22,7 +22,7 @@ $(document).ready(function() {
         var val = $(this).val();
         console.log(val);
         if (val != "none") {
-            $("#country").html("<option value='usa'>United States</option>");
+            $("#country").html("<option value='United States'>United States</option>");
         }
         else {
              $("#country").html("<option value=''>Choose an option...</option>\

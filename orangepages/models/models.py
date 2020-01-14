@@ -296,7 +296,7 @@ class User(db.Model):
 
     # Returns a list of users who have any visible attritute that matches
     # the given arguments. Any number of arguments can be given.
-    def search(self, *args):
+    def search(self, *args, exact):
         attributes = []
         privacy = {}
 
@@ -314,8 +314,12 @@ class User(db.Model):
         group_ids = []
         for group in self.groups_in:
             group_ids.append(group.gid)
-        users = db.session.query(User).\
-            filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes) for val in args))
+        
+        if exact:
+            users = db.session.query(User).filter(and_(or_(and_(x == val, or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes) for val in args))
+        else:
+            users = db.session.query(User).\
+                filter(and_(or_(and_(x.ilike('%' + val + '%'), or_(privacy[str(x)[5:]] == g for g in group_ids)) for x in attributes) for val in args))
         # or_(privacy[str(x)[5:]] == g for g in group_ids)
         return users
 

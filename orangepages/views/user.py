@@ -49,7 +49,7 @@ def view_profile(lookup_id):
 
 
 @page.route('/create-user', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def create_user():
 
     netid = cur_uid()

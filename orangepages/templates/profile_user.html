@@ -290,6 +290,10 @@
                                  <option value='SOC' {% if 'SOC' == user.major %} selected {%endif%}>Sociology</option>
                                  <option value='SPA' {% if 'SPA' == user.major %} selected {%endif%}>Spanish and Portuguese</option>
                                  <option value='WWS' {% if 'WWS' == user.major %} selected {%endif%}>Woodrow Wilson School</option>
+                                 <option value='ELE' {% if 'ELE' == user.major %} selected {%endif%}>Electrical Engineering</option>
+                                 <option value='MAE' {% if 'MAE' == user.major %} selected {%endif%}>Mechanical and Aerospace Engineering</option>
+                                 <option value='ORF' {% if 'ORF' == user.major %} selected {%endif%}>Operations Research and Financial Engineering</option>
+                                 <option value='CEE' {% if 'CEE' == user.major %} selected {%endif%}>Civil and Environmental Engineering</option>
                                 </select>
                             </div>
                             </div>
@@ -971,7 +975,6 @@
 
         <script src="/static/js/sidebar.js"></script>
         <script src="/static/js/upload.js"></script>
-        <script type="text/javascript" src="/static/js/profile.js"></script>
 
         <script>
             document.getElementById('Profile').className = 'active';
